@@ -1,0 +1,36 @@
+// variables & functions
+// @import 'functions';
+@import 'variables';
+
+// base & layout
+@import 'base';
+@import 'breakpoints';
+@import 'grid';
+@import 'flex';
+
+// colors
+@import "colors";
+
+// components (button, card, navbar etc)
+@import 'components/card';
+@import 'components/button';
+@import 'components/navbar';
+@import 'components/badge';
+@import 'components/dashboard_card';
+@import 'components/recipe_widget';
+@import 'components/scrollertop';
+@import 'components/input';
+@import 'components/planner_widget';
+@import 'components/calendar_widget';
+@import 'components/modal';
+
+// utilities (margin, padding, opacity, etc)
+@import 'utilities';
+
+// .trans-scale-hover-4{
+//     // background-color: red;
+//     &:hover{
+//         transform: scale(2);
+//     }
+// }
+

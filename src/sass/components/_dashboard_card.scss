@@ -1,0 +1,49 @@
+@use 'sass:math';
+
+.dashboard-card {
+  display: block;
+  padding: $base-padding;
+  border: $base-border-thickness solid #ddd;
+  box-shadow: $base-box-shadow;
+  border-radius: math.div($base-border-radius, 4);
+  cursor: pointer;
+
+  .title {
+    font-size: $base-font-size;
+    padding-bottom: $base-padding;
+    font-weight: bold;
+    // color: red;
+  }
+  .body {
+    font-size: $base-font-size;
+
+    a {
+      text-decoration: underline;
+    }
+    img{
+        max-height: 10rem;
+        width: 100%;
+        // height: 10rem;
+        object-fit: cover;
+        border-radius: $base-border-radius * 0.2;
+    }
+    p{
+      max-height: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+// @include xs{
+//   .dashboard-card {
+//     .body {
+//       img{
+//           height: 200px;
+//       }
+//       p{
+//         max-height: 200px;
+//       }
+//     }
+//   }
+// }

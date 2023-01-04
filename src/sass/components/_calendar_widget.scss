@@ -1,0 +1,95 @@
+.calendar-widget{
+    .cal-con{
+        cursor: pointer;
+        width: 100%;
+        // border: thin solid rgba(128, 128, 128, 0.2);
+        .box{
+            width: calc(100% / 7);
+            height: 5rem;
+            max-height: 5rem;
+            border: thin solid rgba(128, 128, 128, 0.2);
+            border-collapse: collapse;
+            margin: 1px;
+            border-radius: $base-border-radius * 0.2;
+
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+            .menu{
+                width: 100%;
+                align-self: flex-end;
+
+                img,
+                .empty{
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    background-color: whitesmoke;
+                    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+                    cursor: pointer;
+                }
+            }
+        }
+        .box.inactive{
+            background-color: rgba(128, 128, 128, 0.05);
+            color: grey;
+        }
+        .box.today{
+            border: thin solid lighten($primary, 40);
+        }
+    }
+    .cal-con:hover{
+        .box{
+            background-color: whitesmoke;
+        }
+    }
+    .header{
+        width: 100%;
+        .box{
+            width: calc(100% / 7);
+            height: 3rem;
+            max-height: 3rem;
+            border: none;
+        }
+    }
+}
+
+@include sm {
+    .calendar-widget{
+        .cal-con{
+            .box{
+                width: calc( (100vw / 7) - 1rem );
+                height: calc( (100vw / 7) - 2rem );
+                max-height: calc( (100vw / 7) - 2rem );
+                border-radius: 50%;
+
+                align-items: center;
+                justify-content: center;
+                .menu{
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@include md {
+    .calendar-widget{
+        .cal-con{
+            .box{
+                width: calc(100% / 7);
+                height: 5rem;
+                max-height: 5rem;
+                border-radius: $base-border-radius * 0.2;
+
+                align-items: flex-start;
+                justify-content: flex-start;
+                .menu{
+                    display: flex;
+                }
+            }
+        }
+    }
+}

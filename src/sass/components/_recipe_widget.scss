@@ -1,0 +1,63 @@
+@use 'sass:math';
+
+.recipe-widget{
+    border-bottom: $base-border-thickness solid #ddd;
+    // box-shadow: $base-box-shadow;
+    // border-radius: math.div($base-border-radius, 4);
+    cursor: pointer;
+
+    // img{
+    //     min-width: 40%;
+    //     // height: 100%;
+    //     max-height: 150px;
+    //     object-fit: cover;
+    //     border-radius: $base-border-radius * 0.2;
+    //     margin-left: 1rem;
+    // }
+    &:hover{
+        background-color: whitesmoke;
+        // border-bottom: $base-border-thickness solid white;
+    }
+    .details{
+        max-width: 55%;
+        p{
+            max-height: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        h1{
+            max-width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    .imgcon{
+        min-width: 40%;
+        max-height: 12rem;
+        border-radius: $base-border-radius * 0.2;
+        margin-left: 1rem;
+        overflow: hidden;
+
+        img{
+            width: 100%;
+            max-height: 12rem;
+            object-fit: cover;
+        }
+    }
+}
+
+
+// .recipe-widget:nth-child(even){
+//     flex-direction: row-reverse;
+//     img{
+//         margin-right: 1rem;
+//     }
+//     .details{
+//         align-items: flex-end;
+//         p{
+//             text-align: end;
+//         }
+//     }
+// }

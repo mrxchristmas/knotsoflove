@@ -1,0 +1,162 @@
+// import google font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* reset styles */
+* {
+  color: inherit;
+  margin: 0;
+  cursor: default;
+}
+
+body {
+  font-family: Poppins;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dotted #efefef;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  /* position: relative;
+  right: 20px; */
+}
+/* Track */
+::-webkit-scrollbar-track {
+  /* background: rgba(255, 255, 255, 0.07);  */
+  background: grey; 
+  border-radius: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  /* background: #888;  */
+  background: $primary; 
+  border-radius: 5px;
+  cursor: grab;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  /* background: #555;  */
+  background: lighten($primary, 20); 
+}
+
+
+// .dot{
+//   // padding: 10px;
+//   border-radius: 50%;
+//   height: 1rem;
+//   width: 1rem;
+//   display: inline-block;
+// }
+
+.ul-disc{
+  list-style-type: none;
+  // list-style-position: outside;
+}
+
+.ul-disc li::before {
+  content: " ";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  // color: red; /* Change the color */
+  // font-weight: bold; /* If you want it to be bold */
+  // display: inline-block; /* Needed to add space between the bullet and the text */
+  // width: 1em; /* Also needed for space (tweak if needed) */
+  // margin-left: -1em; /* Also needed for space (tweak if needed) */
+  height: 0.75rem;
+  width: 0.75rem;
+  min-height: 0.75rem;
+  min-width: 0.75rem;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: grey;
+  margin-right: 1rem;
+  margin-top: 0.4rem;
+}
+
+
+/////// ARROWS
+$arrows: (
+  up: 0 100px 144px 100px,
+  down: 144px 100px 0 100px,
+  right: 100px 0 100px 144px,
+  left: 100px 144px 100px 0
+);
+
+$base-arrow: 0.75rem;
+$arrow-size: (
+  sm: $base-arrow,
+  md: $base-arrow * 1.5,
+  lg: $base-arrow * 2.2,
+  xl: $base-arrow * 3,
+  xxl: $base-arrow * 6
+);
+
+@mixin arrow($border, $color, $direction){
+  border-style: solid;
+  border-width: $border;
+  width: 0;
+  height: 0;
+  -webkit-transform:rotate(360deg);
+
+  // @debug $direction;
+
+  @if $direction == "down" {
+    & {
+      border-color: $color transparent transparent transparent;
+      border-width: $border * 1.5 $border 0 $border;
+    }
+  }
+  @if $direction == "left" {
+    & {
+      border-color: transparent $color transparent transparent;
+      border-width: $border $border * 1.5 $border 0;
+    }
+  }
+  @if $direction == "up" {
+    & {
+      border-width: 0 $border $border * 1.5 $border;
+      border-color: transparent transparent $color transparent;
+    }
+    // @debug 0 $border $border * 1.5 $border;
+  }
+  @if $direction == "right" {
+    & {
+      border-color: transparent transparent transparent $color;
+      border-width: $border 0 $border $border * 1.5;
+    }
+    // @debug $border 0 $border $border * 1.5;
+  }
+}
+$directions: ("up", "down", "left", "right");
+
+@each $bordersize, $border in $arrow-size {
+  @each $colorkey, $color in $colors {
+    @each $direction in $directions {
+      .arrow-#{$direction}-#{$colorkey}-#{$bordersize}{
+        @include arrow($border, $color , $direction );
+        // @debug ".arrow-#{$direction}-#{$colorkey}-#{$bordersize}";
+        // @debug ".arrow-up-#{$colorkey}-#{$borderkey}"
+      }
+    }
+  }
+}

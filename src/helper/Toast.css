@@ -1,0 +1,126 @@
+.toast-container{
+    position: fixed;
+    bottom: 10vh;
+    width: 70vw;
+    max-width: 70vw;
+    left: calc( 30vw / 2 );
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.toast-container span{
+    max-width: var(--MAX_WIDTH);
+    background-color: var(--MAIN_COLOR);
+    /* background-color: rgb(97, 97, 97); */
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1.2px;
+    word-spacing: 2px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    font-size: 0.8em;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+
+
+#global-prompt{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+#global-prompt > .container{
+    width: calc(100% - 40px);
+    max-width: var(--MAX_WIDTH);
+    background-color: var(--MAIN_COLOR);
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    text-overflow: ellipsis;
+    padding: 20px 10px;
+}
+#global-prompt > .container > .password{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2); */
+    border-radius: 5px;
+    margin-top: 10px;
+}
+#global-prompt > .container > .password > div{
+    margin-top: 10px;
+}
+#global-prompt > .container > .password button{
+    width: calc(50% - 10px);
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: none;
+}
+#global-prompt > .container > .password input{
+    width: calc(100% - 20px);
+    border: none;
+    padding: 5px 0px;
+    padding-left: 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: none;
+    background-color: var(--BG_WHITE_COLOR);
+    height: 100%;
+}
+
+
+#global-prompt > .container > .choice{
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+
+
+  @media (max-width: 768px) { /* mobile */
+    :root{
+        --HTITLE_SIZE: 3vw;
+       
+    }
+
+    .toast-container{
+        position: fixed;
+        bottom: 20px;
+        width: 70vw;
+        max-width: 70vw;
+        left: calc( 30vw / 2 );
+    }
+    .toast-container span{
+        background-color: var(--MAIN_COLOR);
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: white;
+        text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+        letter-spacing: 1.2px;
+        word-spacing: 2px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        font-size: 0.8em;
+        text-align: center;
+    }
+
+
+    
+    
+    
+    
+
+}
