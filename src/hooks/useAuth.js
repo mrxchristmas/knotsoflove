@@ -27,6 +27,8 @@ const authReducer =(state, action)=>{
             return { isPending: false, user: null, success: true, error: null}
         case 'ERROR':
             return { isPending: false, user: null, success: false, error: action.payload}
+        case 'RESET':
+            return { isPending: false, user: null, success: false, error: null}
     
         default:
             return state
@@ -86,10 +88,15 @@ export const useAuth =()=>{
                     payload: res.user
                 })
             })
-            .catch(() => {
+            .catch(err => {
+                console.log(err.code)
+                let errmsg = ""
+                if(err.code === "auth/user-not-found"){
+                    errmsg = "User not Found"
+                }
                 DINC({
                     type: 'ERROR',
-                    payload: "Invalid Email or Password"
+                    payload: errmsg
                 })
             })
         } catch (err) {
@@ -164,22 +171,21 @@ export const useAuth =()=>{
             })
             .catch(err => {
                 console.log(err.code)
+                let errmsg = ""
                 if(err.code === 'auth/email-already-in-use'){
-                    DINC({
-                        type: 'ERROR',
-                        payload: "This email is already associated with an account. Please login to that account instead." + err
-                    })
+                    errmsg= "This email is already associated with an account. Please login to that account instead."
                 }else if(err.code === 'auth/weak-password'){
-                    DINC({
-                        type: 'ERROR',
-                        payload: "Password is too weak!"
-                    })
+                    errmsg= "Password is too weak!"
+                }else if(err.code === 'auth/invalid-email'){
+                    errmsg= "Please provide a valid Email."
                 }else{
-                    DINC({
-                        type: 'ERROR',
-                        payload: "Invalid Email or Password: "
-                    })
+                    errmsg= "Invalid Email or Password: "
                 }
+
+                DINC({
+                    type: 'ERROR',
+                    payload: errmsg
+                })
                 
                 
             })
@@ -436,6 +442,17 @@ export const useAuth =()=>{
 
         return () => setIsCancelled(true)
     }, [])
+
+    // useEffect(() => {
+    //     if(response.error){
+    //         setTimeout(() => {
+    //             DINC({
+    //                 type: 'RESET'
+    //             })
+    //         }, 2000);
+    //     }
+
+    // }, [response.error])
 
     return {socialLogin, login, loginGetCredentials, logout, signup, _updateProfile, _updateEmail, _sendEmailVerification, 
         _updatePassword, _sendPasswordResetEmail, _confirmPasswordReset, _reauthenticateWithCredential,

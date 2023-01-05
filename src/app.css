@@ -1,0 +1,15 @@
+body{
+    background-color: whitesmoke;
+    /* background-image: url("./assets/bg.gif"); */
+    /* background-image: url("./assets/bg1.png"); */
+    /* background-repeat: repeat; */
+}
+
+*{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+  
+*:focus {
+    outline: 0;
+}
