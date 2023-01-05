@@ -5,36 +5,44 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { NavLink } from 'react-router-dom'
 import '../css/Navbar.css'
 import anon from '../assets/anonymous.jpg'
+import { useIsMobile } from '../hooks/useIsMobile'
+// import menubar from ''
 
 export default function Navbar() {
   const { logout } = useAuth()
   const { user } = useAuthContext()
+  const { isMobile } = useIsMobile()
 
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
 
   return (
-    <div className="nav-main bg-whitesmoke text-black flex-row-start-between p-1-2">
-      <Link to="/" className='font-aureta brand-name'><h1 >Knots of Love</h1></Link>
+    <div className="nav-main bg-whitesmoke text-black flex-row-center-between p-1-2">
 
+      {/* {isMobile && <img src="icons/menu_black_48dp.svg" alt="" />} */}
+
+      <Link to="/" className='font-aureta brand-name flex-row-end-start text-straight'><h1>Knots of Love</h1></Link>
       
-      <div className="navs flex-row-center-center">
-        <NavLink to="/products" className="m-0-1" >Products</NavLink>
-        <NavLink to="/social" className="m-0-1">Social</NavLink>
-        <NavLink to="/contact" className="m-0-1">Contact</NavLink>
-        <NavLink to="/about" className="m-0-1">About</NavLink>
-      </div>
 
-      <div className='flex-row-start-start'>
+      {/* {!isMobile &&  */}
+        <div className={`${isMobile ? "navs-mobile" : "navs"} flex-row-center-center`}>
+          <NavLink to="/products" className="m-0-1" >Products</NavLink>
+          <NavLink to="/social" className="m-0-1">Social</NavLink>
+          <NavLink to="/contact" className="m-0-1">Contact</NavLink>
+          <NavLink to="/about" className="m-0-1">About</NavLink>
+        </div>
+      {/* } */}
+
+      <div className='nav-profile flex-row-start-start'>
 
         {!user && <div className='flex-row-center-center login-button'>
           <NavLink to="/login">Login | Register</NavLink>
         </div>}
-        {/* {user && <li className='' onClick={() => logout()}>Logout</li>} */}
 
         {user && 
-          <div className="profile-container flex-col-center-center position-relative">
+          <div className="profile-container flex-col-end-center position-relative">
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="profile-img-name-container flex-row-center-end">
-              <span className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>
+              {!isMobile && <span className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
               <img className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} alt="" />
             </div>
             {isProfileOpen && 
@@ -47,6 +55,7 @@ export default function Navbar() {
                 <button className="btn-red mt-1" onClick={() => logout()}>Logout</button>
               </div>
             }
+            
           </div>
         }
 
@@ -62,6 +71,5 @@ export default function Navbar() {
 
       
 
-      
       
       

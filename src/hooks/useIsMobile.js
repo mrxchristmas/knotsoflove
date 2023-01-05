@@ -22,12 +22,13 @@ export const useIsMobile = () => {
     useEffect(() => {
         if(width <= 768){
             setIsMobile(true)
+            // console.log('on mobile')
         }else{
             setIsMobile(false)
+            // console.log('not on mobile')
         }
     }, [width]);
 
     return { isMobile } 
-
     
 }

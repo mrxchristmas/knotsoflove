@@ -129,15 +129,21 @@ export default function Home() {
 
 
   return (
-    <div className='home-wallpaper p-5 bg-red flex-row-center-between'>
+    <div className='home-wallpaper  bg-red flex-row-center-between'>
 
-      <div className="logo-container ml-1">
-        <img id="logo" src={logo} alt="" />
-        <h1 className='logo-text font-aureta'>Knots of Love </h1>
-        <span className="logo-alt-text font-normal"><span className='logo-alt-text-cat'>{selectedCategory.title}</span> by <b>Kaye</b></span>
+      <div className="wallpaper-left flex-col-start-center">
+        <div className="logo-container ml-1">
+          <img id="logo" src={logo} alt="" />
+          <h1 className='logo-text font-aureta'>Knots of Love </h1>
+          <span className="logo-alt-text font-normal"><span className='logo-alt-text-cat'>{selectedCategory.title}</span> by <b>Kaye</b></span>
+        </div>
+        <h1 className='wallpaper-left-text mt-3'>Grab your <span className='emphasize p-0-1 '>favorite</span> <p>merchandise now!</p> </h1>
+        
       </div>
+      
 
       <div className="homecat-container mr-3 flex-row-center-center">
+        
         <div className="center8 flex-row-center-center">
           <div className="center7 flex-row-center-center">
             <div className="center6 flex-row-center-center">
@@ -147,7 +153,6 @@ export default function Home() {
                     <div className="center2 flex-row-center-center">
                       <div className="center1 flex-row-center-center">
                         <img className='centerImg' src={selectedCategory.src} alt="" />
-                        {/* <span className='centerImgText'>{selectedCategory.title}</span> */}
                       </div>
                     </div>
                   </div>
@@ -162,30 +167,6 @@ export default function Home() {
             <img className='catImg' src={cat.src} alt="" />
           </div> 
         ))}
-        {/* <div className="circle deg-0">
-          <img className='catImg' src={item1trans} alt="" />
-        </div> 
-        <div className="circle deg-45">
-          <img className='catImg' src={item2trans} alt="" />
-        </div> 
-        <div className="circle deg-90">
-          <img className='catImg' src={item3trans} alt="" />
-        </div> 
-        <div className="circle deg-135">
-          <img className='catImg' src={item4trans} alt="" />
-        </div> 
-        <div className="circle deg-180">
-          <img className='catImg' src={item5trans} alt="" />
-        </div> 
-        <div className="circle deg-225">
-          <img className='catImg' src={item6trans} alt="" />
-        </div> 
-        <div className="circle deg-270">
-          <img className='catImg' src={item7trans} alt="" />
-        </div> 
-        <div className="circle deg-315">
-          <img className='catImg' src={item8trans} alt="" />
-        </div>  */}
       </div>
 
     </div>
