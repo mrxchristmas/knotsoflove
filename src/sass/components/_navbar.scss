@@ -93,9 +93,9 @@
 }
 
 @include sm{
-  .nav-main{
-    background-color: rgba(255, 0, 0, 0.187);
-  }
+  // .nav-main{
+  //   background-color: rgba(255, 0, 0, 0.187);
+  // }
   .brand-name{
     font-size: 1.2em;
     // background-color: red;
@@ -127,9 +127,9 @@
   .brand-name{
     font-size: 1.5em;
   }
-  .nav-main{
-    background-color: rgba(0, 0, 255, 0.289);
-  }
+  // .nav-main{
+  //   background-color: rgba(0, 0, 255, 0.289);
+  // }
   .profile-popup-container{
     width: 250px;
     top: 73px;
@@ -137,15 +137,15 @@
   }
 }
 
-@include lg {
-  .nav-main{
-    background-color: rgba(0, 128, 0, 0.281);
-  }
-}
+// @include lg {
+//   .nav-main{
+//     background-color: rgba(0, 128, 0, 0.281);
+//   }
+// }
 
-@include xl {
-  .nav-main{
-    background-color: rgba(128, 0, 115, 0.281);
-  }
+// @include xl {
+//   .nav-main{
+//     background-color: rgba(128, 0, 115, 0.281);
+//   }
   
-}
+// }

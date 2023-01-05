@@ -64,7 +64,7 @@
     z-index: 1;
 }
 
-.circle {
+.homecat-container > .circle {
     display:block;
     position:absolute;
     width: 130px;
@@ -148,7 +148,7 @@
     }
     .wallpaper-left{
         margin-bottom: 10rem;
-        // align-items: center;
+        align-items: center;
         // background-color: red;
         text-align: center;
     }
@@ -158,6 +158,15 @@
     .homecat-container{
         background-color: red;
         margin-right: unset;
+        margin-top: -5rem;
+    }
+    .centerImg{
+        height: 240px;
+        width: 240px;
+    }
+    .homecat-container > .circle{
+        height: 80px;
+        width: 80px;
     }
 }
 
@@ -173,9 +182,9 @@
     }
     .wallpaper-left{
         margin-bottom: 0rem;
-        // align-items: center;
+        align-items: flex-start;
         // background-color: red;
-        text-align: center;
+        text-align: start;
     }
     .wallpaper-left-text{
         margin-top: 3rem;
@@ -183,5 +192,14 @@
     .homecat-container{
         background-color: red;
         margin-right: 3rem;
+        margin-top: 0rem;
+    }
+    .centerImg{
+        height: 400px;
+        width: 400px;
+    }
+    .homecat-container > .circle{
+        height: 130px;
+        width: 130px;
     }
 }
