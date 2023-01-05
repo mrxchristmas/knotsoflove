@@ -3,10 +3,8 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { NavLink } from 'react-router-dom'
-import '../css/Navbar.css'
 import anon from '../assets/anonymous.jpg'
 import { useIsMobile } from '../hooks/useIsMobile'
-// import menubar from ''
 
 export default function Navbar() {
   const { logout } = useAuth()
@@ -14,7 +12,6 @@ export default function Navbar() {
   const { isMobile } = useIsMobile()
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
 
   return (
     <div className="nav-main bg-whitesmoke text-black flex-row-center-between p-1-2">

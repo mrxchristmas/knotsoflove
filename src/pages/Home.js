@@ -129,7 +129,7 @@ export default function Home() {
 
 
   return (
-    <div className='home-wallpaper  bg-red flex-row-center-between'>
+    <div className='home-wallpaper flex-row-center-between'>
 
       <div className="wallpaper-left flex-col-start-center">
         <div className="logo-container ml-1">

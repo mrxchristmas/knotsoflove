@@ -11,6 +11,9 @@
 // colors
 @import "colors";
 
+// utilities (margin, padding, opacity, etc)
+@import 'utilities';
+
 // components (button, card, navbar etc)
 @import 'components/card';
 @import 'components/button';
@@ -24,9 +27,9 @@
 @import 'components/calendar_widget';
 @import 'components/modal';
 @import 'components/homecat';
+@import 'components/home';
 
-// utilities (margin, padding, opacity, etc)
-@import 'utilities';
+
 
 // .trans-scale-hover-4{
 //     // background-color: red;
