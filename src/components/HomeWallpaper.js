@@ -85,15 +85,21 @@ export default function HomeWallpaper() {
 
       <div className="homecat-container mr-3 flex-row-center-center">
         
-        <div className="center8 flex-row-center-center">
-          <div className="center7 flex-row-center-center">
-            <div className="center6 flex-row-center-center">
-              <div className="center5 flex-row-center-center">
-                <div className="center4 flex-row-center-center">
-                  <div className="center3 flex-row-center-center">
-                    <div className="center2 flex-row-center-center">
-                      <div className="center1 flex-row-center-center">
-                        <img className='centerImg' src={selectedCategory.src} alt="" />
+        <div className="center11 flex-row-center-center">
+          <div className="center10 flex-row-center-center">
+            <div className="center9 flex-row-center-center">
+              <div className="center8 flex-row-center-center">
+                <div className="center7 flex-row-center-center">
+                  <div className="center6 flex-row-center-center">
+                    <div className="center5 flex-row-center-center">
+                      <div className="center4 flex-row-center-center">
+                        <div className="center3 flex-row-center-center">
+                            <div className="center2 flex-row-center-center">
+                                <div className="center1 flex-row-center-center">
+                                    <img className='centerImg' src={selectedCategory.src} alt="" />
+                                </div>
+                            </div>
+                        </div>
                       </div>
                     </div>
                   </div>

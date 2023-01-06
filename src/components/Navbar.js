@@ -14,7 +14,7 @@ export default function Navbar() {
   const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   return (
-    <div className="nav-main bg-whitesmoke text-black flex-row-center-between p-1-2">
+    <div className="nav-main  text-black flex-row-center-between p-1-2">
 
       {/* {isMobile && <img src="icons/menu_black_48dp.svg" alt="" />} */}
 

@@ -9,6 +9,9 @@
 // import { usePrompt } from '../hooks/usePrompt'
 // import { useSwipe } from '../hooks/useSwipe';
 import HomeWallpaper from "../components/HomeWallpaper";
+import HomeShowcase from "../components/HomeShowcase";
+import '../css/Home.css'
+
 
 export default function Home() {
   // const { user } = useAuthContext()
@@ -82,7 +85,8 @@ export default function Home() {
   return (
     <>
       <HomeWallpaper />
-      
+      <HomeShowcase />
+
     </>
 
 
