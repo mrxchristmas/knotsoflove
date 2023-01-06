@@ -19,8 +19,8 @@ export default function HomeShowcase() {
         <a className="arrow-down-orange-xl arrow"></a>
         <div className="container mt-3 flex-col-center-start">
           <div className="title">
-            <p>Discover your favorite </p>
-            <p>macramé merchandise</p>
+            <p>Discover your new favorite </p>
+            <p>macramé collections</p>
             <p>in pairs!</p>
           </div>
           <div className="subtitle mt-2">

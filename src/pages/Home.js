@@ -10,7 +10,9 @@
 // import { useSwipe } from '../hooks/useSwipe';
 import HomeWallpaper from "../components/HomeWallpaper";
 import HomeShowcase from "../components/HomeShowcase";
+import HomePromotions from "../components/HomePromotions";
 import '../css/Home.css'
+
 
 
 export default function Home() {
@@ -86,6 +88,12 @@ export default function Home() {
     <>
       <HomeWallpaper />
       <HomeShowcase />
+      <HomePromotions />
+      <footer className="footer bg-pink text-white flex-row-center-between p-0-4">
+        <span>Terms and Conditions</span>
+        <span className="flex-row-center-center"><span className="big">®</span><span className="font-aureta">Knots of Love</span>&nbsp; by &nbsp;<b>Kaye™</b> &nbsp;&nbsp; ©2023</span>
+        <span>HAHAH</span>
+      </footer>
 
     </>
 
