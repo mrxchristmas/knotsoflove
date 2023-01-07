@@ -1,4 +1,15 @@
 
+import catimg1trans from '../assets/itemimages/catimg1trans.png'
+import catimg2trans from '../assets/itemimages/catimg2trans.png'
+import catimg3trans from '../assets/itemimages/catimg3trans.png'
+import catimg4trans from '../assets/itemimages/catimg4trans.png'
+import catimg5trans from '../assets/itemimages/catimg5trans.png'
+import catimg6trans from '../assets/itemimages/catimg6trans.png'
+import catimg7trans from '../assets/itemimages/catimg7trans.png'
+import catimg8trans from '../assets/itemimages/catimg8trans.png'
+import catimg9trans from '../assets/itemimages/catimg9trans.png'
+import catimg10trans from '../assets/itemimages/catimg10trans.png'
+import catimg11trans from '../assets/itemimages/catimg11trans.png'
 
 export const getDateNow =()=>{
     const date = new Date();
@@ -554,3 +565,74 @@ export const sendEmailToLezzt =({ sender, message, callback, email })=> {
         callback(message);
     });
 }
+
+export const scrollToTop = () =>{
+    window.scrollTo({
+      top: 0, 
+      behavior: 'smooth'
+      /* you can also use 'auto' behaviour
+         in place of 'smooth' */
+    })
+}
+// using useRef to reference an element
+// elementref.current.scrollIntoView({ behavior: 'smooth' })
+
+    // -wall decor
+	// -earrings
+	// -sandals
+	// -handbags
+	// -coasters
+	// -bookmarks
+	// -plant hanger
+	// -curtain tie
+	// -door wreath
+	// -napkin holder
+	// -pairs
+
+export const categoryObj = [
+    {
+        title: "Wall Decors",
+        img: catimg1trans,
+        color: "#5e5eff"
+    },{
+        title: "Earrings",
+        img: catimg2trans,
+        color: "#c368c3"
+    },{
+        title: "Sandals",
+        img: catimg3trans,
+        color: "#daae5e"
+    },{
+        title: "Handbags",
+        img: catimg4trans,
+        color: "#e4e4c5"
+    },{
+        title: "Coasters",
+        img: catimg5trans,
+        color: "#a2cd61"
+    },{
+        title: "Bookmarks",
+        img: catimg6trans,
+        color: "#ea8bd4"
+    },{
+        title: "Plant Hangers",
+        img: catimg7trans,
+        color: "#da6969"
+    },{
+        title: "Curtain Ties",
+        img: catimg8trans,
+        color: "#cc96d1"
+    },{
+        title: "Door Wreaths",
+        img: catimg9trans,
+        color: "#d1ceb3"
+    },{
+        title: "Napkin Holders",
+        img: catimg10trans,
+        color: "#8ed3dc"
+    },{
+        title: "Pairs",
+        img: catimg11trans,
+        color: "#d4dc8e"
+    }
+]

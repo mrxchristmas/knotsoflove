@@ -107,6 +107,20 @@
  }
 
 
+.footer{
+    max-width: 100vw;
+    height: 70px;
+    /* background-color: red; */
+    border-radius: 0px 0px 75px 75px;
+    text-align: center;
+}
+.footer .font-aureta{
+    font-size: 2em;
+}
+.footer .big{
+    font-size: 2em;
+}
+
 @keyframes float2 {
     0% {
         transform: translatey(0px);
@@ -169,6 +183,9 @@
         height: 80px;
         width: 80px;
     }
+    .footer{
+        font-size: 0.8em;
+    }
 }
 
 @include lg {
@@ -201,5 +218,8 @@
     .homecat-container > .circle{
         height: 130px;
         width: 130px;
+    }
+    .footer{
+        font-size: 1em;
     }
 }

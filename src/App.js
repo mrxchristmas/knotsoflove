@@ -10,7 +10,7 @@ import Login from './pages/Login'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Social from './pages/Social'
-import Products from './pages/products/Products'
+import Products from './pages/Products'
 
 
 function App() {

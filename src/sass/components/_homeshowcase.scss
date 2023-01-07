@@ -9,7 +9,14 @@
     /* background-color: #f2b669; */
     background-color: #b28b4c;
     border-radius: 8% 8% 0px 0px;
-    box-shadow: 0px 2px 15px rgba(128, 128, 128, 0.5);
+    // box-shadow: 0px 2px 15px rgba(128, 128, 128, 0.5);
+    -webkit-box-shadow: 0px -8px 20px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px -8px 20px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px -8px 20px 0px rgba(0,0,0,0.5);
+}
+.home-showcase.first{
+    border-radius: 0px;
+    box-shadow: none;
 }
 .home-showcase .container{
     /* background-color: red; */

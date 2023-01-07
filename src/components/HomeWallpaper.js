@@ -8,12 +8,12 @@ import item5trans from '../assets/itemimages/item5trans.png'
 import item6trans from '../assets/itemimages/item6trans.png'
 import item7trans from '../assets/itemimages/item7trans.png'
 import item8trans from '../assets/itemimages/item8trans.png'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export default function HomeWallpaper() {
 
 
-    const leftTextObj = ["ulous", "orite", "tastic", "rageous", "nomenal", "lievable", "velous", "iffic", "tacular", "arkable", "redible", "ravagant", "digious", "endous", "endary", "onceivable" ]
+    // const leftTextObj = 
     const [selLeftText, setSelLeftText] = useState(0);
 
     const catObj = [
@@ -51,6 +51,8 @@ export default function HomeWallpaper() {
             deg: "deg-315"
         }
     ]
+    const leftTextObj = useMemo(() => ["ulous", "orite", "tastic", "rageous", "nomenal", "lievable", "velous", "iffic", "tacular", "arkable", "redible", "ravagant", "digious", "endous", "endary", "onceivable" ]
+    , [])
 
   const [selectedCategory, setSelectedCategory] = useState(catObj[0])
 
@@ -67,7 +69,7 @@ export default function HomeWallpaper() {
     return () => {
       clearInterval(x)
     }
-  }, [selLeftText]);
+  }, [selLeftText, leftTextObj]);
 
   return (
     <div className='home-wallpaper flex-row-center-between'>

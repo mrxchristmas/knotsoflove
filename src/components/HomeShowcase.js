@@ -1,52 +1,39 @@
 
-import pair1trans from '../assets/itemimages/pair1trans.png'
-import pair2trans from '../assets/itemimages/pair2trans.png'
-import pair3trans from '../assets/itemimages/pair3trans.png'
 
-import paint1trans from '../assets/itemimages/paint1trans.png'
-import paint2trans from '../assets/itemimages/paint2trans.png'
-import paint3trans from '../assets/itemimages/paint3trans.png'
 
 import { useIsMobile } from '../hooks/useIsMobile'
+import { useRef } from 'react'
 
 
-export default function HomeShowcase() {
+export default function HomeShowcase({ data: _data }) {
 
     const { isMobile } = useIsMobile();
+    const data = useRef(_data).current
+    const ref = useRef(null)
+    
 
   return (
-    <section className="home-showcase flex-col-center-start p-3-0">
-        <a className="arrow-down-orange-xl arrow"></a>
+    <section ref={ref} style={data.style} className={`home-showcase flex-col-center-start p-3-0 ${!data.isFirst && "first" }`}>
+        {data.isFirst && <span onClick={() => ref.current.scrollIntoView({ behavior: 'smooth' })} className="arrow-down-orange-xl arrow"></span>}          
         <div className="container mt-3 flex-col-center-start">
           <div className="title">
-            <p>Discover your new favorite </p>
-            <p>macramé collections</p>
-            <p>in pairs!</p>
+            {data.title && data.title.map((title, index) => ( <p key={index}>{title}</p> ) )}
           </div>
           <div className="subtitle mt-2">
-            <p>Look through a selection of handmade macramé merchandise</p>
-            <p>and discover for yourself how good they look in pairs!</p>
+            {data.subtitle && data.subtitle.map((subtitle, index) => ( <p key={index}>{subtitle}</p> ) )}
           </div>
         </div>
         <div className={`showcase mt-3 flex-${isMobile ? "col" : "row"}-center-center`}>
-          <div className="item flex-col-center-center">
-            <img className="merchbg" src={paint1trans} alt="" />
-            <img className="merch" src={pair1trans} alt="" />
-            <span className="merch-title">Cream of Mushroom</span>
-          </div>
-          <div className="item flex-col-center-center">
-            <img className="merchbg" src={paint2trans} alt="" />
-            <img className="merch" src={pair2trans} alt="" />
-            <span className="merch-title">Cream of Berry</span>
-          </div>
-          <div className="item flex-col-center-center">
-            <img className="merchbg" src={paint3trans} alt="" />
-            <img className="merch" src={pair3trans} alt="" />
-            <span className="merch-title">Cream of Eggplant</span>
-          </div>
+            {data.items && data.items.map((item, index) => ( 
+                <div key={index} className="item flex-col-center-center">
+                    <img className="merchbg" src={item.background} alt="" />
+                    <img className="merch" src={item.img} alt="" />
+                    <span className="merch-title">{item.title}</span>
+                </div>
+             ) )}
         </div>
 
-        <button className="showcase-view btn-blue mt-5">View All</button>
+        {data.button && <button onClick={()=> data.button.handleClick()} className="showcase-view btn-blue mt-5">{data.button.text}</button>}
       </section>
   )
 }
