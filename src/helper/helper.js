@@ -11,6 +11,121 @@ import catimg9trans from '../assets/itemimages/catimg9trans.png'
 import catimg10trans from '../assets/itemimages/catimg10trans.png'
 import catimg11trans from '../assets/itemimages/catimg11trans.png'
 
+import bookmark_1 from '../assets/gallery/bookmarks/1.png'
+import bookmark_2 from '../assets/gallery/bookmarks/2.png'
+import coaster_1 from '../assets/gallery/coasters/1.png'
+import coaster_2 from '../assets/gallery/coasters/2.png'
+import coaster_2_1 from '../assets/gallery/coasters/2_1.png'
+import coaster_2_2 from '../assets/gallery/coasters/2_2.png'
+import coaster_3 from '../assets/gallery/coasters/3.png'
+import curtain_tie_1 from '../assets/gallery/curtain_ties/1.png'
+import curtain_tie_2 from '../assets/gallery/curtain_ties/2.png'
+import curtain_tie_2_1 from '../assets/gallery/curtain_ties/2_1.png'
+import curtain_tie_3 from '../assets/gallery/curtain_ties/3.png'
+import curtain_tie_4 from '../assets/gallery/curtain_ties/4.png'
+import curtain_tie_4_1 from '../assets/gallery/curtain_ties/4_1.png'
+import door_wreath_1 from '../assets/gallery/door_wreaths/1.png'
+import door_wreath_2 from '../assets/gallery/door_wreaths/2.png'
+import door_wreath_2_1 from '../assets/gallery/door_wreaths/2_1.png'
+import door_wreath_2_2 from '../assets/gallery/door_wreaths/2_2.png'
+import earring_1 from '../assets/gallery/earrings/1.png'
+import earring_2 from '../assets/gallery/earrings/2.png'
+import earring_3 from '../assets/gallery/earrings/3.png'
+import earring_4 from '../assets/gallery/earrings/4.png'
+import earring_5 from '../assets/gallery/earrings/5.png'
+import earring_6 from '../assets/gallery/earrings/6.png'
+import earring_7 from '../assets/gallery/earrings/7.png'
+import earring_8 from '../assets/gallery/earrings/8.png'
+import earring_9 from '../assets/gallery/earrings/9.png'
+import earring_10 from '../assets/gallery/earrings/10.png'
+import earring_11 from '../assets/gallery/earrings/11.png'
+import earring_12 from '../assets/gallery/earrings/12.png'
+import handbag_1 from '../assets/gallery/handbags/1.png'
+import handbag_1_1 from '../assets/gallery/handbags/1_1.png'
+import handbag_2 from '../assets/gallery/handbags/2.png'
+import handbag_2_1 from '../assets/gallery/handbags/2_1.png'
+import handbag_2_2 from '../assets/gallery/handbags/2_2.png'
+import handbag_3 from '../assets/gallery/handbags/3.png'
+import handbag_3_1 from '../assets/gallery/handbags/3_1.png'
+import handbag_3_2 from '../assets/gallery/handbags/3_2.png'
+import napkin_holder_1 from '../assets/gallery/napkin_holders/1.png'
+import napkin_holder_1_1 from '../assets/gallery/napkin_holders/1_1.png'
+import napkin_holder_1_2 from '../assets/gallery/napkin_holders/1_2.png'
+import pair_1 from '../assets/gallery/pairs/1.png'
+import pair_2 from '../assets/gallery/pairs/2.png'
+import pair_3 from '../assets/gallery/pairs/3.png'
+import pair_4 from '../assets/gallery/pairs/4.png'
+import pair_5 from '../assets/gallery/pairs/5.png'
+import pair_6 from '../assets/gallery/pairs/6.png'
+import plant_hanger_1 from '../assets/gallery/plant_hangers/1.png'
+import plant_hanger_2 from '../assets/gallery/plant_hangers/2.png'
+import plant_hanger_3 from '../assets/gallery/plant_hangers/3.png'
+import plant_hanger_4 from '../assets/gallery/plant_hangers/4.png'
+import plant_hanger_5 from '../assets/gallery/plant_hangers/5.png'
+import sandal_1 from '../assets/gallery/sandals/1.png'
+import sandal_2 from '../assets/gallery/sandals/2.png'
+import sandal_2_1 from '../assets/gallery/sandals/2_1.png'
+import sandal_2_2 from '../assets/gallery/sandals/2_2.png'
+import sandal_3 from '../assets/gallery/sandals/3.png'
+import sandal_4 from '../assets/gallery/sandals/4.png'
+import sandal_5 from '../assets/gallery/sandals/5.png'
+import sandal_5_1 from '../assets/gallery/sandals/5_1.png'
+import wall_decor_1 from '../assets/gallery/wall_decors/1.png'
+import wall_decor_2 from '../assets/gallery/wall_decors/2.png'
+import wall_decor_2_1 from '../assets/gallery/wall_decors/2_1.png'
+import wall_decor_2_2 from '../assets/gallery/wall_decors/2_2.png'
+import wall_decor_3 from '../assets/gallery/wall_decors/3.png'
+import wall_decor_3_1 from '../assets/gallery/wall_decors/3_1.png'
+
+import black from '../assets/colors/black.png'
+import blush from '../assets/colors/blush.png'
+import burgundy from '../assets/colors/burgundy.png'
+import burnt_orange from '../assets/colors/burnt_orange.png'
+import caramel from '../assets/colors/caramel.png'
+import charcoal from '../assets/colors/charcoal.png'
+import cream from '../assets/colors/cream.png'
+import deep_blue from '../assets/colors/deep_blue.png'
+import dusty_pink from '../assets/colors/dusty_pink.png'
+import emerald from '../assets/colors/emerald.png'
+import eucalyptus from '../assets/colors/eucalyptus.png'
+import flamingo from '../assets/colors/flamingo.png'
+import forest_green from '../assets/colors/forest_green.png'
+import hot_pink from '../assets/colors/hot_pink.png'
+import indigo from '../assets/colors/indigo.png'
+import khaki from '../assets/colors/khaki.png'
+import latte from '../assets/colors/latte.png'
+import light_gray from '../assets/colors/light_gray.png'
+import lilac from '../assets/colors/lilac.png'
+import lime_green from '../assets/colors/lime_green.png'
+import marlin_blue from '../assets/colors/marlin_blue.png'
+import maroon from '../assets/colors/maroon.png'
+import milk_cream from '../assets/colors/milk_cream.png'
+import mint from '../assets/colors/mint.png'
+import mocha from '../assets/colors/mocha.png'
+import mustard from '../assets/colors/mustard.png'
+import oatmeal from '../assets/colors/oatmeal.png'
+import ocean from '../assets/colors/ocean.png'
+import olive from '../assets/colors/olive.png'
+import orange from '../assets/colors/orange.png'
+import peacock_blue from '../assets/colors/peacock_blue.png'
+import pearl from '../assets/colors/pearl.png'
+import plum from '../assets/colors/plum.png'
+import purple from '../assets/colors/purple.png'
+import royal_blue from '../assets/colors/royal_blue.png'
+import sage from '../assets/colors/sage.png'
+import sand from '../assets/colors/sand.png'
+import soft_green from '../assets/colors/soft_green.png'
+import soft_pink from '../assets/colors/soft_pink.png'
+import soft_yellow from '../assets/colors/soft_yellow.png'
+import sunshine from '../assets/colors/sunshine.png'
+import turquoise from '../assets/colors/turquoise.png'
+import yellow from '../assets/colors/yellow.png'
+import army_green from '../assets/colors/army_green.png'
+
+
+
+
+
 export const getDateNow =()=>{
     const date = new Date();
     const d = date.getDate();
@@ -591,48 +706,548 @@ export const scrollToTop = () =>{
 
 export const categoryObj = [
     {
+        id: "aaaa",
         title: "Wall Decors",
         img: catimg1trans,
         color: "#5e5eff"
     },{
+        id: "bbbb",
         title: "Earrings",
         img: catimg2trans,
         color: "#c368c3"
     },{
+        id: "cccc",
         title: "Sandals",
         img: catimg3trans,
         color: "#daae5e"
     },{
+        id: "dddd",
         title: "Handbags",
         img: catimg4trans,
         color: "#e4e4c5"
     },{
+        id: "eeee",
         title: "Coasters",
         img: catimg5trans,
         color: "#a2cd61"
     },{
+        id: "ffff",
         title: "Bookmarks",
         img: catimg6trans,
         color: "#ea8bd4"
     },{
+        id: "gggg",
         title: "Plant Hangers",
         img: catimg7trans,
         color: "#da6969"
     },{
+        id: "hhhh",
         title: "Curtain Ties",
         img: catimg8trans,
         color: "#cc96d1"
     },{
+        id: "iiii",
         title: "Door Wreaths",
         img: catimg9trans,
         color: "#d1ceb3"
     },{
+        id: "jjjj",
         title: "Napkin Holders",
         img: catimg10trans,
         color: "#8ed3dc"
     },{
+        id: "kkkk",
         title: "Pairs",
         img: catimg11trans,
         color: "#d4dc8e"
+    }
+]
+
+export const categoryItemObj = [
+    {
+        id: "aaaa",
+        items: [
+            {
+                id: "aaaa1",
+                title: "Creamy Circular Leaves",
+                images: [wall_decor_1],
+                price: 35
+            },{
+                id: "aaaa2",
+                title: "Colorful Circular Leaves",
+                images: [wall_decor_2, wall_decor_2_1, wall_decor_2_2],
+                price: 38
+            },{
+                id: "aaaa3",
+                title: "Dirty Cream Elongated Leaves",
+                images: [wall_decor_3, wall_decor_3_1],
+                price: 45
+            }
+        ]
+    },{
+        id: "bbbb",
+        items: [
+            {
+                id: "bbbb1",
+                title: "Creamy Circular Flowers",
+                images: [earring_1],
+                price: 35
+            },{
+                id: "bbbb2",
+                title: "Colorful Circular Flowers",
+                images: [earring_2],
+                price: 38
+            },{
+                id: "bbbb3",
+                title: "Dirty Cream Elongated Flowers",
+                images: [earring_3],
+                price: 45
+            },{
+                id: "bbbb4",
+                title: "Wooden Green Flowers",
+                images: [earring_4],
+                price: 85
+            },{
+                id: "bbbb5",
+                title: "Creamy Circular Flowers",
+                images: [earring_5],
+                price: 35
+            },{
+                id: "bbbb6",
+                title: "Colorful Circular Flowers",
+                images: [earring_6],
+                price: 38
+            },{
+                id: "bbbb7",
+                title: "Dirty Cream Elongated Flowers",
+                images: [earring_7],
+                price: 45
+            },{
+                id: "bbbb8",
+                title: "Wooden Green Flowers",
+                images: [earring_8],
+                price: 85
+            },{
+                id: "bbbb9",
+                title: "Creamy Circular Flowers",
+                images: [earring_9],
+                price: 35
+            },{
+                id: "bbbb10",
+                title: "Colorful Circular Flowers",
+                images: [earring_10],
+                price: 38
+            },{
+                id: "bbbb11",
+                title: "Dirty Cream Elongated Flowers",
+                images: [earring_11],
+                price: 45
+            },{
+                id: "bbbb12",
+                title: "Wooden Green Flowers",
+                images: [earring_12],
+                price: 85
+            }
+        ]
+    },{
+        id: "cccc",
+        items: [
+            {
+                id: "cccc1",
+                title: "Creamy Circular Petals",
+                images: [sandal_1],
+                price: 35
+            },{
+                id: "cccc2",
+                title: "Colorful Circular Petals",
+                images: [sandal_2, sandal_2_1, sandal_2_2],
+                price: 38
+            },{
+                id: "cccc3",
+                title: "Dirty Cream Elongated Petals",
+                images: [sandal_3],
+                price: 45
+            },{
+                id: "cccc4",
+                title: "Wooden Green Petals",
+                images: [sandal_4],
+                price: 85
+            },{
+                id: "cccc5",
+                title: "Wooden Green Petals",
+                images: [sandal_5, sandal_5_1],
+                price: 85
+            }
+        ]
+    },{
+        id: "dddd",
+        items: [
+            {
+                id: "dddd1",
+                title: "Creamy Circular Grass",
+                images: [handbag_1, handbag_1_1],
+                price: 35
+            },{
+                id: "dddd2",
+                title: "Colorful Circular Grass",
+                images: [handbag_2, handbag_2_1, handbag_2_2],
+                price: 38
+            },{
+                id: "dddd3",
+                title: "Dirty Cream Elongated Grass",
+                images: [handbag_3, handbag_3_1, handbag_3_2],
+                price: 45
+            }
+        ]
+    },{
+        id: "eeee",
+        items: [
+            {
+                id: "eeee1",
+                title: "Creamy Circular Branches",
+                images: [coaster_1],
+                price: 35
+            },{
+                id: "eeee2",
+                title: "Colorful Circular Branches",
+                images: [coaster_2, coaster_2_1, coaster_2_2],
+                price: 38
+            },{
+                id: "eeee4",
+                title: "Wooden Green Branches",
+                images: [coaster_3],
+                price: 85
+            }
+        ]
+    },{
+        id: "ffff",
+        items: [
+            {
+                id: "ffff1",
+                title: "Creamy Circular Trunks",
+                images: [bookmark_1],
+                price: 35
+            },{
+                id: "ffff2",
+                title: "Colorful Circular Trunks",
+                images: [bookmark_2],
+                price: 38
+            }
+        ]
+    },{
+        id: "gggg",
+        items: [
+            {
+                id: "gggg1",
+                title: "Creamy Circular Stem",
+                images: [plant_hanger_1],
+                price: 35
+            },{
+                id: "gggg2",
+                title: "Colorful Circular Stem",
+                images: [plant_hanger_2],
+                price: 38
+            },{
+                id: "gggg3",
+                title: "Dirty Cream Elongated Stem",
+                images: [plant_hanger_3],
+                price: 45
+            },{
+                id: "gggg4",
+                title: "Wooden Green Stem",
+                images: [plant_hanger_4],
+                price: 85
+            },{
+                id: "gggg5",
+                title: "Wooden Green Stem",
+                images: [plant_hanger_5],
+                price: 85
+            }
+        ]
+    },{
+        id: "hhhh",
+        items: [
+            {
+                id: "hhhh1",
+                title: "Creamy Circular Pigment",
+                images: [curtain_tie_1],
+                price: 35
+            },{
+                id: "hhhh2",
+                title: "Colorful Circular Pigment",
+                images: [curtain_tie_2, curtain_tie_2_1],
+                price: 38
+            },{
+                id: "hhhh3",
+                title: "Dirty Cream Elongated Pigment",
+                images: [curtain_tie_3],
+                price: 45
+            },{
+                id: "hhhh4",
+                title: "Wooden Green Pigment",
+                images: [curtain_tie_4, curtain_tie_4_1],
+                price: 85
+            }
+        ]
+    },{
+        id: "iiii",
+        items: [
+            {
+                id: "iiii1",
+                title: "Creamy Circular Bees",
+                images: [door_wreath_1],
+                price: 35
+            },{
+                id: "iiii2",
+                title: "Colorful Circular Bees",
+                images: [door_wreath_2, door_wreath_2_1, door_wreath_2_2],
+                price: 38
+            }
+        ]
+    },{
+        id: "jjjj",
+        items: [
+            {
+                id: "jjjj1",
+                title: "Creamy Circular Milk",
+                images: [napkin_holder_1],
+                price: 35
+            },{
+                id: "jjjj2",
+                title: "Colorful Circular Milk",
+                images: [napkin_holder_1_1],
+                price: 38
+            },{
+                id: "jjjj3",
+                title: "Dirty Cream Elongated Milk",
+                images: [napkin_holder_1_2],
+                price: 45
+            }
+        ]
+    },{
+        id: "kkkk",
+        items: [
+            {
+                id: "kkkk1",
+                title: "Creamy Circular Lava",
+                images: [pair_1],
+                price: 35
+            },{
+                id: "kkkk2",
+                title: "Colorful Circular Lava",
+                images: [pair_2],
+                price: 38
+            },{
+                id: "kkkk3",
+                title: "Dirty Cream Elongated AAAA Lava",
+                images: [pair_3],
+                price: 45
+            },{
+                id: "kkkk4",
+                title: "Wooden Green Lava",
+                images: [pair_4],
+                price: 85
+            },{
+                id: "kkkk5",
+                title: "Wooden Green Lava",
+                images: [pair_5],
+                price: 85
+            },{
+                id: "kkkk6",
+                title: "Wooden Green Lava",
+                images: [pair_6],
+                price: 85
+            }
+        ]
+    }
+]
+
+export const getItemsFromCatId = (catid) => {
+    let ret;
+    categoryItemObj.forEach(cat => {
+        if(cat.id === catid){
+            ret = cat.items
+        }
+    })
+    return ret
+}
+
+export const thread_colors = [
+    {
+        name: 'black',
+        img: black,
+        available: true
+    },{
+        name: 'blush',
+        img: blush,
+        available: true
+    },{
+        name: 'burgundy',
+        img: burgundy,
+        available: true
+    },{
+        name: 'burnt_orange',
+        img: burnt_orange,
+        available: false
+    },{
+        name: 'caramel',
+        img: caramel,
+        available: true
+    },{
+        name: 'charcoal',
+        img: charcoal,
+        available: true
+    },{
+        name: 'cream',
+        img: cream,
+        available: true
+    },{
+        name: 'deep_blue',
+        img: deep_blue,
+        available: true
+    },{
+        name: 'dusty_pink',
+        img: dusty_pink,
+        available: true
+    },{
+        name: 'emerald',
+        img: emerald,
+        available: true
+    },{
+        name: 'eucalyptus',
+        img: eucalyptus,
+        available: false
+    },{
+        name: 'flamingo',
+        img: flamingo,
+        available: true
+    },{
+        name: 'forest_green',
+        img: forest_green,
+        available: true
+    },{
+        name: 'hot_pink',
+        img: hot_pink,
+        available: true
+    },{
+        name: 'indigo',
+        img: indigo,
+        available: true
+    },{
+        name: 'khaki',
+        img: khaki,
+        available: true
+    },{
+        name: 'latte',
+        img: latte,
+        available: true
+    },{
+        name: 'light_gray',
+        img: light_gray,
+        available: true
+    },{
+        name: 'lilac',
+        img: lilac,
+        available: false
+    },{
+        name: 'lime_green',
+        img: lime_green,
+        available: true
+    },{
+        name: 'marlin_blue',
+        img: marlin_blue,
+        available: true
+    },{
+        name: 'maroon',
+        img: maroon,
+        available: true
+    },{
+        name: 'milk_cream',
+        img: milk_cream,
+        available: true
+    },{
+        name: 'mint',
+        img: mint,
+        available: true
+    },{
+        name: 'mocha',
+        img: mocha,
+        available: false
+    },{
+        name: 'mustard',
+        img: mustard,
+        available: true
+    },{
+        name: 'oatmeal',
+        img: oatmeal,
+        available: true
+    },{
+        name: 'ocean',
+        img: ocean,
+        available: true
+    },{
+        name: 'olive',
+        img: olive,
+        available: true
+    },{
+        name: 'orange',
+        img: orange,
+        available: false
+    },{
+        name: 'peacock_blue',
+        img: peacock_blue,
+        available: true
+    },{
+        name: 'pearl',
+        img: pearl,
+        available: true
+    },{
+        name: 'plum',
+        img: plum,
+        available: true
+    },{
+        name: 'purple',
+        img: purple,
+        available: true
+    },{
+        name: 'royal_blue',
+        img: royal_blue,
+        available: false
+    },{
+        name: 'sage',
+        img: sage,
+        available: true
+    },{
+        name: 'sand',
+        img: sand,
+        available: true
+    },{
+        name: 'soft_green',
+        img: soft_green,
+        available: true
+    },{
+        name: 'soft_pink',
+        img: soft_pink,
+        available: true
+    },{
+        name: 'soft_yellow',
+        img: soft_yellow,
+        available: false
+    },{
+        name: 'sunshine',
+        img: sunshine,
+        available: true
+    },{
+        name: 'turquoise',
+        img: turquoise,
+        available: true
+    },{
+        name: 'yellow',
+        img: yellow,
+        available: false
+    },{
+        name: 'army_green',
+        img: army_green,
+        available: true
     }
 ]

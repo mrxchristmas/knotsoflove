@@ -27,6 +27,7 @@ import paint3trans from '../assets/itemimages/paint3trans.png'
 import item1trans from '../assets/itemimages/item1trans.png'
 import item2trans from '../assets/itemimages/item2trans.png'
 import item3trans from '../assets/itemimages/item3trans.png'
+import HomeColors from "../components/HomeColors";
 
 
 export default function Home() {
@@ -151,7 +152,9 @@ export default function Home() {
       <HomeWallpaper />
       <HomeShowcase data={homeShowcaseObj} />
       <HomePromotions />
+      <HomeColors />
       <HomeShowcase data={homeShowcaseObj2}/>
+      
       
 
       <footer className="footer bg-pink text-white flex-row-center-between p-0-4">

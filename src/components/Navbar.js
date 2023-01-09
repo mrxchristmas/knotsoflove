@@ -5,30 +5,32 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { NavLink } from 'react-router-dom'
 import anon from '../assets/anonymous.jpg'
 import { useIsMobile } from '../hooks/useIsMobile'
+import { useLocation } from 'react-router-dom' 
 
-export default function Navbar() {
+export default function Navbar({ openNav }) {
   const { logout } = useAuth()
   const { user } = useAuthContext()
   const { isMobile } = useIsMobile()
+  const location = useLocation()
+
+  // console.log(location);
+  
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
 
   return (
     <div className="nav-main  text-black flex-row-center-between p-1-2">
 
-      {/* {isMobile && <img src="icons/menu_black_48dp.svg" alt="" />} */}
+      {isMobile && location.pathname === '/gallery' && openNav}
 
       <Link to="/" className='font-aureta brand-name flex-row-end-start text-straight'><h1>Knots of Love</h1></Link>
       
-
-      {/* {!isMobile &&  */}
         <div className={`${isMobile ? "navs-mobile" : "navs"} flex-row-center-center`}>
-          <NavLink to="/products" className="m-0-1" >Products</NavLink>
-          <NavLink to="/social" className="m-0-1">Social</NavLink>
+          <NavLink to="/gallery" className="m-0-1" >Gallery</NavLink>
+          <NavLink to="/testimonials" className="m-0-1">Testimonials</NavLink>
           <NavLink to="/contact" className="m-0-1">Contact</NavLink>
           <NavLink to="/about" className="m-0-1">About</NavLink>
         </div>
-      {/* } */}
 
       <div className='nav-profile flex-row-start-start'>
 
