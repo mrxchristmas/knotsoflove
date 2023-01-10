@@ -49,20 +49,23 @@ export const useFirestore =(c)=>{
             type: 'IS_PENDING'
         })
 
-        try {
+        return new Promise((res, rej)=>{
             const createdAt = Timestamp.fromDate(new Date())
-            const addedDoc = await addDoc(store, {...doc, createdAt})
-            DINC({
-                type: 'ADDED_DOC',
-                payload: addedDoc
+            addDoc(store, {...doc, createdAt}).then(addedDoc => {
+                DINC({
+                    type: 'ADDED_DOC',
+                    payload: addedDoc
+                })
+                res()
             })
-            
-        } catch (err) {
-            DINC({
-                type: 'ERROR',
-                payload: err.message
+            .catch( err => {
+                DINC({
+                    type: 'ERROR',
+                    payload: err.message
+                })
+                rej()
             })
-        }
+        })
     }
 
     // delete document
@@ -73,18 +76,22 @@ export const useFirestore =(c)=>{
             type: 'IS_PENDING'
         })
 
-        try {
-            await deleteDoc(ref)
-            DINC({
-                type: 'DELETED_DOC'
+        return new Promise((res, rej)=>{
+            deleteDoc(ref)
+            .then(() => {
+                DINC({
+                    type: 'DELETED_DOC'
+                })
+                res()
             })
-            
-        } catch (err) {
-            DINC({
-                type: 'ERROR',
-                payload: err.message
+            .catch(err => {
+                DINC({
+                    type: 'ERROR',
+                    payload: err.message
+                })
+                rej()
             })
-        }
+        })
     }
 
     // set document | will create doc if it doesnt exist ( good for creating docs with custom id )

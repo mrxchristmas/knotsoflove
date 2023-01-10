@@ -9,14 +9,16 @@ import logo from '../assets/logo.svg'
 // import item7trans from '../assets/itemimages/item7trans.png'
 // import item8trans from '../assets/itemimages/item8trans.png'
 import { useEffect, useMemo, useState } from 'react'
-import { useCategory } from '../hooks/useCategory'
+// import { useCategory } from '../hooks/useCategory'
+import { useCollection } from '../hooks/useCollection';
 
 export default function HomeWallpaper() {
 
 
     // const leftTextObj = 
     const [selLeftText, setSelLeftText] = useState(0);
-    const { showcase } = useCategory()
+    // const { showcase } = useCategory()
+    const { documents : showcase } = useCollection('showcase')
 
     // const catObj = [
     //     {

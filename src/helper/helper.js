@@ -1259,3 +1259,22 @@ export const thread_colors = [
         available: true
     }
 ]
+
+
+export const fetchImage = async (url) => {
+
+    try{
+        const res = await fetch(url);
+        console.log(res);
+        
+        const imgBlob = await res.blob();
+        const imgObjURL = URL.createObjectURL(imgBlob);
+        console.log(imgBlob, imgObjURL)
+    }catch (error) {
+        console.log(error);
+        
+    }
+
+    // setImg(imageObjectURL);
+
+};

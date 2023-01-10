@@ -1,0 +1,76 @@
+#global-prompt{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+#global-prompt > .container{
+    width: calc(30% - 40px);
+    max-width: $base-max-width;
+    background-color: $primary;
+    border-radius: 5px;
+    color: black;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    text-overflow: ellipsis;
+    padding: 20px 10px;
+}
+
+#global-prompt > .container .choice button{
+    width: calc(50% - 10px);
+    font-size: 1em;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    border: none;
+    padding: 1rem 0rem;
+}
+#global-prompt > .container .choice button:nth-child(1){
+    background-color: map-get($colors, "green" );
+}
+#global-prompt > .container .choice button:nth-child(2){
+    background-color: map-get($colors, "red" );
+}
+
+#global-prompt > .container > .password{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    /* box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.2); */
+    border-radius: 5px;
+    margin-top: 10px;
+}
+#global-prompt > .container > .password > div{
+    margin-top: 10px;
+}
+#global-prompt > .container > .password button{
+    width: calc(50% - 10px);
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: none;
+}
+#global-prompt > .container > .password input{
+    width: calc(100% - 20px);
+    border: none;
+    padding: 5px 0px;
+    padding-left: 20px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    box-shadow: none;
+    background-color: var(--BG_WHITE_COLOR);
+    height: 100%;
+}
+
+
+#global-prompt > .container > .choice{
+    width: 100%;
+    margin-top: 10px;
+}

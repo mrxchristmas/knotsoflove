@@ -10,7 +10,7 @@
     border-radius: 5px;
     padding: $base-padding $base-padding * 1;
     cursor: pointer;
-    width: 100%;
+    width: calc(100% - $base-padding);
     font-size: 1em
 }
 

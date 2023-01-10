@@ -17,9 +17,9 @@ export default function Manage() {
         <div className="manager-nav w-100 flex-row-center-center">
             <span className="m-0-1">Merchandise</span>
             <span className="m-0-1">Testimonials</span>
-            <span className="m-0-1">Colors</span>
             <span className="m-0-1">Home Page</span>
             <span className="m-0-1">Discounts</span>
+            <NavLink to="/manage/colors" className="m-0-1">Colors</NavLink>
             <NavLink to="/manage/category" className="m-0-1">Category</NavLink>
         </div>
         <Outlet />

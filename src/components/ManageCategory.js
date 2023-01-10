@@ -5,7 +5,7 @@ import { useStorage } from "../hooks/useStorage";
 import { MAX_FILE_SIZE, rngFilename } from "../helper/helper";
 
 import '../css/Manage.css'
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function ManageCategory() {
 
@@ -15,10 +15,6 @@ export default function ManageCategory() {
 
     const [saveImgState, setSaveImgState] = useState(null); 
     const [selected, setSelected] = useState(null);
-
-    console.log(documents);
-
-    const fileRef = useRef()
 
     const handleSaveClick = (e, id) => {
 
@@ -74,43 +70,32 @@ export default function ManageCategory() {
 
 
     
-      const handleCategoryImageSaveClick = (oldURL, id) => {
-        console.log('click test ', `category/${rngFilename()}`);
-        console.log(selected.name.split('.').pop() )
-        //   const oldPhotoURL = user.photoURL
-        //   const uploadPath = `profilepics/${user.uid}/${thumbnail.name}`
-        //   if(!thumbnailError){
-        //     console.log('add file');
-        //     console.log('oldPhotoURL: ', oldPhotoURL);
-        //     console.log('uploadPath: ', uploadPath);
-        //     addFile(uploadPath, thumbnail).then(img => {
-        //       console.log('newprint: ', img);
-        //     })
-        //   }
-        
+    const handleCategoryImageSaveClick = (oldURL, id) => {
+    // console.log('click test ', `category/${rngFilename()}`);
+    // console.log(selected.name.split('.').pop() )
 
-        addFile(`category/${rngFilename()}.${selected.name.split('.').pop()}`, selected)
-          .then((url) => {
-            console.log('Image Uploaded')
-            deleteFile(oldURL)
+    addFile(`category/${rngFilename()}.${selected.name.split('.').pop()}`, selected)
+        .then((url) => {
+        console.log('Image Uploaded')
+        deleteFile(oldURL)
+        .then(() => {
+            console.log('Previous Image Deleted')
+            updateDocument(id, {url})
             .then(() => {
-                console.log('Previous Image Deleted')
-                updateDocument(id, {url})
-                .then(() => {
-                    console.log('Updated Doc of new URL')
-                })
-                .catch(() => {
-                    console.log('Error updating new URL')
-                })
+                console.log('Updated Doc of new URL')
             })
             .catch(() => {
-                console.log('Previous Image has not been Deleted')
+                console.log('Error updating new URL')
             })
-          })
-          .catch(() => {
-            console.log('Image has not been uploaded')
-          })
-      }
+        })
+        .catch(() => {
+            console.log('Previous Image has not been Deleted')
+        })
+        })
+        .catch(() => {
+        console.log('Image has not been uploaded')
+        })
+    }
 
      
 
@@ -121,7 +106,7 @@ export default function ManageCategory() {
             {documents && documents.map(doc => (
                 <div key={doc.id} className="widget  mb-1 flex-row-center-center">
                     <img  onClick={(e)=> e.target.parentElement.children[1].click() } className="bg-white" src={doc.url} alt="" title="Category Image" />
-                    <input onChange={handleProfileChange} ref={fileRef} type="file" style={{display: 'none'}} />
+                    <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
                     <input className="input title ml-1" type="text" defaultValue={doc.title} placeholder="Title" title="Category Title" />
                     <input className="color ml-1" type="color" defaultValue={doc.color} title="Category Theme Color" />
                     <button onClick={e => handleSaveClick(e, doc.id )} className="btn-green ml-1" title="Save Title and Color">Save</button>
@@ -130,7 +115,7 @@ export default function ManageCategory() {
             ))}
             <div className="widget mb-1 flex-row-center-center">
                     <img onClick={(e)=> e.target.parentElement.children[1].click() } className="bg-white" src="" alt="" title="Category Image" />
-                    <input onChange={handleProfileChange} ref={fileRef} type="file" style={{display: 'none'}} />
+                    <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
                     <input className="input title ml-1" type="text" placeholder="Title" title="Category Title" />
                     <input className="color ml-1" type="color" title="Category Theme Color" />
                     <button className="btn-green twice ml-1" title="Save Title and Color">Add New Category</button>
