@@ -1,0 +1,145 @@
+.item-details-container{
+    padding: 2rem;
+    max-width: calc(100vw - 4rem);
+}
+
+.item-image-container{
+    width: 60%;
+    min-height: 200px;
+}
+.item-image-container{
+    width: calc(60% - 1rem);
+    min-height: 200px;
+}
+
+.item-thumbnails-container{
+    width: 100px;
+    max-height: calc(50vw - 2rem);
+    overflow: hidden;
+    overflow-y: auto;
+}
+.item-thumbnails-container > img{
+    width: 90px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    /* border-bottom: 1px solid black; */
+    padding: 1px 5px;
+}
+.item-image{
+    width: calc(100% - 110px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+
+
+
+.item-description-container{
+    width: 40%;
+    min-height: 200px;
+}
+.item-description-container > p{
+    margin-bottom: 10px;
+}
+.item-description-container > .title{
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+.item-description-container > .title p{
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.item-description-container > .colors{
+    margin-bottom: 10px;
+}
+.item-description-container > .colors img{
+    height: 30px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+.item-description-container > .input{
+    height: 100px;
+    width: calc(100% - 1.5rem);
+    text-align: start;
+    resize: none;
+    margin-bottom: 10px;
+}
+.item-description-container > .minitext{
+    font-size: 0.7rem;
+    margin-bottom: 0px;
+    margin-left: 5px;
+}
+
+.frequent{
+    padding: 1.8rem;
+    width: calc(100vw - 4rem);
+}
+.frequent-widget-container{
+    width: calc(100vw - 4.5rem);
+    max-width: calc(100vw - 4.5rem);
+    overflow: hidden;
+    overflow-x: auto;
+}
+.frequent-widget{
+    margin-left: 1rem;
+    padding-bottom: 1rem;
+    width: 150px;
+}
+.frequent-widget img{
+    width: 150px;
+    min-width: 150px;
+    aspect-ratio: 2 / 1.7;
+    object-fit: cover;
+}
+
+
+@include sm{
+    .item-image-container{
+        width: calc(100%);
+    }
+    .item-thumbnails-container{
+        width: 100%;
+        max-height: unset;
+        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+    .item-thumbnails-container > img{
+        padding: 5px 5px;
+    }
+    .item-image{
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+    .item-description-container{
+        width: 100%;
+    }
+    
+}
+
+@include lg{
+    .item-description-container{
+        width: 40%;
+    }
+    .item-image-container{
+        width: calc(60% - 1rem);
+    }
+    .item-thumbnails-container{
+        width: 100px;
+        max-height: calc(50vw - 2rem);
+        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: unset;
+    }
+    .item-thumbnails-container > img{
+        padding: 1px 5px;
+    }
+    .item-image{
+        width: calc(100% - 110px);
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+    }
+    
+}

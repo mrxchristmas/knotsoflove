@@ -11,7 +11,7 @@
     box-shadow: 1px 1px 2px black;
     cursor: pointer;
 }
-.gallery-page-widget img{
+.gallery-page-widget img.img{
     width: 100%;
     height: 100%;
     aspect-ratio: 1 / 1.2;
@@ -19,8 +19,17 @@
     transition: all 0.5s ease-in-out;
     cursor: pointer;
 }
-.gallery-page-widget img:hover{
+.gallery-page-widget img.img:hover{
     transform: scale(1.2);
+}
+.gallery-page-widget img.fav{
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    fill: red;
+    color: #ff38598a;
 }
 .gallery-page-widget .title{
     text-align: center;
@@ -38,8 +47,14 @@
     float: left;
     overflow: hidden;
     cursor: pointer;
+    // max-width: 75%;
 }
 .gallery-page-widget .title > span:nth-child(2){
-    min-width: 40px;
+    min-width: 60px;
     text-align: end;
+}
+.gallery-page-widget .title > span:nth-child(2) .sale{
+    font-size: 0.7em;
+    text-decoration: line-through;
+    color: red;
 }

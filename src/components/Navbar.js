@@ -9,14 +9,17 @@ import { useLocation } from 'react-router-dom'
 
 export default function Navbar({ openNav }) {
   const { logout } = useAuth()
-  const { user } = useAuthContext()
+  const { user, ADMIN_UID } = useAuthContext()
   const { isMobile } = useIsMobile()
   const location = useLocation()
+  
 
-  // console.log(location);
+  // const x = !user.isAnonymous ? user.photoURL : anon;
+  // console.log(ADMIN_UID === user.uid);
   
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
+  
 
   return (
     <div className="nav-main  text-black flex-row-center-between p-1-2">
@@ -38,7 +41,7 @@ export default function Navbar({ openNav }) {
           <NavLink to="/login">Login | Register</NavLink>
         </div>}
 
-        {user && 
+        {user && user.photoURL &&
           <div className="profile-container flex-col-end-center position-relative">
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="profile-img-name-container flex-row-center-end">
               {!isMobile && <span className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
@@ -48,7 +51,8 @@ export default function Navbar({ openNav }) {
               <div className="profile-popup-container mt-1 p-1 flex-col-center-center">
                 <span className=''>Hello {!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}!</span>
                 <hr />
-                {!user.isAnonymous && <button className="btn-pink">View Favorites</button> }
+                {ADMIN_UID === user.uid && <Link to="/manage" className="btn-black text-white ">Manage Website</Link> }
+                {!user.isAnonymous && <button className="btn-pink mt-1">View Favorites</button> }
                 {user.isAnonymous && <p>You will lose all data when you logout</p> }
                 {user.isAnonymous && <button className="btn-green">Link Guest Account</button> }
                 <button className="btn-red mt-1" onClick={() => logout()}>Logout</button>

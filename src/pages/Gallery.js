@@ -5,7 +5,7 @@ import banner1 from '../assets/itemimages/banner1.png'
 import { useEffect, useState } from 'react'
 import { scrollToTop } from '../helper/helper'
 import { useIsMobile } from '../hooks/useIsMobile'
-// import { useNav } from '../hooks/useNav'
+// import harry  from '../assets/'
 
 export const Gallery = ({nav, setNav, closeNav}) => {
 
@@ -81,11 +81,13 @@ export const Gallery = ({nav, setNav, closeNav}) => {
               categoryItems && categoryItems.map((cat) => (
                 <div key={cat.id} className="gallery-page-widget p-1-2 col-12-sm col-6-md col-4-lg flex-col-center-start">
                   <div className="imgcover">
-                    <img src={cat.images[0]} alt="" />
+                    <img className='img' src={cat.images[0]} alt="" />
+                    {/* <img className='fav' src="icons/favorite_border.svg" alt="" /> */}
+                    <img className='fav' src="icons/favorite.svg" alt="" />
                   </div>
                   <div className="title  bg-whitesmoke  flex-row-center-between">
                     <span>{cat.title}</span>
-                    <span>${cat.price}</span>
+                    <span> <span className="sale">$32</span> ${cat.price}</span>
                   </div>
                 </div>
               ))

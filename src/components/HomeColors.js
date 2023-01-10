@@ -4,7 +4,7 @@ import { thread_colors } from '../helper/helper'
 
 export default function HomeColors() {
   return (
-    <div className="colors-main mt-3 flex-col-center-start p-2">
+    <section id="HomeColors" className="colors-main mt-3 flex-col-center-start p-2">
         <h1>Look through our Available Colors</h1>
         <div className="colors-page w-100  mt-2 flex-col-center-center">
           <div className="row gap-1 w-100">
@@ -22,6 +22,6 @@ export default function HomeColors() {
             }
           </div>
         </div>
-    </div> 
+    </section> 
   )
 }
