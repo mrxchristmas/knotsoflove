@@ -13,16 +13,21 @@ import Contact from './pages/Contact'
 import Testimonials from './pages/Testimonials'
 import { Gallery } from './pages/Gallery'
 import Item from './pages/Item'
+import Manage from './pages/Manage'
+import ManageCategory from './components/ManageCategory'
+
+
 import { useState } from 'react'
 
 
 function App() {
-  const { user, authIsReady } = useAuthContext()
+  const { user, authIsReady, ADMIN_UID } = useAuthContext()
 
   const [nav, setNav] = useState(false)
   const NavButtonOpen = <img onClick={() => setNav(true)} src="icons/menu_black_48dp.svg" alt="" />
   const NavButtonClose = <img onClick={() => setNav(false)} src="icons/close_black_48dp.svg"  alt=""/>
 
+  
   return (
     <div className="App">
       {authIsReady && (
@@ -31,6 +36,9 @@ function App() {
           <Routes>
             <Route path="/" element={ <Home /> } />
             <Route path="/login/" element={ !user ? <Login /> : <Navigate to="/" /> } />
+            <Route path="/manage/" element={ user && user.uid === ADMIN_UID ? <Manage /> : <Navigate to="/" /> } >
+              <Route path="/manage/category/" element={ <ManageCategory /> } />
+            </Route>
             <Route path="/about/" element={ <About /> } />
             <Route path="/contact/" element={ <Contact /> } />
             <Route path="/testimonials/" element={ <Testimonials /> } />

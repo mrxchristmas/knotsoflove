@@ -79,15 +79,19 @@ export const useStorage =()=>{
         dispatch({
             type: 'IS_PENDING'
         })
-        deleteObject(imgRef).then(() => {
-            DINC({
-                type: 'DELETED_DOC'
+        return new Promise((res, rej)=>{
+            deleteObject(imgRef).then(() => {
+                DINC({
+                    type: 'DELETED_DOC'
+                })
+                res()
             })
-        })
-        .catch(err => {
-            DINC({
-                type: 'ERROR',
-                payload: err.message
+            .catch(err => {
+                DINC({
+                    type: 'ERROR',
+                    payload: err.message
+                })
+                rej(err.message)
             })
         })
     }

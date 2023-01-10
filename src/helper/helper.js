@@ -124,7 +124,7 @@ import army_green from '../assets/colors/army_green.png'
 
 
 
-
+export const MAX_FILE_SIZE = 7000000
 
 export const getDateNow =()=>{
     const date = new Date();
@@ -689,6 +689,14 @@ export const scrollToTop = () =>{
          in place of 'smooth' */
     })
 }
+
+export const rngFilename =()=>{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for( var i=0; i < 8; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+}
 // using useRef to reference an element
 // elementref.current.scrollIntoView({ behavior: 'smooth' })
 
@@ -706,57 +714,57 @@ export const scrollToTop = () =>{
 
 export const categoryObj = [
     {
-        id: "aaaa",
+        id: "Lvz2J8a9DAUkWrugYGRX",
         title: "Wall Decors",
         img: catimg1trans,
         color: "#5e5eff"
     },{
-        id: "bbbb",
+        id: "evHBKbNcF7JLLxGQEiHU",
         title: "Earrings",
         img: catimg2trans,
         color: "#c368c3"
     },{
-        id: "cccc",
+        id: "CK2uErQ3b4lKRRjc8bs5",
         title: "Sandals",
         img: catimg3trans,
         color: "#daae5e"
     },{
-        id: "dddd",
+        id: "CxgwyLNk3SE9DG7ksVcJ",
         title: "Handbags",
         img: catimg4trans,
         color: "#e4e4c5"
     },{
-        id: "eeee",
+        id: "veSIrylBPY4i7MC4lc8s",
         title: "Coasters",
         img: catimg5trans,
         color: "#a2cd61"
     },{
-        id: "ffff",
+        id: "pLrRx69Fhz4sZHqnc05Z",
         title: "Bookmarks",
         img: catimg6trans,
         color: "#ea8bd4"
     },{
-        id: "gggg",
+        id: "0LUvLcpM5rYCaAzgPv2c",
         title: "Plant Hangers",
         img: catimg7trans,
         color: "#da6969"
     },{
-        id: "hhhh",
+        id: "wW9V6uEMsD0dIGVC7KBn",
         title: "Curtain Ties",
         img: catimg8trans,
         color: "#cc96d1"
     },{
-        id: "iiii",
+        id: "dEg7cAslfQsVlTtslehb",
         title: "Door Wreaths",
         img: catimg9trans,
         color: "#d1ceb3"
     },{
-        id: "jjjj",
+        id: "whKOxcpRRbbmslNOqLcp",
         title: "Napkin Holders",
         img: catimg10trans,
         color: "#8ed3dc"
     },{
-        id: "kkkk",
+        id: "g56UDFwFLE3ZvGm8FtpO",
         title: "Pairs",
         img: catimg11trans,
         color: "#d4dc8e"
@@ -765,7 +773,7 @@ export const categoryObj = [
 
 export const categoryItemObj = [
     {
-        id: "aaaa",
+        id: "Lvz2J8a9DAUkWrugYGRX",
         items: [
             {
                 id: "aaaa1",
@@ -785,7 +793,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "bbbb",
+        id: "evHBKbNcF7JLLxGQEiHU",
         items: [
             {
                 id: "bbbb1",
@@ -850,7 +858,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "cccc",
+        id: "CK2uErQ3b4lKRRjc8bs5",
         items: [
             {
                 id: "cccc1",
@@ -880,7 +888,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "dddd",
+        id: "CxgwyLNk3SE9DG7ksVcJ",
         items: [
             {
                 id: "dddd1",
@@ -900,7 +908,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "eeee",
+        id: "veSIrylBPY4i7MC4lc8s",
         items: [
             {
                 id: "eeee1",
@@ -920,7 +928,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "ffff",
+        id: "pLrRx69Fhz4sZHqnc05Z",
         items: [
             {
                 id: "ffff1",
@@ -935,7 +943,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "gggg",
+        id: "0LUvLcpM5rYCaAzgPv2c",
         items: [
             {
                 id: "gggg1",
@@ -965,7 +973,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "hhhh",
+        id: "wW9V6uEMsD0dIGVC7KBn",
         items: [
             {
                 id: "hhhh1",
@@ -990,7 +998,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "iiii",
+        id: "dEg7cAslfQsVlTtslehb",
         items: [
             {
                 id: "iiii1",
@@ -1005,7 +1013,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "jjjj",
+        id: "whKOxcpRRbbmslNOqLcp",
         items: [
             {
                 id: "jjjj1",
@@ -1025,7 +1033,7 @@ export const categoryItemObj = [
             }
         ]
     },{
-        id: "kkkk",
+        id: "g56UDFwFLE3ZvGm8FtpO",
         items: [
             {
                 id: "kkkk1",

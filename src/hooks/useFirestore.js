@@ -117,19 +117,25 @@ export const useFirestore =(c)=>{
         })
         const ref = doc(db, c, id)
         const createdAt = Timestamp.fromDate(new Date())
-        updateDoc(ref, {...d, createdAt})
-        .then(res => {
-            DINC({
-                type: 'UPDATED_DOC',
-                payload: res
+
+        return new Promise((resolve, reject)=>{
+            updateDoc(ref, {...d, createdAt})
+            .then(res => {
+                DINC({
+                    type: 'UPDATED_DOC',
+                    payload: res
+                })
+                resolve()
             })
-        })
-        .catch(err => {
-            DINC({
-                type: 'ERROR',
-                payload: err.message
+            .catch(err => {
+                DINC({
+                    type: 'ERROR',
+                    payload: err.message
+                })
+                reject()
             })
-        })
+        });
+        
     }
 
 

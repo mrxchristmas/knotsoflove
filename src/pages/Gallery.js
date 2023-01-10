@@ -1,18 +1,21 @@
 
 import '../css/Gallery.css'
-import { categoryObj, categoryItemObj, getItemsFromCatId } from '../helper/helper'
+import { categoryItemObj, getItemsFromCatId } from '../helper/helper'
 import banner1 from '../assets/itemimages/banner1.png'
 import { useEffect, useState } from 'react'
 import { scrollToTop } from '../helper/helper'
 import { useIsMobile } from '../hooks/useIsMobile'
+import { useCollection } from '../hooks/useCollection'
 // import harry  from '../assets/'
 
 export const Gallery = ({nav, setNav, closeNav}) => {
 
   const { isMobile } = useIsMobile()
   // const {nav, NavButtonOpen, NavButtonClose, setNav} = useNav()
-  const [selectedCategory, setSelectedCategory] = useState(categoryObj[0]);
   const [categoryItems, setCategoryItems] = useState(categoryItemObj[0].items);
+  const { documents: categoryObj } = useCollection('category')
+
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   // const [isNavOpen, setIsNavOpen] = useState(false);
   // const testFunc = () => {
@@ -22,10 +25,18 @@ export const Gallery = ({nav, setNav, closeNav}) => {
   // }
   // const closeNavIfCatChanged = useMemo(() =>  testFunc(), [])
 
+  // console.log(categoryObj);
+  useEffect(() => {
+    if(categoryObj){
+      setSelectedCategory(categoryObj[0])
+    }
+  }, [categoryObj]);
   useEffect(() => {
     
-    setCategoryItems(getItemsFromCatId(selectedCategory.id))
-    setNav(false)
+    if(selectedCategory){
+      setCategoryItems(getItemsFromCatId(selectedCategory.id))
+      setNav(false)
+    }
   }, [selectedCategory, isMobile, setNav]);
 
   const getIsNavOpen = () => {
@@ -40,6 +51,8 @@ export const Gallery = ({nav, setNav, closeNav}) => {
     }
   }
 
+  // console.log(selectedCategory, categoryObj);
+  
 
   return (
     <div className="gallery-main flex-row-start-center">
@@ -47,17 +60,17 @@ export const Gallery = ({nav, setNav, closeNav}) => {
       { getIsNavOpen() && 
         <div className="gallerynav-container flex-col-center-start">
           <span className={`title ${isMobile && "flex-row-center-between w-100"}`}>Categories {isMobile && closeNav}</span>
-          {categoryObj && categoryObj.map((cat) => (
+          {selectedCategory && categoryObj && categoryObj.map((cat) => (
             <div 
               key={cat.id} 
               onClick={() => {
                 setSelectedCategory(cat)
                 scrollToTop()
               }} 
-              className={`${cat.title === selectedCategory.title && "active"} gallerynav-widget mt-1 flex-col-end-start`} 
+              className={`${cat.id === selectedCategory.id && "active"} gallerynav-widget mt-1 flex-col-end-start`} 
               style={{backgroundColor: cat.color}}
             >
-              <img src={cat.img} alt="" />
+              <img src={cat.url} alt="" />
               <span className="title">{cat.title}</span>
               <div className="peel"></div>
               <div className="peel2"></div>
@@ -73,7 +86,7 @@ export const Gallery = ({nav, setNav, closeNav}) => {
           <div className="peel"></div>
         </div>
         {/* {NavButtonOpen} */}
-        <h1 className='mt-2' onClick={() => setNav(true)} style={{backgroundColor: selectedCategory.color}}>{selectedCategory.title}</h1>
+        { selectedCategory && <h1 className='mt-2' onClick={() => setNav(true)} style={{backgroundColor: selectedCategory.color}}>{selectedCategory.title}</h1>}
 
         <div className="gallery-page w-100  mt-2 flex-col-center-start">
           <div className="row gap-1 w-100">

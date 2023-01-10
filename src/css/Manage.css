@@ -1,0 +1,43 @@
+.manager-main{
+    /* width: calc(100vw - 10em); */
+}
+.manager-nav span{
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+.manage-category-main > .widget{
+    width: 100%;
+    /* min-height: 100px; */
+}
+.manage-category-main > .widget .title{
+    width: 30%;
+}
+.manage-category-main > .widget .color{
+    width: 10%;
+    height: 40px;
+    border-width: 0px;
+    padding: 0px;
+}
+.manage-category-main > .widget img{
+    height: 50px;
+    aspect-ratio: 2 / 1;
+    object-fit: contain;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+.manage-category-main > .widget .btn-green{
+    width: 15%;
+}
+.manage-category-main > .widget .btn-green.twice{
+    width: calc(30% + 10px);
+}
+.manage-category-main > .widget .btn-green:disabled{
+    background-color: grey;
+}

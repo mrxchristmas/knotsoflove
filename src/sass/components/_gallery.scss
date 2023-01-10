@@ -130,7 +130,7 @@
         left: 0px;
         top: 0px;
         z-index: 1;
-        overflow-y: auto;
+        overflow-y: unset;
     }
     .gallerynav-container::-webkit-scrollbar {
         width: 1px;

@@ -15,7 +15,7 @@ export default function Navbar({ openNav }) {
   
 
   // const x = !user.isAnonymous ? user.photoURL : anon;
-  // console.log(ADMIN_UID === user.uid);
+  // console.log(!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest");
   
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
@@ -41,13 +41,13 @@ export default function Navbar({ openNav }) {
           <NavLink to="/login">Login | Register</NavLink>
         </div>}
 
-        {user && user.photoURL &&
+        {user && 
           <div className="profile-container flex-col-end-center position-relative">
             <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="profile-img-name-container flex-row-center-end">
               {!isMobile && <span className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
               <img className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} alt="" />
             </div>
-            {isProfileOpen && 
+            {isProfileOpen && user && 
               <div className="profile-popup-container mt-1 p-1 flex-col-center-center">
                 <span className=''>Hello {!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}!</span>
                 <hr />

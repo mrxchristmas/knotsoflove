@@ -3,6 +3,7 @@
 
 import { useIsMobile } from '../hooks/useIsMobile'
 import { useRef } from 'react'
+import { useCategory } from '../hooks/useCategory';
 
 
 export default function HomeShowcase({ data: _data }) {
@@ -10,6 +11,7 @@ export default function HomeShowcase({ data: _data }) {
     const { isMobile } = useIsMobile();
     const data = useRef(_data).current
     const ref = useRef(null)
+    const { showcase } = useCategory()
     
 
   return (
