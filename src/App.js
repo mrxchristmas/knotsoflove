@@ -16,6 +16,7 @@ import Item from './pages/Item'
 import Manage from './pages/Manage'
 import ManageCategory from './components/ManageCategory'
 import ManageColors from './components/ManageColors'
+import ManageItem from './components/ManageItem'
 
 
 import { useState } from 'react'
@@ -40,6 +41,7 @@ function App() {
             <Route path="/manage/" element={ user && user.uid === ADMIN_UID ? <Manage /> : <Navigate to="/" /> } >
               <Route path="/manage/category/" element={ <ManageCategory /> } />
               <Route path="/manage/colors/" element={ <ManageColors /> } />
+              <Route path="/manage/item/" element={ <ManageItem /> } />
             </Route>
             <Route path="/about/" element={ <About /> } />
             <Route path="/contact/" element={ <Contact /> } />

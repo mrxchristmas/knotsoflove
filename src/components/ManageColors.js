@@ -1,4 +1,3 @@
-import { useImage } from "../hooks/useImage"
 import { useCollection } from "../hooks/useCollection"
 import { useFirestore } from "../hooks/useFirestore";
 import { useStorage } from "../hooks/useStorage";
@@ -87,7 +86,7 @@ export default function ManageColors() {
     const handleCheckboxClick = (e, id, type) => {
         const checked = e.target.checked
         e.checked = checked
-        updateDocument(id, type == "isAvailable" ? {
+        updateDocument(id, type === "isAvailable" ? {
             isAvailable: checked
         } : {
             isLowOnStock: checked

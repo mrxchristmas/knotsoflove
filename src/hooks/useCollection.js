@@ -38,6 +38,7 @@ export const useCollection = (c, _q, _o, l) => {
 
         if(q){
             q.forEach(qq => {
+                
                 store = query(store, where(...qq))
             })
         }

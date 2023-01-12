@@ -67,6 +67,7 @@ export const useFirestore =(c)=>{
             })
         })
     }
+    
 
     // delete document
     const deleteDocument = async id =>{

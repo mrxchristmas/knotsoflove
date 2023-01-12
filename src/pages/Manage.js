@@ -15,7 +15,7 @@ export default function Manage() {
   return (
     <div className="manager-main flex-col-center-start p-2">
         <div className="manager-nav w-100 flex-row-center-center">
-            <span className="m-0-1">Merchandise</span>
+            <NavLink to="/manage/item" className="m-0-1">Merchandise</NavLink>
             <span className="m-0-1">Testimonials</span>
             <span className="m-0-1">Home Page</span>
             <span className="m-0-1">Discounts</span>

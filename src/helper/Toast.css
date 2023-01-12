@@ -13,7 +13,7 @@
 .toast-container span{
     max-width: var(--MAX_WIDTH);
     background-color: var(--MAIN_COLOR);
-    /* background-color: rgb(97, 97, 97); */
+    background-color: rgb(208, 153, 76);
     padding: 5px 10px;
     border-radius: 5px;
     color: white;

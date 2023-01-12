@@ -44,6 +44,7 @@
 
 
 
+
 .manage-color-main .addColor{
     height: 200px;
     width: 900px;
@@ -130,4 +131,68 @@
 }
 .manage-colors-page-widget .title label input{
     margin-right: 5px;
+}
+
+
+
+
+.manage-item-main{
+    position: relative;
+}
+.itemlist-container{
+    width: 300px;
+}
+.category-wrapper{
+    /* border: thin solid white; */
+}
+.category-wrapper .header{
+    text-align: center;
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    position: relative;
+}
+.category-wrapper h3{
+    cursor: pointer;
+    /* background-color: red; */
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+.category-wrapper .header img{
+    height: 30px;
+}
+.item-widget-container{
+    overflow: hidden;
+    max-width: 100%;
+    text-align: center;
+    transition: all 1s ease-in-out;
+}
+.item-widget-container.hidden{
+    height: 0px;
+}
+.item-widget-container span{
+    width: calc(100% - 2rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    float: left;
+    /* border-bottom: 1px solid grey; */
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.item-widget-container span:hover{
+    /* font-size: 1.2em; */
+    font-weight: bold;
+    /* background-color: whitesmoke; */
+}
+
+
+
+.itemdesc-container{
+    width: calc(100% - 300px - 2rem);
 }

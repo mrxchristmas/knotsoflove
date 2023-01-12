@@ -22,7 +22,7 @@ export default function Item() {
                 <h4>Description</h4>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor veritatis sunt nisi. Aliquid soluta facilis beatae incidunt atque natus nisi, voluptas tempora. Deserunt fugit iure repellendus vel earum excepturi facilis?</p>
                 <h4>Colors Used</h4>
-                <div className="colors flex-row-center-start">
+                <div className="colors flex-row-center-start p-1">
                     <img src={color1} alt="Flamingo" title="Flamingo" />
                     <img src={color1} alt="Flamingo" title="Flamingo" />
                     <img src={color1} alt="Flamingo" title="Flamingo" />
