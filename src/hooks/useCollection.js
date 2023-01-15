@@ -9,6 +9,12 @@ import { collection, onSnapshot, query, where, orderBy, limit } from 'firebase/f
 // [ ['title'], ['likes', 'asc' ] ] for orderby or _o
 // l must be a number
 
+// USAGE FOR getting multiple id in a collection
+// import { documentId } from 'firebase/firestore'
+// const xxx = ["07Ew4Vdx5MSbB6rG8A4S", "12vUpr2dSq42jn5Wic8I", "1vRugt103vzftKnwVsGh"]
+// const { documents: items } = useCollection('items', [ [documentId(), "in", xxx ] ])
+
+
 // < less than
 // <= less than or equal to
 // == equal to
@@ -32,13 +38,13 @@ export const useCollection = (c, _q, _o, l) => {
     const q = useRef(_q).current
     const o = useRef(_o).current
 
+
     useEffect( () => {
         let store = collection(db, c)
         setIsPending(true)
 
         if(q){
             q.forEach(qq => {
-                
                 store = query(store, where(...qq))
             })
         }
@@ -51,6 +57,10 @@ export const useCollection = (c, _q, _o, l) => {
             store = query(store, limit(l))
         }
 
+
+        // store = query(store, where("category", "==", "0LUvLcpM5rYCaAzgPv2c"))
+
+        
         const unsub = onSnapshot(store, snapshot => {
             let res = []
             snapshot.docs.forEach(doc => {

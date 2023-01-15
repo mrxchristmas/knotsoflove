@@ -46,7 +46,7 @@ function App() {
             <Route path="/about/" element={ <About /> } />
             <Route path="/contact/" element={ <Contact /> } />
             <Route path="/testimonials/" element={ <Testimonials /> } />
-            <Route path="/item/" element={ <Item /> } />
+            <Route path="/item/:itemid/" element={ <Item /> } />
             <Route path="/gallery/" element={ <Gallery nav={nav} setNav={setNav} closeNav={NavButtonClose} /> } />
             <Route path="*" element={ <Navigate to="/" />  } />
           </Routes>

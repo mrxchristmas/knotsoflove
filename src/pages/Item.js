@@ -1,105 +1,167 @@
 import '../css/Item.css'
 import item1 from '../assets/itemimages/item1.png'
-import color1 from '../assets/colors/flamingo.png'
 import { useIsMobile } from '../hooks/useIsMobile'
+import { Link, useParams } from 'react-router-dom'
+import { useDocument } from '../hooks/useDocument'
+import { useCollection } from '../hooks/useCollection'
+import { useEffect, useState } from 'react'
+import { useFavorite } from '../hooks/useFavorite'
+import { scrollToTop } from '../helper/helper'
+import { useFirestore } from '../hooks/useFirestore'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 export default function Item() {
+    const { user } = useAuthContext()
     const { isMobile } = useIsMobile()
+    const { itemid } = useParams()
+    const { document } = useDocument('items', itemid)
+    const [selectedImage, setSelectedImage] = useState(null)
+    const { setDocument } = useFirestore("users")
 
-  return (
-    <div className="item-main w-100 mt-3 flex-col-center-center">
-        <div className={`item-details-container flex-${isMobile ? "col-center-start" : "row-start-between"} `}>
-            <div className={`item-image-container flex-${isMobile ? "colr-center" : "row-start"}-between`}>
-                <div className={`item-thumbnails-container flex-${isMobile ? "row" : "col"}-center-start`}>
-                    <img src={item1} alt="" />
-                    <img src={item1} alt="" />
-                    <img src={item1} alt="" />
+
+    const { documents: colors } = useCollection('colors')
+    const { documents: favs } = useFavorite()
+    const [favIds, setFavIds] = useState(null)
+
+
+    scrollToTop()
+    // console.log(favs);
+    const isFav = itemid => {
+        let ret = false
+        favIds && favIds.forEach(fi => {
+          if(fi === itemid){
+            ret = true
+          }
+        })
+        return ret
+    }
+  
+    const getColorObjById = colorid => {
+        let ret
+        colors.forEach(color => {
+            if(color.id === colorid){
+                ret = color
+            }
+        })
+        return ret
+    }
+
+
+    const handleFavClick = itemid => {
+        if(isFav(itemid)){
+          setDocument(user.uid, {
+            favItems: favIds.filter(fi => fi !== itemid)
+          })
+          setFavIds(favIds.filter(fi => fi !== itemid))
+        }else{
+          setDocument(user.uid, {
+            favItems: [...favIds, itemid]
+          })
+          setFavIds([...favIds, itemid])
+        }
+      }
+
+    useEffect(() => {
+        if(document){
+            setSelectedImage(document.images[0])
+        }
+    }, [document]);
+
+    useEffect(() => {
+        if(favs){
+            let ret = []
+            favs.forEach(fav => {
+                ret.push(fav.id)
+            })
+            setFavIds(ret)
+        }
+    }, [favs]);
+
+    return (
+        <div className="item-main w-100 mt-3 flex-col-center-center">
+        {document && selectedImage && favs && <>
+            <div className={`item-details-container flex-${isMobile ? "col-center-start" : "row-start-between"} `}>
+                <div className={`item-image-container flex-${isMobile ? "colr-center" : "row-start"}-between`}>
+                    <div className={`item-thumbnails-container flex-${isMobile ? "row" : "col"}-center-start`}>
+                        {document.images.map((docim, index) => (
+                            <img onClick={() => setSelectedImage(docim)} key={index} src={docim.url} alt="" />
+                        ))}
+                    </div>
+                    <img onClick={() => handleFavClick(itemid)} src={`/icons/${isFav(itemid) ? "favorite" : "favorite_border"}.svg`} alt="" className="fav" />
+                    <img className='item-image' src={selectedImage.url} alt="" />
                 </div>
-                <img className='item-image' src={item1} alt="" />
-            </div>
-            <div className="item-description-container flex-col-start-start">
-                <span className='title flex-row-center-between w-100'>Product Name <p>$12</p></span>
-                <h4>Description</h4>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor veritatis sunt nisi. Aliquid soluta facilis beatae incidunt atque natus nisi, voluptas tempora. Deserunt fugit iure repellendus vel earum excepturi facilis?</p>
-                <h4>Colors Used</h4>
-                <div className="colors flex-row-center-start p-1">
-                    <img src={color1} alt="Flamingo" title="Flamingo" />
-                    <img src={color1} alt="Flamingo" title="Flamingo" />
-                    <img src={color1} alt="Flamingo" title="Flamingo" />
-                    <img src={color1} alt="Flamingo" title="Flamingo" />
+                <div className="item-description-container flex-col-start-start">
+                    <span className='title flex-row-center-between w-100'>{document.name} <p>${document.price}</p></span>
+                    <h4>Description</h4>
+                    <p>{document.description}</p>
+                    <h4>Colors Used</h4>
+                    <div className="colors flex-row-center-start p-1">
+                        {colors && selectedImage.colors.map(color => (
+                            <img key={color} src={getColorObjById(color).url} alt={getColorObjById(color).name} title={`${getColorObjById(color).name}${getColorObjById(color).isLowOnStock ? " - Low on Stock" : ""}${getColorObjById(color).isAvailable ? " - Available" : " - Unavailable"}`} />
+                        ))}
+                    </div>
+                    {document.width !== "" && <>
+                        <h4>Width</h4>
+                        <p>{document.width}</p>
+                    </>}
+                    {document.soleType !== "" && <>
+                        <h4>Soletype</h4>
+                        <p>{document.soleType}</p>
+                    </>}
+                    {document.size !== "" && <>
+                        <h4>Size</h4>
+                        <p>{document.size}</p>
+                    </>}
+                    {/* <input type="text" className="input" /> */}
+                    <p className="minitext text-red">Please include where you want to be contacted back (eg. phone, email, or in app)</p>
+                    <textarea className="input" placeholder='ask a question or a special request eg(colors, size, etc.)'></textarea>
+                    <button className="btn-gray">Submit Order Request</button>
                 </div>
-                <h4>Width</h4>
-                <p>7.8cm</p>
-                <h4>Soletype</h4>
-                <p>Abaca</p>
-                <h4>Size</h4>
-                <p>8.5 (us women)</p>
-                {/* <input type="text" className="input" /> */}
-                <p className="minitext text-red">Please include where you want to be contacted back (eg. phone, email, or in app)</p>
-                <textarea className="input" placeholder='ask a question or a special request eg(colors, size, etc.)'></textarea>
-                <button className="btn-gray">Submit Order Request</button>
             </div>
+            <div className="frequent flex-col-start-start ">
+                <h3>Your Favorite Items</h3>
+                <div className="frequent-widget-container mt-1 flex-row-start-start">
+                    {favs && favs.map(fav => (
+                        <Link key={fav.id} to={`/item/${fav.id}`} className="frequent-widget flex-col-center-center">
+                            <img src={fav.images[0].url} alt="" />
+                            <span>{fav.name}</span>
+                            <p>{fav.description}</p>
+                        </Link>
+                    ))}
+                </div>
+                
+            </div>
+            <div className="frequent flex-col-start-start ">
+                <h3>Customers Most Ordered</h3>
+                <div className="frequent-widget-container mt-1 flex-row-center-start">
+                    <div className="frequent-widget flex-col-center-center">
+                        <img src={item1} alt="" />
+                        <span>Item 1 Title</span>
+                    </div>
+                    <div className="frequent-widget flex-col-center-center">
+                        <img src={item1} alt="" />
+                        <span>Item 1 Title</span>
+                    </div>
+                    <div className="frequent-widget flex-col-center-center">
+                        <img src={item1} alt="" />
+                        <span>Item 1 Title</span>
+                    </div>
+                    <div className="frequent-widget flex-col-center-center">
+                        <img src={item1} alt="" />
+                        <span>Item 1 Title</span>
+                    </div>
+                    <div className="frequent-widget flex-col-center-center">
+                        <img src={item1} alt="" />
+                        <span>Item 1 Title</span>
+                    </div>
+                    <div className="frequent-widget flex-col-center-center">
+                        <img src={item1} alt="" />
+                        <span>Item 1 Title</span>
+                    </div>
+                </div>
+                
+            </div>
+        </>}
         </div>
-        <div className="frequent flex-col-start-start ">
-            <h3>Customers frequently viewed</h3>
-            <div className="frequent-widget-container mt-1 flex-row-center-start">
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-            </div>
-            
-        </div>
-        <div className="frequent flex-col-start-start ">
-            <h3>Customers Most Ordered</h3>
-            <div className="frequent-widget-container mt-1 flex-row-center-start">
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-                <div className="frequent-widget flex-col-center-center">
-                    <img src={item1} alt="" />
-                    <span>Item 1 Title</span>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-  )
+    )
 }

@@ -123,7 +123,6 @@ import yellow from '../assets/colors/yellow.png'
 import army_green from '../assets/colors/army_green.png'
 
 
-
 export const MAX_FILE_SIZE = 7000000
 
 export const getDateNow =()=>{
@@ -1278,3 +1277,4 @@ export const fetchImage = async (url) => {
     // setImg(imageObjectURL);
 
 };
+

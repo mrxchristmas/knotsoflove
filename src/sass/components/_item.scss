@@ -4,12 +4,17 @@
 }
 
 .item-image-container{
-    width: 60%;
-    min-height: 200px;
-}
-.item-image-container{
     width: calc(60% - 1rem);
     min-height: 200px;
+    position: relative;
+}
+.item-image-container .fav{
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    height: 30px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
 }
 
 .item-thumbnails-container{
@@ -85,14 +90,33 @@
     margin-left: 1rem;
     padding-bottom: 1rem;
     width: 150px;
+    cursor: pointer;
 }
 .frequent-widget img{
     width: 150px;
     min-width: 150px;
     aspect-ratio: 2 / 1.7;
     object-fit: cover;
+    cursor: pointer;
 }
-
+.frequent-widget span{
+    max-width: calc(100% - 10px);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    float: left;
+    overflow: hidden;
+    cursor: pointer;
+}
+.frequent-widget p{
+    max-width: calc(100% - 10px);
+    max-height: 35px;
+    // white-space: nowrap;
+    text-overflow: ellipsis;
+    float: left;
+    overflow: hidden;
+    font-size: 0.8em;
+    cursor: pointer;
+}
 
 @include sm{
     .item-image-container{

@@ -11,6 +11,7 @@ import logo from '../assets/logo.svg'
 import { useEffect, useMemo, useState } from 'react'
 // import { useCategory } from '../hooks/useCategory'
 import { useCollection } from '../hooks/useCollection';
+import { Link } from 'react-router-dom';
 
 export default function HomeWallpaper() {
 
@@ -109,7 +110,7 @@ export default function HomeWallpaper() {
                         <div className="center3 flex-row-center-center">
                             <div className="center2 flex-row-center-center">
                                 <div className="center1 flex-row-center-center">
-                                    {selectedCategory && <img className='centerImg' src={selectedCategory.url} alt="" />}
+                                    {selectedCategory && <Link to={`gallery/?categoryid=${selectedCategory.categoryID}`}><img className='centerImg' src={selectedCategory.url} alt="" /></Link>}
                                 </div>
                             </div>
                         </div>

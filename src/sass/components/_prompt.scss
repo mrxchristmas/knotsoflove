@@ -33,9 +33,11 @@
 }
 #global-prompt > .container .choice button:nth-child(1){
     background-color: map-get($colors, "green" );
+    color: white;
 }
 #global-prompt > .container .choice button:nth-child(2){
     background-color: map-get($colors, "red" );
+    color: white;
 }
 
 #global-prompt > .container > .password{

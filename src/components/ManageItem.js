@@ -3,10 +3,11 @@ import { useIsMobile } from '../hooks/useIsMobile'
 import { useEffect, useState } from 'react'
 import { MAX_FILE_SIZE, rngPassword, rngFilename } from '../helper/helper'
 import { useCollection } from '../hooks/useCollection'
-import Select from 'react-select'
+import Select, { components } from 'react-select'
 import { useStorage } from '../hooks/useStorage'
 import { useFirestore } from '../hooks/useFirestore'
 import { useToast } from '../hooks/useToast'
+import { usePrompt } from '../hooks/usePrompt'
 
 export default function ManageItem() {
 
@@ -15,8 +16,9 @@ export default function ManageItem() {
     const { documents: categories } = useCollection("category")
     const { documents: items } = useCollection("items")
     const { addFile } = useStorage()
-    const { setDocument, addDocument } = useFirestore('items')
+    const { setDocument, addDocument, deleteDocument } = useFirestore('items')
     const { showToast, toast } = useToast(2000)
+    const { prompt, promptChoice } = usePrompt()
 
     const [itemID, setItemID] = useState(null)
     const [name, setName] = useState("")
@@ -362,14 +364,32 @@ export default function ManageItem() {
 
     }
 
+    const handleDeleteItemClick = () => {
+        console.log(name);
+        promptChoice(`Delete Item: ${name}?`)
+        .then(() => {
+            deleteDocument(itemID)
+            .then(() => {
+                reset()
+                showToast({message: 'Deleted Item Successfully!'})
+            })
+            .catch(() => {
+                showToast({message: 'An Error Occured while Deleting Item...'})
+            })
+        })
+        .catch(() => {
+            showToast({message: 'Cancelled Deleting Item'})
+        })
+    }
+
     useEffect(() => {
         if(colors){
             let ret = []
             colors.forEach(color => {
                 ret.push({
-                    value: color.id,
                     label: color.name,
-                    url: color.url
+                    value: color.id,
+                    url: color.url,
                 })
             })
             setAvailableColor(ret)
@@ -383,10 +403,45 @@ export default function ManageItem() {
         }
     }, [addImageReport]);
 
-    
+    const MultiValueLabel = (props) => {
+        // console.log('awesome: ', props)
+        return (
+            <components.MultiValueLabel key={props.data.id} {...props} >
+                <div key={props.data.value}>
+                    {props.data.label}
+                </div>
+            </components.MultiValueLabel>
+        );
+    };
+    const Option = (props) => {
+        // console.log('awesome: ', props)
+        return (
+            <components.Option key={props.data.id} {...props} >
+                <div 
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start"
+                    }} 
+                    key={props.data.value}
+                >
+                    <img style={{
+                        height: "20px",
+                        width: "20px",
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        marginRight: "1rem"
+                    }} src={props.data.url} alt="" />
+                    {props.data.label}
+                </div>
+            </components.Option>
+        );
+    };
 
     return (<>
         {toast}
+        {prompt}
         <div className="manage-item-main p-2 mt-2  w-100 flex-row-start-between">
             <div className="itemlist-container bg-red flex-col-center-start">
                 <button onClick={() => reset()} className="btn-purple">Add New Item</button>
@@ -458,7 +513,15 @@ export default function ManageItem() {
                                             value={selectedColors}
                                             onChange={handleColorSelectChange} 
                                             options={availableColor}
-                                            isMulti={true}
+                                            isMulti
+                                            components={{MultiValueLabel, Option}}
+                                            innerProps={{
+                                                "MultiValueLabel": {
+                                                    key: rngFilename()
+                                                }
+                                            }}
+                                            getOptionValue={option => option.value}
+                                            getOptionLabel={option => option.label}
                                         />
                                         {/* <button onClick={e => handleAddColorClick(e)} className="btn-blue">Add</button> */}
                                     </div>
@@ -476,6 +539,7 @@ export default function ManageItem() {
                     
                 </div>
                 <button onClick={() => handleSaveItemClick()} className='btn-green mt-2'>Save</button>
+                {itemID && <button onClick={() => handleDeleteItemClick()} className='btn-red mt-2'>Delete</button>}
             </div>
 
         </div>
