@@ -110,7 +110,7 @@ export default function HomeWallpaper() {
                         <div className="center3 flex-row-center-center">
                             <div className="center2 flex-row-center-center">
                                 <div className="center1 flex-row-center-center">
-                                    {selectedCategory && <Link to={`gallery/?categoryid=${selectedCategory.categoryID}`}><img className='centerImg' src={selectedCategory.url} alt="" /></Link>}
+                                    {selectedCategory && <Link className='centerImg-con' to={`gallery/?categoryid=${selectedCategory.categoryID}`}><img className='centerImg' src={selectedCategory.url} alt="" /></Link>}
                                 </div>
                             </div>
                         </div>

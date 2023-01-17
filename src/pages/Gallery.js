@@ -41,7 +41,7 @@ export const Gallery = ({nav, setNav, closeNav}) => {
       setSelCatItems(items.filter(item => item.category === selectedCategory.id))
       searchParams.set("categoryid", selectedCategory.id)
     }
-  }, [items, selectedCategory]);
+  }, [items, selectedCategory, searchParams]);
   
 
   

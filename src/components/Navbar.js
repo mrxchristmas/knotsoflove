@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -6,12 +6,43 @@ import { NavLink } from 'react-router-dom'
 import anon from '../assets/anonymous.jpg'
 import { useIsMobile } from '../hooks/useIsMobile'
 import { useLocation } from 'react-router-dom' 
+import { useCollection } from '../hooks/useCollection'
 
 export default function Navbar({ openNav }) {
   const { logout } = useAuth()
   const { user, ADMIN_UID } = useAuthContext()
   const { isMobile } = useIsMobile()
   const location = useLocation()
+  const { documents: _orders } = useCollection('orders')
+
+  
+
+  const [orders, setOrders] = useState(null);
+
+  useEffect(() => {
+    if(_orders){
+      // console.log(_orders);
+      setOrders(_orders)
+    }
+  }, [_orders]);
+
+  const getNotif = () => {
+    let x = 0
+    orders.forEach(order => {
+      order.messages.forEach(om => {
+        // console.log(om);
+        let y = true
+        om.read.forEach(id => {
+          // console.log(id === user.ADMIN_UID);
+          if(id === user.uid) y = false
+        })
+        y && x++
+      })
+    })
+    return x
+  }
+
+
   
 
   // const x = !user.isAnonymous ? user.photoURL : anon;
@@ -43,19 +74,34 @@ export default function Navbar({ openNav }) {
 
         {user && 
           <div className="profile-container flex-col-end-center position-relative">
-            <div onClick={() => setIsProfileOpen(!isProfileOpen)} className="profile-img-name-container flex-row-center-end">
-              {!isMobile && <span className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
-              <img className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} alt="" />
+            <div className="profile-img-name-container flex-row-center-end">
+              {orders && getNotif() > 0 && 
+                <div className="profile-notif flex-col-center-center mr-1">
+                  <p className="counter flex-row-center-center">{getNotif()}</p>
+                  <img className='' src='/icons/bell-solid.svg' alt="" />
+                </div>
+              }
+
+              
+              {!isMobile && <span onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
+              <img onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} alt="" />
             </div>
             {isProfileOpen && user && 
               <div className="profile-popup-container mt-1 p-1 flex-col-center-center">
-                <span className=''>Hello {!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}!</span>
-                <hr />
-                {ADMIN_UID === user.uid && <Link to="/manage" className="btn-black text-white ">Manage Website</Link> }
-                {!user.isAnonymous && <button className="btn-pink mt-1">View Favorites</button> }
-                {user.isAnonymous && <p>You will lose all data when you logout</p> }
-                {user.isAnonymous && <button className="btn-green">Link Guest Account</button> }
-                <button className="btn-red mt-1" onClick={() => logout()}>Logout</button>
+              {/* <div className="face1 display-none" style={{display: 'none'}}> */}
+                <div className="face1 display-none" >
+                  <span className=''>Hello {!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}!</span>
+                  <hr />
+                  {ADMIN_UID === user.uid && <Link to="/manage" className="btn-black text-white ">Manage Website</Link> }
+                  {!user.isAnonymous && <button className="btn-pink mt-1">View Favorites</button> }
+                  {!user.isAnonymous && <button className="btn-blue mt-1">Messages</button> }
+                  {user.isAnonymous && <p>You will lose all data when you logout</p> }
+                  {user.isAnonymous && <button className="btn-green">Link Guest Account</button> }
+                  <button className="btn-red mt-1" onClick={() => logout()}>Logout</button>
+                </div>
+                <div className="face2 messenger flex-col-center-center">
+                  
+                </div>
               </div>
             }
             
@@ -72,7 +118,6 @@ export default function Navbar({ openNav }) {
 
       
 
-      
 
       
       

@@ -9,6 +9,7 @@ import { useFavorite } from '../hooks/useFavorite'
 import { scrollToTop } from '../helper/helper'
 import { useFirestore } from '../hooks/useFirestore'
 import { useAuthContext } from '../hooks/useAuthContext'
+import ItemOrderRequest from '../components/ItemOrderRequest'
 
 export default function Item() {
     const { user } = useAuthContext()
@@ -79,7 +80,7 @@ export default function Item() {
 
     return (
         <div className="item-main w-100 mt-3 flex-col-center-center">
-        {document && selectedImage && favs && <>
+        {document && selectedImage &&  <>
             <div className={`item-details-container flex-${isMobile ? "col-center-start" : "row-start-between"} `}>
                 <div className={`item-image-container flex-${isMobile ? "colr-center" : "row-start"}-between`}>
                     <div className={`item-thumbnails-container flex-${isMobile ? "row" : "col"}-center-start`}>
@@ -113,24 +114,23 @@ export default function Item() {
                         <p>{document.size}</p>
                     </>}
                     {/* <input type="text" className="input" /> */}
-                    <p className="minitext text-red">Please include where you want to be contacted back (eg. phone, email, or in app)</p>
-                    <textarea className="input" placeholder='ask a question or a special request eg(colors, size, etc.)'></textarea>
-                    <button className="btn-gray">Submit Order Request</button>
+                    <ItemOrderRequest item={document} />
                 </div>
             </div>
-            <div className="frequent flex-col-start-start ">
-                <h3>Your Favorite Items</h3>
-                <div className="frequent-widget-container mt-1 flex-row-start-start">
-                    {favs && favs.map(fav => (
-                        <Link key={fav.id} to={`/item/${fav.id}`} className="frequent-widget flex-col-center-center">
-                            <img src={fav.images[0].url} alt="" />
-                            <span>{fav.name}</span>
-                            <p>{fav.description}</p>
-                        </Link>
-                    ))}
+            {favs && 
+                <div className="frequent flex-col-start-start ">
+                    <h3>Your Favorite Items</h3>
+                    <div className="frequent-widget-container mt-1 flex-row-start-start">
+                        {favs.map(fav => (
+                            <Link key={fav.id} to={`/item/${fav.id}`} className="frequent-widget flex-col-center-center">
+                                <img src={fav.images[0].url} alt="" />
+                                <span>{fav.name}</span>
+                                <p>{fav.description}</p>
+                            </Link>
+                        ))}
+                    </div>
                 </div>
-                
-            </div>
+            }
             <div className="frequent flex-col-start-start ">
                 <h3>Customers Most Ordered</h3>
                 <div className="frequent-widget-container mt-1 flex-row-center-start">

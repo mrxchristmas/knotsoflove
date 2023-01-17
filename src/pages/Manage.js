@@ -19,6 +19,7 @@ export default function Manage() {
             <span className="m-0-1">Testimonials</span>
             <span className="m-0-1">Home Page</span>
             <span className="m-0-1">Discounts</span>
+            <NavLink to="/manage/messages" className="m-0-1">Messages</NavLink>
             <NavLink to="/manage/colors" className="m-0-1">Colors</NavLink>
             <NavLink to="/manage/category" className="m-0-1">Category</NavLink>
         </div>

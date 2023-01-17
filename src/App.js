@@ -20,6 +20,7 @@ import ManageItem from './components/ManageItem'
 
 
 import { useState } from 'react'
+import ManageMessages from './components/ManageMessages'
 
 
 function App() {
@@ -28,7 +29,6 @@ function App() {
   const [nav, setNav] = useState(false)
   const NavButtonOpen = <img onClick={() => setNav(true)} src="icons/menu_black_48dp.svg" alt="" />
   const NavButtonClose = <img onClick={() => setNav(false)} src="icons/close_black_48dp.svg"  alt=""/>
-
   
   return (
     <div className="App">
@@ -42,6 +42,7 @@ function App() {
               <Route path="/manage/category/" element={ <ManageCategory /> } />
               <Route path="/manage/colors/" element={ <ManageColors /> } />
               <Route path="/manage/item/" element={ <ManageItem /> } />
+              <Route path="/manage/messages/" element={ <ManageMessages /> } />
             </Route>
             <Route path="/about/" element={ <About /> } />
             <Route path="/contact/" element={ <Contact /> } />

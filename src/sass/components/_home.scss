@@ -85,17 +85,26 @@
     transform: scale(1.2);
  }
 
- /* .center0{
-    position: relative;
- } */
+// .center1{
+//     position: relative;
+// } 
+//  .centerImg-con{
+//     // position: absolute;
+//     // min-height: 350px;
+//     // min-width: 350px;
+//     // aspect-ratio: 1 / 1;
+//     // background-color: red;
+//  }
  .centerImg{
     height: 350px;
     width: 350px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 50%;
     animation: float2 6s ease-in-out infinite;
     cursor: pointer;
     overflow: visible;
+    // background-color: red;
  }
  .centerImgText{
     position: absolute;
@@ -213,7 +222,7 @@
     }
     .centerImg{
         height: 400px;
-        width: 400px;
+        min-width: 400px;
     }
     .homecat-container > .circle{
         height: 130px;
