@@ -81,7 +81,7 @@
     position: absolute;
     top: 20px;
     left: 30%;
-    height: 20px;
+    height: 15px;
     aspect-ratio: 1 / 1;
     cursor: pointer;
     /* background-color: red; */
@@ -303,7 +303,7 @@
     margin-top: 10px;
 }
 .mmmrcq-items-widget .button-action-container{
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #b5813e;
 }
 .mmmrcq-items-widget .button-action-container button{
     /* background-color: red; */
@@ -352,7 +352,57 @@
     padding: 12px;
     border-radius: 5px;
 }
+.manage-messages-main .right .replybox img.closed{
+    background-color: rgb(230, 230, 230);
+}
 
 .manage-messages-main .minitext{
     font-size: 0.8em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.manage-sales-main .header img{
+    height: 40px;
+    cursor: pointer;
+    padding: 10px;
+}
+.manage-sales-main .header h3{
+    padding: 5px 1rem;
+    width: 50%;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
 }

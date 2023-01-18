@@ -12,7 +12,7 @@ export default function ManageMessages() {
 
     const { documents } = useCollection('orders')
     const { user } = useAuthContext()
-    const { setDocument } = useFirestore('orders')
+    const { setDocument, deleteDocument } = useFirestore('orders')
     const { addDocument : addSalesDocument } = useFirestore('sales')
 
     const { prompt, promptChoice } = usePrompt()
@@ -45,6 +45,7 @@ export default function ManageMessages() {
         if(selectedOrder){
             orders.forEach(o => {
                 if(o.id === selectedOrder.id){
+                    setIsSettingsOpen(false)
                     setSelectedOrder(o)
                     setConversation(o.messages.sort((a,b) => a.createdAt < b.createdAt))
                     contentRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -125,11 +126,10 @@ export default function ManageMessages() {
     const handleSaleCompleteClick = (e, item) => {
         const p = e.target.previousElementSibling.value
         const data = {
-            buyer: {
-                id: selectedOrder.user.id,
-                name: selectedOrder.user.name
-            },
+            buyerid: selectedOrder.user.id,
+            buyerName: selectedOrder.user.name,
             item: item,
+            itemid: item.id,
             salePrice: p === "" ? item.price : p,
             receiptTag: selectedOrder.receiptTag
         }
@@ -163,6 +163,44 @@ export default function ManageMessages() {
         .catch(() => {
             showToast({
                 message: "An Error has Occured while adding Sales Record..."
+            })
+        })
+    }
+
+    const handleOrderCloseClick = () => {
+        console.log(selectedOrder)
+        promptChoice("Confirm Close Order")
+        .then(() => {
+
+            const nd = {
+                id: selectedOrder.id,
+                items: selectedOrder.items,
+                messages: selectedOrder.messages,
+                user: selectedOrder.user
+            }
+            setDocument(selectedOrder.id, {...nd,
+                isClosed: true
+            })
+            .then(() => {
+                showToast({message: "Order Successfully Closed"})
+            })
+            .catch((err) => {
+                showToast({message: `There was an error Closing the Order: ${err.message }`})
+            })
+        })
+    }
+
+    const handleOrderDeleteClick = () => {
+        promptChoice("Confirm Delete Record")
+        .then(() => {
+            deleteDocument(selectedOrder.id)
+            .then(() => {
+                showToast({message: "Record Successfully Deleted"})
+                setSelectedOrder(null)
+                setIsSettingsOpen(false)
+            })
+            .catch((err) => {
+                showToast({message: `There was an error Deleting the Record: ${err.message }`})
             })
         })
     }
@@ -220,15 +258,21 @@ export default function ManageMessages() {
                                     </div>
                                 </div>
                             ))}
-                            
-                            <button className="btn-black text-white mt-1">Close Order</button>
-                            <button className="btn-red text-white mt-1">Delete Message Record</button>
+                            {selectedOrder && !selectedOrder.isClosed && 
+                                <button onClick={() => handleOrderCloseClick()} className="btn-black text-white mt-1">Close Order</button>
+                            }
+                            <button onClick={() => handleOrderDeleteClick()} className="btn-red text-white mt-1">Delete Message Record</button>
                         </div> 
                     }
 
                     <div className="replybox mt-1 flex-row-center-between">
-                        <textarea disabled={isSettingsOpen} className="input"></textarea>
-                        <img onClick={e => {!isSettingsOpen && handleSendMessage(e)}} src="/icons/paper-plane-solid.svg" alt="" />
+                        {selectedOrder && selectedOrder.isClosed ? <>
+                            <textarea disabled={true} className="input" placeholder="Order is Closed" ></textarea>
+                            <img className="closed" src="/icons/paper-plane-solid.svg" alt="" />
+                        </> : <>
+                            <textarea disabled={isSettingsOpen} className="input"></textarea>
+                            <img onClick={e => {!isSettingsOpen && handleSendMessage(e)}} src="/icons/paper-plane-solid.svg" alt="" />
+                        </>}
                     </div>
                 </>}
             </div>

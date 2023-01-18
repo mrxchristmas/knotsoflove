@@ -129,7 +129,7 @@ export default function ManageColors() {
 
                     {documents && documents.map(doc => (
                         <div key={doc.id} className="manage-colors-page-widget pl-1 pt-1 col-4-sm col-3-md col-2-lg flex-row-center-between">
-                            <img onClick={() => handleDeleteClick(doc.id, doc.name, doc.url)} className="delete" src="/icons/delete_black_48dp.svg" alt="" /> 
+                            <img onClick={() => handleDeleteClick(doc.id, doc.name, doc.url)} className="delete" src="/icons/trash-solid.svg" alt="" /> 
                             <div className="imgcover">
                                 <img src={doc.url} alt="" />
                             </div>

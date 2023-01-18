@@ -21,6 +21,7 @@ import ManageItem from './components/ManageItem'
 
 import { useState } from 'react'
 import ManageMessages from './components/ManageMessages'
+import ManageSales from './components/ManageSales'
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/manage/colors/" element={ <ManageColors /> } />
               <Route path="/manage/item/" element={ <ManageItem /> } />
               <Route path="/manage/messages/" element={ <ManageMessages /> } />
+              <Route path="/manage/sales/" element={ <ManageSales /> } />
             </Route>
             <Route path="/about/" element={ <About /> } />
             <Route path="/contact/" element={ <Contact /> } />
