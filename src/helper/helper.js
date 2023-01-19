@@ -150,6 +150,31 @@ export const getDateNow =()=>{
     
     return {year, month, day}
 }
+export const getDateNowToText =()=>{
+    const date = new Date();
+    const d = date.getDate();
+    const m = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    // console.log(d, m, year)
+
+    let day = '';
+    let month = '';
+
+    if(parseInt(d) <= 9){
+        day = '0' + d;
+    }else{
+        day = d;
+    }
+
+    if(parseInt(m) <= 9){
+        month = '0' + m;
+    }else{
+        month = m;
+    }
+    
+    return `${month}-${day}-${year}`
+}
 export const getDateNowText =()=>{
     const date = new Date();
     const d = date.getDate();
@@ -202,67 +227,107 @@ export const dateToText = (_date) =>{
     return `${month}-${day}-${year}`
 }
 
-export const zgetMonthObject =(d)=>{
-    const date = new Date(d)
-    const fd = new Date(date.getFullYear(), date.getMonth(), 1);
-    const ld = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    let ret = [];
-    const lmld = new Date(date.getFullYear(), date.getMonth(), 0);
-    const lmzd = new Date(date.getFullYear(), date.getMonth(), 0)
-    lmzd.setDate((lmzd.getDate() - lmzd.getDay()));
+export const dateTextToWord = (datetext, format="MM DD") => {
+    // const m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    const z = datetext.split('-')
 
-    // console.log('AAAAA', lmzd, lmld, lmzd.getDate() - lmzd.getDay())
+    const m = [
+        {
+            month: "01",
+            monthText: "Jan",
+            fullMonthText: "January"
+        },{
+            month: "02",
+            monthText: "Feb",
+            fullMonthText: "February"
+        },{
+            month: "03",
+            monthText: "Mar",
+            fullMonthText: "March"
+        },{
+            month: "04",
+            monthText: "Apr",
+            fullMonthText: "April"
+        },{
+            month: "05",
+            monthText: "May",
+            fullMonthText: "May"
+        },{
+            month: "06",
+            monthText: "Jun",
+            fullMonthText: "June"
+        },{
+            month: "07",
+            monthText: "Jul",
+            fullMonthText: "July"
+        },{
+            month: "08",
+            monthText: "Aug",
+            fullMonthText: "August"
+        },{
+            month: "09",
+            monthText: "Sept",
+            fullMonthText: "September"
+        },{
+            month: "10",
+            monthText: "Oct",
+            fullMonthText: "October"
+        },{
+            month: "11",
+            monthText: "Nov",
+            fullMonthText: "November"
+        },{
+            month: "12",
+            monthText: "Dec",
+            fullMonthText: "December"
+        } 
+
+        
     
-    const add = lmld.getDate() - lmzd.getDate() + 1;
-
-
-    let x = parseInt(fd.getDate())
-    let y = parseInt(ld.getDate()) + add
-
-    console.log(x, y, add)
-    while (x < y){
-        let week = []; 
-        const current = new Date(date.getFullYear(), date.getMonth(), x)
-        current.setDate((current.getDate() - current.getDay()));
-        for (var i = 0; i < 7; i++) {
-            week.push(
-                dateToText( new Date(current) )
-            ); 
-            current.setDate(current.getDate() +1);
-            // if(ld.getMonth === current.getMonth()){
-                x++;
-            // }
+    ]
+    let mm = ""
+    m.forEach(me => {
+        if(z[0] === me.month){
+            if(format === "MMMM DD, YYYY"){
+                mm = me.fullMonthText
+            }else if(format === "MM DD"){
+                mm = me.monthText
+            }
         }
-        ret.push(week)
-    }
+    })
 
-    return ret;
+    if(format === "MM DD"){
+        return `${mm} ${z[1]}`
+    }else if(format === "MMMM DD, YYYY"){
+        return `${mm} ${z[1]}, ${z[2]}`
+    }
 }
 
 export const getMonthObject =(d)=>{
+    let ret = [];
+
     const darr = d.split('-')
     const date = getCorrectDateFormat({
         day: darr[1],
         month: darr[0],
         year: darr[2]
     })
-    const fd = new Date(date.getFullYear(), date.getMonth(), 1);
-    const ld = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    let ret = [];
-    const lmld = new Date(date.getFullYear(), date.getMonth(), 0);
-    const lmzd = new Date(date.getFullYear(), date.getMonth(), 0)
-    lmzd.setDate((lmzd.getDate() - lmzd.getDay()));
-    
-    const add = lmld.getDate() - lmzd.getDate() + 1;
 
-    // return `AAAAA, ${fd} ${ld} ${lmld} ${lmzd} `
+    // getting first and last date of month
+    const fd = new Date(date.getFullYear(), date.getMonth(), 1)
+    const ld = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
+    // console.log(fd.getDay());
+    // console.log(Math.abs(ld.getDay() - 6));
+    // this add variable is the extra days before and after the month
+    // eg. if Feb 1 is a Wed then theres ( Sun, Mon, Tue ) extra days to complete the week
+    const add = fd.getDay() + (Math.abs(ld.getDay() - 6 ));
     let x = parseInt(fd.getDate())
     let y = parseInt(ld.getDate()) + add
 
+    // build the whole month calendar separated weekly into array
     while (x < y){
         let week = []; 
-        // const current = new Date(date.getFullYear(), date.getMonth(), x)
         const current = new Date(date.getFullYear(), date.getMonth(), x)
         current.setDate((current.getDate() - current.getDay()));
         for (var i = 0; i < 7; i++) {
@@ -270,16 +335,11 @@ export const getMonthObject =(d)=>{
                 dateToText( new Date(current) )
             ); 
             current.setDate(current.getDate() +1);
-            // if(ld.getMonth === current.getMonth()){
-                x++;
-            // }
+            x++;
         }
         ret.push(week)
     }
-
-    // console.log(ret)
     return ret;
-
 }
 
 export const getCorrectDateFormat =({day, month, year})=>{
@@ -390,6 +450,7 @@ export const getFirstAndLastDateOfMonth = (month, year) => {
 
     // const nd = new Date(`${month}-01-${year}`)
     // const darr = d.split('-')
+
     const nd = getCorrectDateFormat({
         day: '01',
         month: month,
@@ -399,8 +460,6 @@ export const getFirstAndLastDateOfMonth = (month, year) => {
     const sd = new Date(nd)
     sd.setMonth(sd.getMonth() + 1)
     sd.setDate(0)
-
-    // console.log(dateToText(nd), dateToText(sd))
 
     return {
         first: dateToText(nd),

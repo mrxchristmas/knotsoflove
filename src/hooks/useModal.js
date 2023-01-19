@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import '../helper/Toast.css'
 import '../helper/Modal.css'
 
-export const useModal =(closeCallback=()=>{})=>{
+export const useModal = ( closeCallback=()=>{} )=>{
 
 
     const [modal, setModal] = useState(null)
@@ -30,7 +30,7 @@ export const useModal =(closeCallback=()=>{})=>{
         setModal(ReactDOM.createPortal((
             <div onClick={handleClick} className="modal-container-backdrop" ref={modalRef}>
                 <div className="modal-container">
-                    <img onClick={closeModal} src="/icons/close_black_48dp.svg" alt="" className="modal-close" />
+                    <img onClick={closeModal} src="/icons/xmark-solid.svg" alt="" className="modal-close" />
                     {modalContent}
                 </div>
             </div>

@@ -130,7 +130,7 @@ export default function ManageMessages() {
             buyerName: selectedOrder.user.name,
             item: item,
             itemid: item.id,
-            salePrice: p === "" ? item.price : p,
+            salePrice: p === "" ? parseFloat(item.price) : parseFloat(p),
             receiptTag: selectedOrder.receiptTag
         }
         // console.log(data);
