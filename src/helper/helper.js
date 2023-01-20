@@ -1337,3 +1337,6 @@ export const fetchImage = async (url) => {
 
 };
 
+export const qrcode = text => {
+    return encodeURI(`https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${text}`)
+}

@@ -304,6 +304,7 @@
 }
 .mmmrcq-items-widget .button-action-container{
     border-bottom: 1px solid #b5813e;
+    margin-top: 5px;
 }
 .mmmrcq-items-widget .button-action-container button{
     /* background-color: red; */
@@ -320,6 +321,13 @@
     border-radius: 10px 0px 0px 10px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
     border: none;
+}
+.mmmrcq-items-widget-link{
+    font-size: 0.7em;
+    padding: 1px 10px;
+    border-radius: 10px;
+    text-decoration: underline;
+    /* background-color: red; */
 }
 
 
@@ -440,7 +448,7 @@
 
 .manage-sales-print{
     position: absolute;
-    min-height: 70vh;
+    max-height: 70vh;
     border-radius: 1rem;
 }
 .manage-sales-print .header{
@@ -458,6 +466,16 @@
     overflow: hidden;
     overflow-y: auto;
     overflow-x: auto;
+}
+.manage-sales-print .minitext{
+    font-size: 0.7rem;
+}
+.manage-sales-print .shipping-input{
+    border-width: 0px;
+    /* background-color: whitesmoke; */
+    padding: 5px 10px;
+    border-radius: 5px;
+    
 }
 
 .paper{

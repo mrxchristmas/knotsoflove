@@ -7,6 +7,7 @@ import { rngPassword } from "../helper/helper"
 import { useFirestore } from "../hooks/useFirestore"
 import { usePrompt } from "../hooks/usePrompt"
 import { useToast } from "../hooks/useToast"
+import { Link } from "react-router-dom"
 
 export default function ManageMessages() {
 
@@ -128,12 +129,14 @@ export default function ManageMessages() {
         const data = {
             buyerid: selectedOrder.user.id,
             buyerName: selectedOrder.user.name,
+            buyerPhotoURL: selectedOrder.user.photoURL,
+            buyerEmail: selectedOrder.user.email,
             item: item,
             itemid: item.id,
             salePrice: p === "" ? parseFloat(item.price) : parseFloat(p),
             receiptTag: selectedOrder.receiptTag
         }
-        // console.log(data);
+        console.log(data);
         addSalesDocument(data).then(() => {
             showToast({
                 message: "Successfully Added Sales Record..."
@@ -214,7 +217,7 @@ export default function ManageMessages() {
                     <div onClick={() => setSelectedOrder(order)} key={order.id} className="widget p-1 bg-red flex-row-center-start">
                         {getNotif(order) > 0 && <p className="counter flex-col-center-center">{getNotif(order)}</p>}
                         {/* <ImageLoader url={order.user.photoURL} /> */}
-                        <img src={order.user.photoURL} alt="" />
+                        <img src={order.user.photoURL} referrerPolicy="no-referrer" alt="" />
                         <span>{order.user.name}</span>
                     </div>
                 )) : <div className="widget p-1 bg-red flex-row-center-center">
@@ -246,7 +249,10 @@ export default function ManageMessages() {
                             <p className="minitext ">{`*Close orders after checkout or if cancelled by the buyer.`}</p>
                             {selectedOrder && selectedOrder.items.map(soi => (
                                 <div key={soi.id} className="mmmrcq-items-widget w-100 flex-col-start-start">
-                                    <span className="name">{soi.name} - ${soi.price}</span>
+                                    <span className="name flex-row-center-start">
+                                        {soi.name} - ${soi.price} 
+                                        <Link target="_blank" rel="noreferrer" className="mmmrcq-items-widget-link bg-yellow ml-1 text-white" to={`/item/${soi.id}`}> Item Link</Link> 
+                                    </span>
                                     <div className="button-action-container pb-1 w-100 flex-row-center-start">
                                         {!soi.isSold && <>
                                             <button onClick={() => handleRemoveItemClick(soi.id)} className="btn-red mr-1">Remove Item</button>

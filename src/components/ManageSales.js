@@ -1,12 +1,15 @@
 
-import { getDateNow, getMonthObject, getDateNowToText, dateTextToWord } from "../helper/helper"
+import { getDateNow, getMonthObject, getDateNowToText, dateTextToWord, rngPassword, qrcode } from "../helper/helper"
 import { useEffect, useRef, useState } from "react";
 import { useSales } from "../hooks/useSales";
 import staticlogo from '../assets/logostatic.svg'
 import { useReactToPrint } from 'react-to-print'
+import { useFirestore } from "../hooks/useFirestore";
+import { useToast } from "../hooks/useToast";
 
 export default function ManageSales() {
 
+    const qrcodeBaseURL = 'http://localhost:3000/writetestimonials/'
 
     const z = getDateNow()
     const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ]
@@ -39,6 +42,8 @@ export default function ManageSales() {
         return `${months[index]}-01-${z.year}`
     }
 
+    const { setDocument } = useFirestore("testimony")
+
     const [monthObj, setMonthObj] = useState(getMonthObject( getDateNowToText() ))
     const [selectedMonth, setSelectedMonth] = useState(null)
     const [selectedMonthText, setSelectedMonthText] = useState(null)
@@ -49,11 +54,133 @@ export default function ManageSales() {
     const [lastDate, setLastDate] = useState(null)
     const [salesParam, setSalesParam] = useState(null);
     const [totalPrice, setTotalPrice] = useState(0);
+    
+    const [isPrintOpen, setIsPrintOpen] = useState(false);
+    const [isThanksCardOpen, setIsThanksCardOpen] = useState(false);
+    const [isTestimonyTicketOpen, setIsTestimonyTicketOpen] = useState(false);
+    const [isInvoiceOpen, setIsInvoiceOpen] = useState(true);
 
     const printComponentRef = useRef(null)
 
+    const [receiptSortedSales, setReceiptSortedSales] = useState(null);
+    const [selectedPrintSale, setSelectedPrintSale] = useState(null);
+    const [shippingPrice, setShippingPrice] = useState(0);
+
+    const [testimonyId, setTestimonyId] = useState(rngPassword());
+    const qrcodeURL = qrcode(`${qrcodeBaseURL}${testimonyId}`)
+    
+
     
     const { documents: sales } = useSales(salesParam)
+    const { toast, showToast } = useToast(2000)
+
+
+    const getTotalSaleAmount = items => {
+        let x = 0
+        items.forEach(i => {
+            x += i.salePrice
+        })
+        return x
+    }
+    const formatNum = num => {
+        return (Math.round(num * 100) / 100).toFixed(2)
+    }
+    const createReceiptSortedSales = (_sales) => {
+        // console.log(_sales);
+        let newSalesObj = []
+        const newTemplate = (sale, sameReceiptTag=false) => {
+            return !sameReceiptTag ? {
+                id: rngPassword(),
+                buyerid: sale.buyerid,
+                buyerName: sale.buyerName,
+                buyerEmail: sale.buyerEmail,
+                buyerPhotoURL: sale.buyerPhotoURL,
+                createdAt: sale.createdAt,
+                item: [
+                    {
+                        id: sale.itemid,
+                        name: sale.item.name,
+                        price: sale.item.price,
+                        salePrice: sale.salePrice
+                    }
+                ],
+                receiptTag: sale.receiptTag
+            } : {
+                id: sale.itemid,
+                name: sale.item.name,
+                price: sale.item.price,
+                salePrice: sale.salePrice
+            }
+        }
+        const findAndAppendItem = (receiptTag, sale) => {
+            let i
+            if(newSalesObj.length > 0){
+                let y = false
+                newSalesObj.every((nso, index) => {
+                    if(nso.receiptTag === receiptTag){
+                        i = index
+                        y = true
+                        return false
+                    }else {
+                        return true
+                    }
+                })
+                if(y){
+                    newSalesObj[i].item.push(newTemplate(sale, true))
+                }else{
+                    newSalesObj.push(newTemplate(sale))
+                }
+            }else{
+                newSalesObj.push(newTemplate(sale))
+            }
+        }
+
+        _sales.forEach(sale => {
+            findAndAppendItem(sale.receiptTag, sale)
+        })
+        return newSalesObj
+    }
+    const handleAfterPrint = () => {
+        console.log(selectedPrintSale)
+        // console.log(qrcodeURL);
+        // id: testimonyId,
+        if(isTestimonyTicketOpen){
+
+            const obj = {
+                writerid : selectedPrintSale.buyerid,
+                writerName: selectedPrintSale.buyerName,
+                writerEmail: selectedPrintSale.buyerEmail,
+                writerPhotoURL: selectedPrintSale.buyerPhotoURL,
+                items: selectedPrintSale.item,
+                testimony : "",
+                isAvailable : true,
+                isValidated : false,
+                showOnPage : false
+            }
+
+            setDocument(testimonyId, obj)
+            .then(() => {
+                showToast({
+                    message: "Created Testimony Ticket"
+                })
+            })
+            .catch(() => {
+                showToast({
+                    message: "Erro Creating Testimony Ticket"
+                })
+            })
+
+        }
+    }
+    const handlePrint = useReactToPrint({
+        content: () => printComponentRef.current,
+        copyStyles: true,
+        onAfterPrint : handleAfterPrint,
+        documentTitle : `${selectedPrintSale ? selectedPrintSale.buyerName : "Guest"}_INVOICE_${selectedPrintSale? selectedPrintSale.receiptTag : rngPassword()}`
+    });
+
+    // handleAfterPrint()
+    
 
 
     useEffect(() => {
@@ -224,6 +351,10 @@ export default function ManageSales() {
                 p += sale.salePrice
             })
             setTotalPrice(p)
+            // console.log(sales);
+            setReceiptSortedSales(createReceiptSortedSales(sales))
+        }else{
+            setReceiptSortedSales(null)
         }
     }, [sales]);
 
@@ -238,141 +369,233 @@ export default function ManageSales() {
 
     // console.log(sales);
 
+    // const handleCreateTest = () => {
+    //     const obj = {
+    //         writerid : rngPassword(),
+    //         writerName: "Jeffery Phillips",
+    //         writerEmail: "jeffery.phillips@example.com",
+    //         writerPhotoURL: "https://i.pravatar.cc/",
+    //         items: [
+    //             {
+    //                 id: rngPassword(),
+    //                 name: "Plant Hanger",
+    //                 price: 20,
+    //                 salePrice: 20
+    //             }
+    //         ],
+    //         testimony : "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus laborum vitae sunt amet voluptas esse autem quo cupiditate dolor enim libero beatae similique maiores, itaque distinctio fugiat animi minus. Ipsam.",
+    //         isAvailable : false,
+    //         isValidated : false,
+    //         showOnPage : false
+    //     }
 
-    const modalTest = () => {
-        console.log('aa');
-        
-    }
+    //     setDocument(rngPassword(), obj)
+    //     .then(() => {
+    //         showToast({
+    //             message: "Created Testimony Ticket"
+    //         })
+    //     })
+    //     .catch(() => {
+    //         showToast({
+    //             message: "Erro Creating Testimony Ticket"
+    //         })
+    //     })
+    // }
 
-    const handlePrint = useReactToPrint({
-        content: () => printComponentRef.current,
-        copyStyles: true
-    });
+    // useEffect(() => {
+    //     fetch("https://tinyfac.es/api/data?limit=10&quality=0")
+    //     .then(data => {
+    //       // console.log();
+    //       data.json()
+    //       .then(d => {
+    //         // console.log(d);
+    //         let ret = []
+    //         d.forEach(data => {
+    //         //   ret.push()
+    //         //   console.log(ret);
+    //         const obj = {
+    //             isAvailable : false,
+    //             isValidated : false,
+    //             showOnPage : false,
+    //             testimony : "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus laborum vitae sunt amet voluptas esse autem quo cupiditate dolor enim libero beatae similique maiores, itaque distinctio fugiat animi minus. Ipsam.",
+    //             writerEmail : `${data.first_name}.${data.last_name}${data.id}@example.com`.toLowerCase(),
+    //             writerName : `${data.first_name} ${data.last_name}`,
+    //             writerPhotoURL: data.url,
+    //             writerid: rngPassword(),
+    //             items: [
+    //                 {
+    //                     id: rngPassword(),
+    //                     name: "Plant Hanger",
+    //                     price: 20,
+    //                     salePrice: 20
+    //                 }
+    //             ]
+    //           }
+    //             // setDocument(rngPassword(), obj)
+    //             // .then(() => {
+    //             //     showToast({
+    //             //         message: "Created Testimony Ticket"
+    //             //     })
+    //             // })
+    //             // .catch(() => {
+    //             //     showToast({
+    //             //         message: "Error Creating Testimony Ticket"
+    //             //     })
+    //             // })
+    //         })
+    //         // console.log(ret);
+            
+    //       })
+    //     })
+    //   }, []);
+
+      
 
   return ( 
     <>
-        <div className="manage-sales-print bg-white shadow-3 container flex-col-center-start mt-3 p-1-2">
-            <div className="header w-100 flex-row-center-between pb-2">
-                <div className="actions flex-row-center-start w-70">
-                    <span className="mr-1">Invoice</span>
-                    <label className="mr-1"> <input type="checkbox"/> Thank you card</label>
-                    <label className="mr-1"> <input type="checkbox"/> Testimony Ticket</label>
-                    <img onClick={handlePrint} className="mr-1" src="/icons/print-solid.svg" alt="" />
+        {toast}
+        {/* <button onClick={handleCreateTest} className="btn">Create</button> */}
+        {isPrintOpen && 
+            <div className="manage-sales-print bg-white shadow-3 container flex-col-center-start mt-3 p-1-2">
+                <div className="header w-100 flex-row-center-between pb-2">
+                    <div className="actions flex-row-center-start w-70">
+                        <label className="mr-1"> <input checked={isInvoiceOpen} onChange={e => setIsInvoiceOpen(e.target.checked)} type="checkbox"/> Invoice</label>
+                        <label className="mr-1"> <input checked={isThanksCardOpen} onChange={e => setIsThanksCardOpen(e.target.checked)} type="checkbox"/> Thank you card</label>
+                        <label className="mr-1"> <input checked={isTestimonyTicketOpen} onChange={e => setIsTestimonyTicketOpen(e.target.checked)} type="checkbox"/> Testimony Ticket</label>
+                        <img onClick={handlePrint} className="mr-1" src="/icons/print-solid.svg" alt="" />
+                    </div>
+                    <div className="flex-row-center-end w-40">
+                        <div className="flex-col-start-start minitext">
+                            <p>Shipping Fee (keep 0 for FREE shipping)</p>
+                            <input className="w-80 mr-4 shadow-1 bg-whitesmoke shipping-input" type="number" value={shippingPrice} onChange={e => setShippingPrice(e.target.value)}  placeholder="Enter Shipping Price, 0 for FREE" />
+                        </div>
+                        <img onClick={() => setIsPrintOpen(false)} className="close" src="/icons/xmark-solid.svg" alt="" />
+                    </div>
+                </div>
+                <div className="content w-100 bg-gray p-2 flex-col-center-start">
                     
+                    <div ref={printComponentRef} className="paper-print ">
+                        {isInvoiceOpen && 
+                            <div className="paper flex-col-center-center">
+                                
+                                <div className="paper-space mt-4">
+                                    <div className="pb-2 flex-row-start-between w-100">
+                                        <div className="flex-row-center-start">
+                                            <img className="paper-logo" src={staticlogo} alt="" />
+                                            <div className="flex-col-start-center ml-1">
+                                                <h2 className="font-aureta paper-font-aureta">Knots of Love</h2>
+                                                <p className="paper-sub">&nbsp;Ajax ON, L1T 2W7</p>
+                                                <p className="paper-sub paper-web">&nbsp;https://knotsoflove.to</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex-col-start-end">
+                                            <h1>INVOICE</h1>
+                                            <p>{dateTextToWord(`${z.month}-${z.day}-${z.year}`, "MMMM DD, YYYY")}</p>
+                                        </div>
+                                    </div>
+                                    <h1>Knots Of Love</h1>
+                                    <p>Maker of premium quality handmade macrame products</p>
+                                    <div className="flex-row-center-between w-100 mt-3 paper-border-top">
+                                        <div className="flex-col-start-start">
+                                            <h4>Bill to</h4>
+                                            <p>{selectedPrintSale.buyerName}</p>
+                                            <p>{selectedPrintSale.buyerEmail}</p>
+                                        </div>
+                                        <div className="flex-col-end-start">
+                                            <h4>Payment</h4>
+                                            <p>${ formatNum(getTotalSaleAmount(selectedPrintSale.item)) }</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex-col-center-start mt-2 paper-border-top w-100">
+                                        <div className="w-100 p-1 flex-row-center-between">
+                                            <div className="paper-col-item flex-col-start-center">
+                                                <h4>Item</h4>
+                                            </div>
+                                            <div className="paper-col-price flex-col-center-center">
+                                                <h4>Price</h4>
+                                            </div>
+                                            <div className="paper-col-amount flex-col-center-center">
+                                                <h4>Amount</h4>
+                                            </div>
+                                        </div>
+                                        {selectedPrintSale.item.map(i => (
+                                            <div key={i.id} className="w-100 flex-row-center-between paper-border-top p-1">
+                                                <div className="paper-col-item flex-col-start-center">
+                                                    <p>{i.name}</p>
+                                                </div>
+                                                <div className="paper-col-price flex-col-center-center">
+                                                    <p>${formatNum(i.price)}</p>
+                                                </div>
+                                                <div className="paper-col-amount flex-col-center-center">
+                                                    <p>${formatNum(i.salePrice)}</p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        {/* <div className="w-100 flex-row-center-between paper-border-top p-1">
+                                            <div className="paper-col-item flex-col-start-center">
+                                                <p>Makuna Hatata</p>
+                                            </div>
+                                            <div className="paper-col-price flex-col-center-center">
+                                                <p>$59</p>
+                                            </div>
+                                            <div className="paper-col-amount flex-col-center-center">
+                                                <p>$57</p>
+                                            </div>
+                                        </div> */}
+                                        <div className="w-100 flex-row-center-between paper-border-top p-1">
+                                            <p>Shipping</p>
+                                            <p>{shippingPrice > 0 ? `$${shippingPrice}` : "FREE"}</p>
+                                        </div>
+                                        <div className="w-100 flex-row-center-between">
+                                            <h4>Total</h4>
+                                            <p>${formatNum(parseFloat(getTotalSaleAmount(selectedPrintSale.item)) + parseFloat(shippingPrice))}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        } {/* isInvoiceOpen end */}
+
+                        {isThanksCardOpen && 
+                            <div className="paper flex-col-center-center">
+                                <div className="paper-space mt-4 flex-col-start-start">
+                                    <span>{dateTextToWord(`${z.month}-${z.day}-${z.year}`, "MMMM DD, YYYY")}</span>
+                                    <p className="mt-2">Kaye ExPression Frianeza</p>
+                                    <p className="">Knots of Love by Kaye</p>
+                                    <p className="paper-web">https://knotsoflove.to</p>
+                                    <p className="mt-3">Dear {selectedPrintSale.buyerName},</p>
+                                    <p className="mt-1">Hello Friend! Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus autem impedit, corporis dolorum voluptas, praesentium error voluptatibus non recusandae accusantium nihil doloremque aut porro eligendi accusamus nulla a quisquam neque. Lorem</p>
+                                    <p className="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione debitis necessitatibus at?</p>
+                                    <p className="mt-5">Sincerely,</p>
+                                    <p className="font-aureta paper-font-aureta">Kaye Expression Frianeza</p>
+                                </div>
+                            </div>
+                        }{/* isThanksCardOpen end */}
+                        
+                        {isTestimonyTicketOpen && 
+                            <div className="paper flex-col-center-center">
+                                <div className="paper-space mt-4 flex-col-center-start">
+                                    <img src={staticlogo} alt="" className="paper-testimony-header" />
+                                    <h1 className="font-aureta paper-font-aureta huge paper-z1 mt-4">Knots of Love</h1>
+                                    <p className="paper-z1">by Kaye</p>
+                                    <p className="mt-3 text-align-center">is excited to announce that </p>
+                                    <p className="text-align-center">you have been selected to get a <b>$5 OFF</b> on your next purchase </p>
+                                    <p className="text-align-center">when you write a <b>Testimony</b> on our website regarding</p>
+                                    <p className="text-align-center"> your thoughts on the product/s you bought!</p>
+
+                                    <p className="mt-4">To participate, please follow this link or scan the image below.</p> 
+                                    <p className="paper-web">{`${qrcodeBaseURL}${testimonyId}`}</p> 
+                                    <p className="paper-sub">To scan the image, just open your smartphone's camera and shoot at the image below</p>
+                                    <p className="paper-sub">Please do not share this link to anyone because this may contain sensitive information.</p>
+                                    <img className="mt-5" src={qrcodeURL} alt="" />
+                                </div>
+                            </div>
+                        }{/* isTestimonyTicketOpen end */}
+                    </div>
                 </div>
-                <div className="flex-row-ccenter-center">
-                    <img className="close" src="/icons/xmark-solid.svg" alt="" />
-                </div>
+
+
             </div>
-            <div className="content w-100 bg-gray p-2 flex-col-center-start">
-                
-                <div ref={printComponentRef} className="paper-print ">
-
-                    <div className="paper flex-col-center-center">
-                        <div className="paper-space mt-4">
-                            <div className="pb-2 flex-row-start-between w-100">
-                                <div className="flex-row-center-start">
-                                    <img className="paper-logo" src={staticlogo} alt="" />
-                                    <div className="flex-col-start-center ml-1">
-                                        <h2 className="font-aureta paper-font-aureta">Knots of Love</h2>
-                                        <p className="paper-sub">&nbsp;Ajax ON, L1T 2W7</p>
-                                        <p className="paper-sub paper-web">&nbsp;https://knotsoflove.to</p>
-                                    </div>
-                                </div>
-                                <div className="flex-col-start-end">
-                                    <h1>INVOICE</h1>
-                                    <p>{dateTextToWord(`${z.month}-${z.day}-${z.year}`, "MMMM DD, YYYY")}</p>
-                                </div>
-                            </div>
-                            <h1>Knots Of Love</h1>
-                            <p>Maker of premium quality handmade macrame products</p>
-                            <div className="flex-row-center-between w-100 mt-3 paper-border-top">
-                                <div className="flex-col-start-start">
-                                    <h4>Bill to</h4>
-                                    <p>John Snow</p>
-                                    <p>john.snow_wethenorth@gmail.com</p>
-                                </div>
-                                <div className="flex-col-end-start">
-                                    <h4>Payment</h4>
-                                    <p>$45.00</p>
-                                </div>
-                            </div>
-                            <div className="flex-col-center-start mt-2 paper-border-top w-100">
-                                <div className="w-100 p-1 flex-row-center-between">
-                                    <div className="paper-col-item flex-col-start-center">
-                                        <h4>Item</h4>
-                                    </div>
-                                    <div className="paper-col-price flex-col-center-center">
-                                        <h4>Price</h4>
-                                    </div>
-                                    <div className="paper-col-amount flex-col-center-center">
-                                        <h4>Amount</h4>
-                                    </div>
-                                </div>
-                                <div className="w-100 flex-row-center-between paper-border-top p-1">
-                                    <div className="paper-col-item flex-col-start-center">
-                                        <p>Makuna Hatata</p>
-                                    </div>
-                                    <div className="paper-col-price flex-col-center-center">
-                                        <p>$59</p>
-                                    </div>
-                                    <div className="paper-col-amount flex-col-center-center">
-                                        <p>$57</p>
-                                    </div>
-                                </div>
-                                <div className="w-100 flex-row-center-between paper-border-top p-1">
-                                    <div className="paper-col-item flex-col-start-center">
-                                        <p>Makuna Hatata</p>
-                                    </div>
-                                    <div className="paper-col-price flex-col-center-center">
-                                        <p>$59</p>
-                                    </div>
-                                    <div className="paper-col-amount flex-col-center-center">
-                                        <p>$57</p>
-                                    </div>
-                                </div>
-                                <div className="w-100 flex-row-center-between paper-border-top p-1">
-                                    <p>Shipping</p>
-                                    <p>$12</p>
-                                </div>
-                                <div className="w-100 flex-row-center-between">
-                                    <h4>Total</h4>
-                                    <p>$125</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="paper flex-col-center-center">
-                        <div className="paper-space mt-4 flex-col-start-start">
-                            <span>{dateTextToWord(`${z.month}-${z.day}-${z.year}`, "MMMM DD, YYYY")}</span>
-                            <p className="mt-2">Kaye ExPression Frianeza</p>
-                            <p className="">Knots of Love by Kaye</p>
-                            <p className="">knotsoflove.to</p>
-                            <p className="mt-3">Dear Jessa,</p>
-                            <p className="mt-1">Hello Friend! Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus autem impedit, corporis dolorum voluptas, praesentium error voluptatibus non recusandae accusantium nihil doloremque aut porro eligendi accusamus nulla a quisquam neque. Lorem</p>
-                            <p className="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione debitis necessitatibus at?</p>
-                            <p className="mt-5">Sincerely,</p>
-                            <p className="font-aureta paper-font-aureta">Kaye Expression Frianeza</p>
-                        </div>
-                    </div>
-                    
-                    <div className="paper flex-col-center-center">
-                        <div className="paper-space mt-4 flex-col-center-start">
-                            <img src={staticlogo} alt="" className="paper-testimony-header" />
-                            <h1 className="font-aureta paper-font-aureta huge paper-z1 mt-4">Knots of Love</h1>
-                            <p className="paper-z1">by Kaye</p>
-                            <p className="mt-3 text-align-center">is excited to announce that </p>
-                            <p className="text-align-center">you have been selected to write a <b>Testimony</b> on our website regarding your thoughts on the product/s you bought!</p>
-                            <p className="w-100 mt-5">To participate, please follow this link <span className="web">https://knotsoflove.to/writetestimony</span> 
-                            &nbsp;or scan the image below. Please login to your Account when you visit the link. </p> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
+        }
         <div className="manage-sales-main container flex-col-center-start mt-3">
             <div className="header flex-row-center-between w-50">
                 <img onClick={() => {
@@ -403,15 +626,20 @@ export default function ManageSales() {
             </div>
 
             <div className="list flex-col-center-start w-70 mt-2">
-                {sales && sales.length > 0 ? sales.map(sale => (
-                    <div key={sale.id} className="widget bg-white flex-col-center-start w-90 p-1">
-                        <div className="flex-row-center-between w-100">
-                            <span>{sale.item.name}</span>
-                            {sale.salePrice === parseFloat(sale.item.price) ? 
-                                <span>${sale.salePrice}</span> :
-                                <span><span className="sale">${sale.item.price}</span>  ${sale.salePrice}</span>
-                            }
-                        </div>
+                {receiptSortedSales && receiptSortedSales.length > 0 ? receiptSortedSales.map(sale => (
+                    <div key={sale.id} onClick={() => {
+                        setIsPrintOpen(true)
+                        setSelectedPrintSale(sale)
+                    }} className="widget bg-white flex-col-center-start w-90 p-1">
+                        {sale.item.map(i => (
+                            <div key={i.id} className="flex-row-center-between w-100">
+                                <span>{i.name}</span>
+                                {i.salePrice === parseFloat(i.price) ? 
+                                    <span>${i.salePrice}</span> :
+                                    <span><span className="sale">${i.price}</span>  ${i.salePrice}</span>
+                                }
+                            </div>
+                        ))}
                         <div className="flex-row-center-between w-100">
                             <span className="sub">Sold to: {sale.buyerName}</span>
                             <span className="sub">{new Date(sale.createdAt.toDate()).toDateString()}</span>
@@ -426,7 +654,7 @@ export default function ManageSales() {
                     <h4>Total</h4>
                     <span>${totalPrice}</span>
                 </div>
-                <button className="btn-green mt-1" onClick={() => modalTest()}>Show Modal</button>
+                {/* <button className="btn-green mt-1" onClick={() => modalTest()}>Show Modal</button> */}
             </div>
         </div>
     </>

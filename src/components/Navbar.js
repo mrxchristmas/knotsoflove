@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { NavLink } from 'react-router-dom'
@@ -7,13 +7,15 @@ import anon from '../assets/anonymous.jpg'
 import { useIsMobile } from '../hooks/useIsMobile'
 import { useLocation } from 'react-router-dom' 
 import { useCollection } from '../hooks/useCollection'
+import { useNavigate } from 'react-router-dom'
 
-export default function Navbar({ openNav }) {
+export default function Navbar({ openNav, setUserMsgOpen }) {
   const { logout } = useAuth()
   const { user, ADMIN_UID } = useAuthContext()
   const { isMobile } = useIsMobile()
   const location = useLocation()
   const { documents: _orders } = useCollection('orders')
+  const navigate = useNavigate();
 
   
 
@@ -51,9 +53,9 @@ export default function Navbar({ openNav }) {
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   
-
+  
   return (
-    <div className="nav-main  text-black flex-row-center-between p-1-2">
+    <div className={`nav-main text-black flex-row-center-between p-1-2 ${location.pathname === '/testimonials' && "testimonial"}`}>
 
       {isMobile && location.pathname === '/gallery' && openNav}
 
@@ -76,7 +78,7 @@ export default function Navbar({ openNav }) {
           <div className="profile-container flex-col-end-center position-relative">
             <div className="profile-img-name-container flex-row-center-end">
               {orders && getNotif() > 0 && 
-                <div className="profile-notif flex-col-center-center mr-1">
+                <div onClick={() => user.uid === ADMIN_UID ? navigate('/manage/messages/') : setUserMsgOpen(true)} className="profile-notif flex-col-center-center mr-1">
                   <p className="counter flex-row-center-center">{getNotif()}</p>
                   <img className='' src='/icons/bell-solid.svg' alt="" />
                 </div>
@@ -84,7 +86,7 @@ export default function Navbar({ openNav }) {
 
               
               {!isMobile && <span onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
-              <img onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} alt="" />
+              <img onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} referrerPolicy="no-referrer" alt="" />
             </div>
             {isProfileOpen && user && 
               <div className="profile-popup-container mt-1 p-1 flex-col-center-center">
@@ -94,7 +96,7 @@ export default function Navbar({ openNav }) {
                   <hr />
                   {ADMIN_UID === user.uid && <Link to="/manage" className="btn-black text-white ">Manage Website</Link> }
                   {!user.isAnonymous && <button className="btn-pink mt-1">View Favorites</button> }
-                  {!user.isAnonymous && <button className="btn-blue mt-1">Messages</button> }
+                  {!user.isAnonymous && user.uid !== ADMIN_UID && <button onClick={() => setIsProfileOpen(false)} className="btn-blue mt-1">Messages</button> }
                   {user.isAnonymous && <p>You will lose all data when you logout</p> }
                   {user.isAnonymous && <button className="btn-green">Link Guest Account</button> }
                   <button className="btn-red mt-1" onClick={() => logout()}>Logout</button>

@@ -79,6 +79,7 @@ export default function ItemOrderRequest({ item }) {
             items: getItems(),
             user: {
                 name: user.displayName,
+                email: user.email,
                 photoURL: user.photoURL,
                 id: user.uid
             },

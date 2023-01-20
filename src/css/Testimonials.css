@@ -1,0 +1,232 @@
+.testimonials-main{
+    position: fixed;
+
+
+    /* background: linear-gradient(45deg, #dca 12%, transparent 0, transparent 88%, #dca 0),
+    linear-gradient(135deg, transparent 37%, #a85 0, #a85 63%, transparent 0),
+    linear-gradient(45deg, transparent 37%, #dca 0, #dca 63%, transparent 0) #753;
+    background-size: 25px 25px; */
+
+    /* background:
+    radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 9%, hsla(0, 100%, 20%, 0) 9%) 0 0,
+    radial-gradient(hsl(0, 100%, 27%) 4%, hsl(0, 100%, 18%) 8%, hsla(0, 100%, 20%, 0) 10%) 50px 50px,
+    radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 50px 0,
+    radial-gradient(hsla(0, 100%, 30%, 0.8) 20%, hsla(0, 100%, 20%, 0)) 0 50px,
+    radial-gradient(hsla(0, 100%, 20%, 1) 35%, hsla(0, 100%, 20%, 0) 60%) 50px 0,
+    radial-gradient(hsla(0, 100%, 20%, 1) 35%, hsla(0, 100%, 20%, 0) 60%) 100px 50px,
+    radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 0 0,
+    radial-gradient(hsla(0, 100%, 15%, 0.7), hsla(0, 100%, 20%, 0)) 50px 50px,
+    linear-gradient(45deg, hsla(0, 100%, 20%, 0) 49%, hsla(0, 100%, 0%, 1) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0,
+    linear-gradient(-45deg, hsla(0, 100%, 20%, 0) 49%, hsla(0, 100%, 0%, 1) 50%, hsla(0, 100%, 20%, 0) 70%) 0 0;
+    background-color: #300;
+    background-size: 100px 100px; */
+
+    /* background-color: #fff;
+    background-image:
+    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+    linear-gradient(#eee .1em, transparent .1em);
+    background-size: 100% 1.2em; */
+
+
+    /* --s: 80px; 
+    --c1: #f8cf95;
+    --c2: #7d3569;
+    --_g: 
+       var(--c2) 6%  14%,var(--c1) 16% 24%,var(--c2) 26% 34%,var(--c1) 36% 44%,
+       var(--c2) 46% 54%,var(--c1) 56% 64%,var(--c2) 66% 74%,var(--c1) 76% 84%,var(--c2) 86% 94%;
+    background:
+      radial-gradient(100% 100% at 100% 0,var(--c1) 4%,var(--_g),#0008 96%,#0000),
+      radial-gradient(100% 100% at 0 100%,#0000, #0008 4%,var(--_g),var(--c1) 96%)
+      var(--c1);
+    background-size: var(--s) var(--s); */
+
+
+    /* --u: 2vmin;
+    --c1: hsl(186, 73%, 66%);
+    --c2: hsl(201, 27%, 12%);
+    --c3: hsl(288, 100%, 55%);
+    --gp: 50%/calc(var(--u) * 5) calc(var(--u) * 10);
+    --bp: calc(var(--u) * -2.5) calc(var(--u) * -5);
+    height: 100vh;
+    --bg: 
+		radial-gradient(circle at 50% 25%, var(--c2) 23%, #fff0 25% 100%) var(--gp), 
+		conic-gradient(from 270deg at 34% 46%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), 
+		conic-gradient(from 45deg at 66% 46%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), 
+		conic-gradient(from 180deg at 50% 80%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), 
+		conic-gradient(from 135deg at 50% 80%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), 
+		conic-gradient(from 0deg at 0% 20%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), 
+		conic-gradient(from -45deg at 100% 20%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp), 
+		linear-gradient(180deg, var(--c2) 0 4.5%, #fff0 0 45.25%, var(--c2) 0 50%, #fff0 0% 100%) var(--gp), 
+		radial-gradient(circle at 50% 25%, #fff0 0 25%, var(--c2) 26% 32%, #fff0 0 100%) var(--gp), 
+		linear-gradient(165deg, var(--c3) -15%, var(--c1) 44%, #fff0 0 100%) var(--gp), 
+		linear-gradient(180deg, var(--c1) 50%, #fff0 0 100%) var(--gp);
+    background: var(--bg), var(--bg);
+    background-position: 
+		var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), 
+		0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+	background-color: var(--c2); */
+
+
+    /* --u:  1.5vmin;	
+	--c1: #83b0e3;
+    --c2: #6c91bb;
+    --c3: #4d6887;
+	--gp: 50%/calc(var(--u) * 5) calc(var(--u) * 10);
+	--bp: calc(var(--u) * -2.5) calc(var(--u) * -5);
+	--bg: 
+		radial-gradient(circle at 50% 25%, var(--c2)  15%, #fff0 30% 100%) var(--gp),
+		conic-gradient(from 270deg at 34% 46%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp),
+		conic-gradient(from 45deg at 66% 46%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp),
+		conic-gradient(from 180deg at 50% 80%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp),
+		conic-gradient(from 135deg at 50% 80%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp),
+		conic-gradient(from 0deg at 0% 20%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp),
+		conic-gradient(from -45deg at 100% 20%, var(--c2) 0 12.5%, #fff0 0 100%) var(--gp),
+		linear-gradient(180deg, var(--c2) 0 4.5%, #fff0 0 45.25%, var(--c2) 0 50%, #fff0 0% 100%) var(--gp),
+		radial-gradient(circle at 50% 25%, #fff0 0 25%, var(--c2) 26% 32%, #fff0 0 100%) var(--gp),
+		linear-gradient(165deg, var(--c3) 15%, var(--c1) 44%, #fff0 0 100%) var(--gp),
+		linear-gradient(180deg, var(--c1) 50%, #fff0 0 100%) var(--gp);
+	background: 
+		var(--bg), 
+		var(--bg);
+	background-position: 
+		var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), var(--bp), 
+		0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; */
+
+
+    --s: 50px;
+    --c: #191b22;
+    --_s: calc(2*var(--s)) calc(2*var(--s));
+    --_g: 35.36% 35.36% at;
+    --_c: #0000 66%,#20222a 68% 70%,#0000 72%;
+    background: 
+        radial-gradient(var(--_g) 100% 25%,var(--_c)) var(--s) var(--s)/var(--_s), 
+        radial-gradient(var(--_g) 0 75%,var(--_c)) var(--s) var(--s)/var(--_s), 
+        radial-gradient(var(--_g) 100% 25%,var(--_c)) 0 0/var(--_s), 
+        radial-gradient(var(--_g) 0 75%,var(--_c)) 0 0/var(--_s), 
+        repeating-conic-gradient(var(--c) 0 25%,#0000 0 50%) 0 0/var(--_s), 
+        radial-gradient(var(--_c)) 0 calc(var(--s)/2)/var(--s) var(--s) var(--c);
+    background-attachment: fixed;
+    
+    
+    min-height: calc(100vh - 84px);
+    top: 0px;
+    left: 0px;
+    padding-top: 84px;
+}
+.testimonials-main .wrapper{
+    height: calc(100vh - 84px);
+    max-height: calc(100vh - 84px);
+    overflow-y: auto;
+    transition: all 0.5s ease-in-out;
+    /* padding-bottom: 2rem; */
+}
+.testimonials-main .header-title{
+    /* font-size: 3rem; */
+    font-weight: bold;
+    letter-spacing: 0.3rem;
+    text-shadow: 1px 1px 5px black;
+}
+
+
+
+
+
+/* .testimonials-main .image-container{
+    
+} */
+
+.testimonials-main .onscreen-img{
+    height: 100px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+}
+.testimonials-main .onscreen-img.fadeOut{
+    transform: scale(0);
+}
+.testimonials-main .onscreen-img.fadeIn{
+    transform: scale(1);
+}
+
+.testimonials-main .selected-testimony img{
+    height: 200px;
+}
+.testimonials-main .selected-testimony span{
+    font-size: 2.2em;
+}
+.testimonials-main .selected-testimony span img{
+    height: 25px;
+}
+
+.testimonials-main .text-container{
+    position: relative;
+    color: white;
+    /* overflow: visible; */
+}
+.testimonials-main .text-container p{
+    z-index: 1;
+    text-shadow: 1px 1px 3px black;
+}
+
+.testimonials-main .text-container .quotes{
+    height: 120px;
+    position: absolute;
+    z-index: 0;
+    opacity: 0.3;
+}
+.testimonials-main .text-container .testimony{
+    transition: all 0.2s ease-in-out;
+}
+.testimonials-main .text-container .testimony.fadeOut{
+    /* transform: scale(0); */
+    opacity: 0;
+}
+.testimonials-main .text-container .testimony.fadeIn{
+    /* transform: scale(1); */
+    opacity: 1;
+}
+.testimonials-main .text-container .quotes.left{
+    left: -50px;
+    top: 0px;
+}
+.testimonials-main .text-container .quotes.right{
+    right: -50px;
+    bottom: 0px;
+}
+.testimonials-main .text-container .bg{
+    position: absolute;
+    z-index: -1;
+    /* min-height: 300px; */
+    /* height: 300px; */
+    min-width: 60vw;
+    /* aspect-ratio: 3 / 1; */
+    /* object-fit: contain; */
+}
+.testimonials-main .minitext{
+    font-size: 0.8rem;
+
+}
+.testimonials-main .item{
+    cursor: pointer;
+
+}
+.testimonials-main .minitext img{
+    height: 8px;
+}
+
+
+
+.floating { 
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+ 
+/* @keyframes floating {
+    0% { transform: translate(0,  0px); }
+    50%  { transform: translate(0px, 5px); }
+    100%   { transform: translate(0, -0px); }   
+} */
