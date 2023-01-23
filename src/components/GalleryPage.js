@@ -1,9 +1,10 @@
-// import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useFirestore } from '../hooks/useFirestore'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useDocument } from '../hooks/useDocument'
 // import { useCollection } from "../hooks/useCollection"
 // import { useIsMobile } from '../hooks/useIsMobile'
+import { useGallery } from '../hooks/useGallery'
 
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -11,20 +12,20 @@ import { Link } from 'react-router-dom'
 
 
 
-export default function GalleryPage({ data: items }) {
+export default function GalleryPage() {
 
-    
     // const { isMobile } = useIsMobile()
     const { user } = useAuthContext()
-    // const { categoryid } = useParams()
+    const { categoryid } = useParams()
+    console.log(categoryid);
+    const { documents : items } = useGallery(categoryid)
     const { document: userObj } = useDocument('users', user.uid)
-    // const { documents: items } = useCollection('items', [ [ "category", "==", selCat ] ] )
 
     
     const { setDocument } = useFirestore('users')
     const [favItems, setFavItems] = useState(null)
 
-    // console.log(items);
+    console.log(items);
     
 
    

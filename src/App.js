@@ -21,6 +21,7 @@ import ManageMessages from './components/ManageMessages'
 import ManageSales from './components/ManageSales'
 import UserMessage from './components/UserMessage'
 import WriteTestimony from './pages/WriteTestimony'
+import ManageDiscount from './components/ManageDiscount'
 
 
 import { useState } from 'react'
@@ -30,8 +31,8 @@ function App() {
   const { user, authIsReady, ADMIN_UID } = useAuthContext()
 
   const [nav, setNav] = useState(false)
-  const NavButtonOpen = <img onClick={() => setNav(true)} src="icons/menu_black_48dp.svg" alt="" />
-  const NavButtonClose = <img onClick={() => setNav(false)} src="icons/close_black_48dp.svg"  alt=""/>
+  const NavButtonOpen = <img onClick={() => setNav(true)} src="/icons/menu_black_48dp.svg" alt="" />
+  const NavButtonClose = <img onClick={() => setNav(false)} src="/icons/xmark-solid.svg"  alt=""/>
 
   const [userMessageOpen, setUserMessageOpen] = useState(false);
   
@@ -50,6 +51,7 @@ function App() {
               <Route path="/manage/item/" element={ <ManageItem /> } />
               <Route path="/manage/messages/" element={ <ManageMessages /> } />
               <Route path="/manage/sales/" element={ <ManageSales /> } />
+              <Route path="/manage/discount/" element={ <ManageDiscount /> } />
             </Route>
             <Route path="/about/" element={ <About /> } />
             <Route path="/contact/" element={ <Contact /> } />
@@ -57,6 +59,7 @@ function App() {
             <Route path="/writetestimonials/:testimonyid" element={ <WriteTestimony /> } />
             <Route path="/item/:itemid/" element={ <Item /> } />
             <Route path="/gallery/" element={ <Gallery nav={nav} setNav={setNav} closeNav={NavButtonClose} /> } />
+            <Route path="/gallery/:categoryid" element={ <Gallery nav={nav} setNav={setNav} closeNav={NavButtonClose} /> } />
             <Route path="*" element={ <Navigate to="/" />  } />
           </Routes>
         </BrowserRouter>

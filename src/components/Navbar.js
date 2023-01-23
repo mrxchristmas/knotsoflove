@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { NavLink } from 'react-router-dom'
@@ -49,15 +49,15 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
 
   // const x = !user.isAnonymous ? user.photoURL : anon;
   // console.log(!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest");
+  // console.log(location.pathname.split('/')[1]);
   
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   
-  
   return (
-    <div className={`nav-main text-black flex-row-center-between p-1-2 ${location.pathname === '/testimonials' && "testimonial"}`}>
+    <div className={`nav-main text-black flex-row-center-between p-1-2 ${location.pathname.split('/')[1] === 'testimonials' | location.pathname.split('/')[1] === 'gallery' && "dark"}`}>
 
-      {isMobile && location.pathname === '/gallery' && openNav}
+      {isMobile && location.pathname.split('/')[1] === 'gallery' && openNav}
 
       <Link to="/" className='font-aureta brand-name flex-row-end-start text-straight'><h1>Knots of Love</h1></Link>
       

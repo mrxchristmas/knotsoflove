@@ -1,10 +1,41 @@
 .gallery-main{
     position: relative;
     max-width: 100vw;
+
+    // top: 0px;
+    // left: 0px;
+    // max-height: calc(100vh - 84px);
+    // padding-top: 84px;
+    // overflow-y: auto;
+}
+.gallery-main.dark{
+    
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    max-height: calc(100vh - 84px);
+    padding-top: 84px;
+    overflow-y: auto;
+
+
+
+    --s: 50px;
+    --c: #191b22;
+    --_s: calc(2*var(--s)) calc(2*var(--s));
+    --_g: 35.36% 35.36% at;
+    --_c: #0000 66%,#20222a 68% 70%,#0000 72%;
+    background: 
+        radial-gradient(var(--_g) 100% 25%,var(--_c)) var(--s) var(--s)/var(--_s), 
+        radial-gradient(var(--_g) 0 75%,var(--_c)) var(--s) var(--s)/var(--_s), 
+        radial-gradient(var(--_g) 100% 25%,var(--_c)) 0 0/var(--_s), 
+        radial-gradient(var(--_g) 0 75%,var(--_c)) 0 0/var(--_s), 
+        repeating-conic-gradient(var(--c) 0 25%,#0000 0 50%) 0 0/var(--_s), 
+        radial-gradient(var(--_c)) 0 calc(var(--s)/2)/var(--s) var(--s) var(--c);
+    background-attachment: fixed;
 }
 
 .gallerynav-container{
-    max-height: calc((100vh - 84px) - 2rem);
+    // max-height: calc((100vh - 84px) - 2rem);
     width: calc(300px - 2rem);
     padding: 1rem;
     /* background-color: red; */
@@ -35,6 +66,12 @@
 .gallerynav-container > .title{
     font-weight: bold;
     font-size: 1.3em;
+}
+.gallery-main.dark .gallerynav-container > .title{
+    color: white;
+}
+.gallerynav-container > .title > img{
+    height: 30px;
 }
 
 
@@ -70,6 +107,9 @@
     border-radius: 50%;
     box-shadow: inset 1px 1px 2px black;
 }
+.gallery-main.dark .gallery-header > .peel{
+    background-color: #191b22;
+}
 
 .gallery-container{
     width: calc((100vw - 300px) - 2rem);
@@ -97,8 +137,18 @@
         position: fixed;
         left: 0px;
         top: 0px;
-        z-index: 1000;
+        z-index: 9999;
         overflow-y: auto;
+    }
+    .gallery-main.dark .gallerynav-container{
+        // max-height: calc(100vh - 2rem);
+        // width: calc(100vw - 2rem);
+        // position: fixed;
+        // left: 0px;
+        // top: 0px;
+        // z-index: 1000;
+        // overflow-y: auto;
+        background-color: #191b22;
     }
     .gallerynav-container::-webkit-scrollbar {
         width: 5px;
@@ -115,18 +165,20 @@
 }
 
 @include lg{
+
     .gallery-container{
         width: calc((100vw - 300px) - 2rem);
         min-height: 500px;
         padding: 1rem;
-        margin-left: 300px;
+        // margin-left: 300px;
         margin-top: 0rem;
     }
     .gallerynav-container{
         max-height: calc((100vh - 84px) - 2rem);
         width: calc(300px - 2rem);
+        min-width: calc(300px - 2rem);
         background-color: unset;
-        position: absolute;
+        position: relative;
         left: 0px;
         top: 0px;
         z-index: 1;

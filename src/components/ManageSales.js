@@ -66,7 +66,7 @@ export default function ManageSales() {
     const [selectedPrintSale, setSelectedPrintSale] = useState(null);
     const [shippingPrice, setShippingPrice] = useState(0);
 
-    const [testimonyId, setTestimonyId] = useState(rngPassword());
+    const [testimonyId] = useState(rngPassword());
     const qrcodeURL = qrcode(`${qrcodeBaseURL}${testimonyId}`)
     
 

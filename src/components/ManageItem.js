@@ -395,6 +395,7 @@ export default function ManageItem() {
             setAvailableColor(ret)
         }
     }, [colors]);
+
     useEffect(() => {
         if(addImageReport){
             setTimeout(() => {
@@ -407,7 +408,7 @@ export default function ManageItem() {
         // console.log('awesome: ', props)
         return (
             <components.MultiValueLabel key={props.data.id} {...props} >
-                <div key={props.data.value}>
+                <div key={props.data.value} title='props.data.value' >
                     {props.data.label}
                 </div>
             </components.MultiValueLabel>
@@ -482,8 +483,11 @@ export default function ManageItem() {
                         <input value={soleType} onChange={e => setSoleType(e.target.value)}  type="text" className="input" placeholder='Item Soletype' title='Item Soletype' />
                         <h4>Size<span className="minitext">(also indicate unit measure eg. 8.5 us women)</span> </h4>
                         <input value={size} onChange={e => setSize(e.target.value)}  type="text" className="input" placeholder='Item Size' title='Item Size' />
+                        <h4>Discount<span className="minitext">(select between percent discount or amount discount)</span> </h4>
+                        
                         {/* <p className="minitext flex-row-center-center text-red mt-1">Properties with <span className="fs-3 p-0-1 text-red">*</span> are required</p> */}
                         <p className="minitext text-red mt-1">{saveItemReport}</p>
+
                     </div>
                     <div className={`manage-item-image-container flex-${isMobile ? "colr-center-between" : "col-center-start"}`}>
                         <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
@@ -492,7 +496,7 @@ export default function ManageItem() {
                         <div className="flex-row-start-between w-100">
                             <div className={`manage-item-thumbnails-container flex-${isMobile ? "row" : "col"}-center-start`}>
                                 {images.length > 0 ? images.map(image => (
-                                    <img onClick={() => handleChangeImageClick(image.id)} key={image.id} src={image.src} alt="" />
+                                    <img key={image.id} onClick={() => handleChangeImageClick(image.id)} src={image.src} alt="" />
                                 )) : <div className="skeleton-box flex-col-center-end">no img yet</div> }
                             </div>
                             <div className="manage-item-thumbnail-details flex-col-start-start">
@@ -502,12 +506,6 @@ export default function ManageItem() {
                                     <button onClick={() => handleRemoveItem()} className="btn-red mb-1">Remove</button>
                                     <h4>Colors Used <span className="minitext text-red">click on color image to delete</span> </h4>
                                     <div className="color-selector w-100 flex-row-center-between">
-                                        {/* <select className='input'>
-                                            <option disabled value="aaa">Select Color</option>
-                                            {colors && colors.map(color => (
-                                                <option key={color.id}  value={JSON.stringify(color)}>{color.name}</option>
-                                            ))}
-                                        </select> */}
                                         <Select
                                             className='select'
                                             value={selectedColors}
@@ -523,7 +521,6 @@ export default function ManageItem() {
                                             getOptionValue={option => option.value}
                                             getOptionLabel={option => option.label}
                                         />
-                                        {/* <button onClick={e => handleAddColorClick(e)} className="btn-blue">Add</button> */}
                                     </div>
                                     <div className="colors p-1-1-0-1 ">
                                         {selectedColors.length > 0 && selectedColors.map(color => (

@@ -18,7 +18,7 @@ export default function Manage() {
             <NavLink to="/manage/category" className="m-0-1">Category</NavLink>
             <NavLink to="/manage/item" className="m-0-1">Merchandise</NavLink>
             <NavLink to="/manage/sales" className="m-0-1">Sales</NavLink>
-            <span className="m-0-1">Discounts</span>
+            <NavLink to="/manage/discount" className="m-0-1">Discount</NavLink>
             <NavLink to="/manage/colors" className="m-0-1">Colors</NavLink>
             <NavLink to="/manage/messages" className="m-0-1">Messages</NavLink>
             <span className="m-0-1">Settings</span>
