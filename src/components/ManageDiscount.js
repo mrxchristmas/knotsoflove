@@ -49,7 +49,7 @@ export default function ManageDiscount() {
             // console.log(filterCategory("CK2uErQ3b4lKRRjc8bs5"));
             // console.log(filterPrice(">=", "50"));
             // console.log(filterName("square"));
-            setFilteredItems(documents)
+            // setFilteredItems(documents)
             // handleSearchClick()
         }
     }, [documents]);
@@ -496,7 +496,7 @@ export default function ManageDiscount() {
             </div>
             <div className="flex-col-start-start w-15">
                 <p className="mini"></p>
-                <button onClick={handleColorGoClick} className="btn-blue">Go</button>
+                <button onClick={handleColorGoClick} className="btn-green">Go</button>
             </div>
             
             
@@ -547,14 +547,16 @@ export default function ManageDiscount() {
             <button onClick={handleSearchClick} className="btn-green ml-1">Search</button>
         </div>
 
+        {filteredItems && 
+            <div className="w-100 mt-2 flex-row-center-center pos-relative ">
+                <label className="select-all-check"> <input onChange={e => e.target.checked ? setAllItemSelected() : setAllItemDeselected()} type="checkbox"/> Select All</label>
+                <img onClick={() => setGrid(1)} className={`grid-icon ${grid === 1 && "active"}`} src="/icons/grid-1.svg" alt="" />
+                <img onClick={() => setGrid(2)} className={`grid-icon ml-2 ${grid === 2 && "active"}`} src="/icons/grid-2.svg" alt="" />
+                <img onClick={() => setGrid(3)} className={`grid-icon ml-2 mr-2 ${grid === 3 && "active"}`}src="/icons/grid-3.svg" alt="" />
+                <img onClick={() => setGrid(4)} className={`grid-icon ${grid === 4 && "active"}`} src="/icons/grid-4.svg" alt="" />
+            </div>
+        }
 
-        <div className="w-100 mt-2 flex-row-center-center pos-relative ">
-            <label className="select-all-check"> <input onChange={e => e.target.checked ? setAllItemSelected() : setAllItemDeselected()} type="checkbox"/> Select All</label>
-            <img onClick={() => setGrid(1)} className={`grid-icon ${grid === 1 && "active"}`} src="/icons/grid-1.svg" alt="" />
-            <img onClick={() => setGrid(2)} className={`grid-icon ml-2 ${grid === 2 && "active"}`} src="/icons/grid-2.svg" alt="" />
-            <img onClick={() => setGrid(3)} className={`grid-icon ml-2 mr-2 ${grid === 3 && "active"}`}src="/icons/grid-3.svg" alt="" />
-            <img onClick={() => setGrid(4)} className={`grid-icon ${grid === 4 && "active"}`} src="/icons/grid-4.svg" alt="" />
-        </div>
         <div className="widget-container w-100 mt-1 flex-col-center-start">
             <div className="row gap-1 w-100">
                 {filteredItems && filteredItems.map(item => (
@@ -574,19 +576,20 @@ export default function ManageDiscount() {
             </div>
         </div>
 
-        <div className="w-50 m-2-0">
-            <fieldset className="flex-col-center-center p-1-2">
-                <legend className="flex-row-center-between w-100">
-                    <label >Percent <input checked={saleMode === "percent" ? true : false} onChange={() => setSaleMode("percent")} type="radio" name="happy" /> </label>
-                    <span className="mini text-red">enter amount below</span>
-                    <label className="ml-1" > <input checked={saleMode === "amount" ? true : false} onChange={() => setSaleMode("amount")} type="radio" name="happy" /> Amount</label>
-                </legend>
-                <input value={salePrice} onChange={e => setSalePrice(e.target.value)} type="number" className="input" />
-            </fieldset>
-            <button onClick={handleDiscountSubmit} className="btn-green mt-1">Put Items on Discount</button>
-            <button onClick={handleDiscountRemove} className="btn-red mt-1">Remove Discount</button>
-        </div>
-
+        {filteredItems && 
+            <div className="w-50 m-4-0">
+                <fieldset className="flex-col-center-center p-1-2">
+                    <legend className="flex-row-center-between w-100">
+                        <label >Percent <input checked={saleMode === "percent" ? true : false} onChange={() => setSaleMode("percent")} type="radio" name="happy" /> </label>
+                        <span className="mini text-red">enter amount below</span>
+                        <label className="ml-1" > <input checked={saleMode === "amount" ? true : false} onChange={() => setSaleMode("amount")} type="radio" name="happy" /> Amount</label>
+                    </legend>
+                    <input value={salePrice} onChange={e => setSalePrice(e.target.value)} type="number" className="input" />
+                </fieldset>
+                <button onClick={handleDiscountSubmit} className="btn-green mt-1">Put Items on Discount</button>
+                <button onClick={handleDiscountRemove} className="btn-red mt-1">Remove Discount</button>
+            </div>
+        }
 
         
 
