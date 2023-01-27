@@ -6,10 +6,11 @@ import '../css/Manage.css'
 import { usePrompt } from "../hooks/usePrompt";
 
 import { MAX_FILE_SIZE, rngFilename } from "../helper/helper";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function ManageColors() {
 
-
+    const { isMobile } = useIsMobile()
     const { documents } = useCollection('colors')
     const { addDocument, updateDocument, deleteDocument } = useFirestore('colors')
     const { addFile, deleteFile } = useStorage()
@@ -123,12 +124,12 @@ export default function ManageColors() {
     return (
         <>
         {prompt}
-        <div className="manage-color-main mt-2 flex-row-center-center p-2 w-100">
-            <div className="colors-page w-100  mt-2 flex-col-center-center">
+        <div className="manage-color-main flex-row-center-center p-2 w-100">
+            <div className="colors-page w-100 flex-col-center-center">
                 <div className="row gap-1 w-100">
 
                     {documents && documents.map(doc => (
-                        <div key={doc.id} className="manage-colors-page-widget pl-1 pt-1 col-4-sm col-3-md col-2-lg flex-row-center-between">
+                        <div key={doc.id} className="manage-colors-page-widget pl-1 pt-1 col-6-sm col-4-md col-2-lg flex-row-center-between">
                             <img onClick={() => handleDeleteClick(doc.id, doc.name, doc.url)} className="delete" src="/icons/trash-solid.svg" alt="" /> 
                             <div className="imgcover">
                                 <img src={doc.url} alt="" />
@@ -142,9 +143,9 @@ export default function ManageColors() {
                     )) }
 
                 </div>
-                <div className="addColor p-1-2 col-4-sm col-3-md col-2-lg flex-row-center-center">
+                <div className={`addColor p-1-2 col-4-sm col-3-md col-2-lg flex-row-center-center ${isMobile && "mobile"}`}>
                     <img src="/icons/settings_black_48dp.svg" alt="" />
-                    <div className="ml-2">
+                    <div className={isMobile ? "ml-2 w-20" : "ml-2"}>
                         <input type="text" className="input mb-1" placeholder="Color Name" title="Color Name" />
                         <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
                         {saveImgState === true ? 

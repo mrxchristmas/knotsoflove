@@ -6,8 +6,11 @@ import { MAX_FILE_SIZE, rngFilename } from "../helper/helper";
 
 import '../css/Manage.css'
 import { useState } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function ManageCategory() {
+
+    const { isMobile } = useIsMobile()
 
     const { documents } = useCollection('category')
     const { updateDocument } = useFirestore('category')
@@ -102,15 +105,19 @@ export default function ManageCategory() {
     // console.log(fsresponse)
 
     return (
-        <div className="manage-category-main container flex-col-center-start p-2  mt-2 ">
+        <div className="manage-category-main  w-100 flex-col-center-start p-2  ">
             {documents && documents.map(doc => (
-                <div key={doc.id} className="widget  mb-1 flex-row-center-center">
-                    <img  onClick={(e)=> e.target.parentElement.children[1].click() } className="bg-white" src={doc.url} alt="" title="Category Image" />
-                    <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
-                    <input className="input title ml-1" type="text" defaultValue={doc.title} placeholder="Title" title="Category Title" />
-                    <input className="color ml-1" type="color" defaultValue={doc.color} title="Category Theme Color" />
-                    <button onClick={e => handleSaveClick(e, doc.id )} className="btn-green ml-1" title="Save Title and Color">Save</button>
-                    {saveImgState === true ? <button onClick={() => handleCategoryImageSaveClick(doc.url, doc.id)} className="btn-green ml-1">Save Image</button> : saveImgState === null ? <button onClick={(e)=> e.target.parentElement.children[1].click() } className="btn-green ml-1">Select Image</button> : <button disabled className="btn-green ml-1">{saveImgState}</button>}
+                <div key={doc.id} className={`widget w-100  mb-1 flex-${isMobile ? "col" : "row"}-center-between ${isMobile && "bg-white p-1"}`}>
+                    <div className={`flex-row-center-between ${isMobile ? "w-100 m-1" : "w-70"}`}>
+                        <img  onClick={(e)=> e.target.parentElement.children[1].click() } className="w-30 bg-white" src={doc.url} alt="" title="Category Image" />
+                        <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
+                        <input className="input title ml-1" type="text" defaultValue={doc.title} placeholder="Title" title="Category Title" />
+                        <input className="color ml-1 w-20" type="color" defaultValue={doc.color} title="Category Theme Color" />
+                    </div>
+                    <div className={`flex-row-center-between ${isMobile ? "w-100" : "w-30"}`}>
+                        <button onClick={e => handleSaveClick(e, doc.id )} className="btn-green ml-1" title="Save Title and Color">Save</button>
+                        {saveImgState === true ? <button onClick={() => handleCategoryImageSaveClick(doc.url, doc.id)} className="btn-green ml-1">Save Image</button> : saveImgState === null ? <button onClick={(e)=> e.target.parentElement.children[1].click() } className="btn-green ml-1">Select Image</button> : <button disabled className="btn-green ml-1">{saveImgState}</button>}
+                    </div>
                 </div>
             ))}
             <div className="widget mb-1 flex-row-center-center">

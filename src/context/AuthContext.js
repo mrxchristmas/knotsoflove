@@ -12,6 +12,10 @@ export const authReducer = (state, action) => {
       return { ...state, user: null }
     case 'AUTH_IS_READY':
       return {  ...state, user: action.payload, authIsReady: true }
+      case 'DARK_MODE':
+        return {  ...state, theme: "dark" }
+    case 'LIGHT_MODE':
+      return {  ...state, theme: "light" }
     default:
       return state
   }
@@ -21,7 +25,8 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { 
     user: null,
     authIsReady: false,
-    ADMIN_UID: "ab1GlkM8EtQG0FTfqosg8jXAndJ2"
+    ADMIN_UID: "03AespeZzUhMGPzwMpMs5bQ5fOu2",
+    theme: "light"
   })
 
   useEffect(() => {

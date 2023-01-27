@@ -50,6 +50,9 @@
     cursor: pointer;
     // max-width: 75%;
 }
+.gallery-page-widget .title > span.name{
+    max-width: 75%;
+}
 .gallery-page-widget .title > span:nth-child(2){
     min-width: 60px;
     text-align: end;

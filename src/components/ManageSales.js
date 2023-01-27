@@ -6,10 +6,12 @@ import staticlogo from '../assets/logostatic.svg'
 import { useReactToPrint } from 'react-to-print'
 import { useFirestore } from "../hooks/useFirestore";
 import { useToast } from "../hooks/useToast";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function ManageSales() {
 
     const qrcodeBaseURL = 'http://localhost:3000/writetestimonials/'
+    const { isMobile } = useIsMobile()
 
     const z = getDateNow()
     const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ]
@@ -402,52 +404,7 @@ export default function ManageSales() {
     //     })
     // }
 
-    // useEffect(() => {
-    //     fetch("https://tinyfac.es/api/data?limit=10&quality=0")
-    //     .then(data => {
-    //       // console.log();
-    //       data.json()
-    //       .then(d => {
-    //         // console.log(d);
-    //         let ret = []
-    //         d.forEach(data => {
-    //         //   ret.push()
-    //         //   console.log(ret);
-    //         const obj = {
-    //             isAvailable : false,
-    //             isValidated : false,
-    //             showOnPage : false,
-    //             testimony : "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus laborum vitae sunt amet voluptas esse autem quo cupiditate dolor enim libero beatae similique maiores, itaque distinctio fugiat animi minus. Ipsam.",
-    //             writerEmail : `${data.first_name}.${data.last_name}${data.id}@example.com`.toLowerCase(),
-    //             writerName : `${data.first_name} ${data.last_name}`,
-    //             writerPhotoURL: data.url,
-    //             writerid: rngPassword(),
-    //             items: [
-    //                 {
-    //                     id: rngPassword(),
-    //                     name: "Plant Hanger",
-    //                     price: 20,
-    //                     salePrice: 20
-    //                 }
-    //             ]
-    //           }
-    //             // setDocument(rngPassword(), obj)
-    //             // .then(() => {
-    //             //     showToast({
-    //             //         message: "Created Testimony Ticket"
-    //             //     })
-    //             // })
-    //             // .catch(() => {
-    //             //     showToast({
-    //             //         message: "Error Creating Testimony Ticket"
-    //             //     })
-    //             // })
-    //         })
-    //         // console.log(ret);
-            
-    //       })
-    //     })
-    //   }, []);
+
 
       
 
@@ -456,15 +413,15 @@ export default function ManageSales() {
         {toast}
         {/* <button onClick={handleCreateTest} className="btn">Create</button> */}
         {isPrintOpen && 
-            <div className="manage-sales-print bg-white shadow-3 container flex-col-center-start mt-3 p-1-2">
-                <div className="header w-100 flex-row-center-between pb-2">
-                    <div className="actions flex-row-center-start w-70">
+            <div className={`manage-sales-print bg-white shadow-3 container flex-col-center-start  p-1-2 ${isMobile ? "mobile" : "mt-2"}`}>
+                <div className={`header w-100 flex-${isMobile ? "colr" : "row"}-center-between pb-2`}>
+                    <div className={`actions flex-row-center-start ${isMobile ? "w-100" : "w-70"}`}>
                         <label className="mr-1"> <input checked={isInvoiceOpen} onChange={e => setIsInvoiceOpen(e.target.checked)} type="checkbox"/> Invoice</label>
                         <label className="mr-1"> <input checked={isThanksCardOpen} onChange={e => setIsThanksCardOpen(e.target.checked)} type="checkbox"/> Thank you card</label>
                         <label className="mr-1"> <input checked={isTestimonyTicketOpen} onChange={e => setIsTestimonyTicketOpen(e.target.checked)} type="checkbox"/> Testimony Ticket</label>
                         <img onClick={handlePrint} className="mr-1" src="/icons/print-solid.svg" alt="" />
                     </div>
-                    <div className="flex-row-center-end w-40">
+                    <div className={`flex-row-${isMobile ? "center-between w-100 mb-1" : "center-end w-40"}`}>
                         <div className="flex-col-start-start minitext">
                             <p>Shipping Fee (keep 0 for FREE shipping)</p>
                             <input className="w-80 mr-4 shadow-1 bg-whitesmoke shipping-input" type="number" value={shippingPrice} onChange={e => setShippingPrice(e.target.value)}  placeholder="Enter Shipping Price, 0 for FREE" />
@@ -472,7 +429,7 @@ export default function ManageSales() {
                         <img onClick={() => setIsPrintOpen(false)} className="close" src="/icons/xmark-solid.svg" alt="" />
                     </div>
                 </div>
-                <div className="content w-100 bg-gray p-2 flex-col-center-start">
+                <div className={`content w-100 bg-gray p-2 flex-col-${isMobile ? "center" : "center"}-start`}>
                     
                     <div ref={printComponentRef} className="paper-print ">
                         {isInvoiceOpen && 
@@ -596,8 +553,8 @@ export default function ManageSales() {
 
             </div>
         }
-        <div className="manage-sales-main container flex-col-center-start mt-3">
-            <div className="header flex-row-center-between w-50">
+        <div className="manage-sales-main container flex-col-center-start mt-1">
+            <div className={`header flex-row-center-between ${isMobile ? "w-100" : "w-50"}`}>
                 <img onClick={() => {
                     setSelectedWeek(null)
                     setMonthObj(getMonthObject( getPrevMonth() ))
@@ -608,10 +565,10 @@ export default function ManageSales() {
                     setMonthObj(getMonthObject( getNextMonth() ))
                 }} src="/icons/caret-right-solid.svg" alt="" />
             </div>
-            <div className="weekheader flex-row-center-center w-30">
+            <div className={`weekheader flex-row-center-center ${isMobile ? "w-90" : "w-30"}`}>
                 {firstDate && lastDate && <h3 className="bg-white shadow-1">{dateTextToWord(firstDate)} - {dateTextToWord(lastDate)}</h3>}
             </div>
-            <div className="weekheader flex-row-center-between w-30">
+            <div className={`weekheader flex-row-center-between ${isMobile ? "w-90" : "w-30"}`}>
                 <img onClick={() => {
                     selectedWeek === null ? setSelectedWeek(monthObj.length - 1) :
                     selectedWeek - 1 < 0 ? setSelectedWeek(null) : 
@@ -625,7 +582,7 @@ export default function ManageSales() {
                 }} src="/icons/caret-right-solid.svg" alt="" />
             </div>
 
-            <div className="list flex-col-center-start w-70 mt-2">
+            <div className={`list flex-col-center-start ${isMobile ? "w-100" : "w-70"} mt-2`}>
                 {receiptSortedSales && receiptSortedSales.length > 0 ? receiptSortedSales.map(sale => (
                     <div key={sale.id} onClick={() => {
                         setIsPrintOpen(true)

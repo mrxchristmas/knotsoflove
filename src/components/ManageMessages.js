@@ -8,8 +8,11 @@ import { useFirestore } from "../hooks/useFirestore"
 import { usePrompt } from "../hooks/usePrompt"
 import { useToast } from "../hooks/useToast"
 import { Link } from "react-router-dom"
+import { useIsMobile } from "../hooks/useIsMobile"
 
 export default function ManageMessages() {
+
+    const { isMobile } = useIsMobile()
 
     const { documents } = useCollection('orders')
     const { user } = useAuthContext()
@@ -23,6 +26,8 @@ export default function ManageMessages() {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [conversation, setConversation] = useState(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+    const [isNavOpen, setIsNavOpen] = useState(true);
 
     const contentRef = useRef()
 
@@ -39,8 +44,7 @@ export default function ManageMessages() {
 
     useEffect(() => {
         contentRef.current?.scrollIntoView({behavior: 'smooth'});
-    }, [isSettingsOpen]);
-
+    }, [isSettingsOpen, isNavOpen]);
 
     useEffect(() => {
         if(selectedOrder){
@@ -54,6 +58,10 @@ export default function ManageMessages() {
             })
         }
     }, [selectedOrder, orders]);
+
+    useEffect(() => {
+        setIsNavOpen(true)
+    }, []);
 
     const getNotif = (order) => {
         let x = 0
@@ -208,25 +216,48 @@ export default function ManageMessages() {
         })
     }
 
+    const showNavQuery = () => {
+        if(isMobile){
+            if(isNavOpen){
+                return true
+            }else{
+                return false
+            }
+        }else{
+            return true
+        }
+    }
+
     return (
-        <div className="manage-messages-main container mt-3 flex-row-start-between">
+        <div className={`manage-messages-main container w-100 mt-1 flex-${isMobile ? "col-start-between mobile" : "row-start-between"}`}>
             {prompt}
             {toast}
-            <div className="left bg-white">
-                {orders && orders.length > 0 ? orders.map(order => (
-                    <div onClick={() => setSelectedOrder(order)} key={order.id} className="widget p-1 bg-red flex-row-center-start">
-                        {getNotif(order) > 0 && <p className="counter flex-col-center-center">{getNotif(order)}</p>}
-                        {/* <ImageLoader url={order.user.photoURL} /> */}
-                        <img src={order.user.photoURL} referrerPolicy="no-referrer" alt="" />
-                        <span>{order.user.name}</span>
-                    </div>
-                )) : <div className="widget p-1 bg-red flex-row-center-center">
-                    <span>No Orders</span>
+            {showNavQuery() && 
+                <div className={`left bg-white ${isMobile && "mobile"}`}>
+                    {isMobile &&
+                        <div onClick={() => setIsNavOpen(false)} className="widget close p-1 bg-red flex-rowr-center-start">
+                            <img src="/icons/xmark-solid.svg" referrerPolicy="no-referrer" alt="" />
+                            <span className="mr-1">{`Close`}</span>
+                        </div>
+                    }
+                    {orders && orders.length > 0 ? orders.map(order => (
+                        <div onClick={() => {
+                            setSelectedOrder(order)
+                            setIsNavOpen(false)
+                        }} key={order.id} className="widget p-1 bg-red flex-row-center-start">
+                            {getNotif(order) > 0 && <p className="counter flex-col-center-center">{getNotif(order)}</p>}
+                            {/* <ImageLoader url={order.user.photoURL} /> */}
+                            <img src={order.user.photoURL} referrerPolicy="no-referrer" alt="" />
+                            <span>{order.user.name}</span>
+                        </div>
+                        )) : <div className="widget p-1 bg-red flex-row-center-center">
+                            <span>No Orders</span>
+                        </div>
+                    }
                 </div>
-            
             }
-            </div>
-            <div className="right flex-col-center-start">
+            {isMobile && <button onClick={() => setIsNavOpen(true)} className="btn-green">Select Message</button>}
+            <div className={`right ${isMobile ? "w-100 mt-1" : "w-70"} flex-col-center-start`}>
                 {selectedOrder && conversation && <>
                     <div className="header  bg-white flex-row-center-between">
                         <span className="name">{selectedOrder.user.name}</span>
@@ -240,6 +271,8 @@ export default function ManageMessages() {
                             {conversation.map(msg => (
                                 <span key={msg.id} className={`bubble  ${msg.sender === user.uid ? "receiver bg-blue text-white" : "sender bg-whitesmoke"}`}>{msg.message}</span>
                             ))}
+                            {selectedOrder.fromContactPage && <a href={`mailto:${selectedOrder.user.email}`} className="bubble sender bg-whitesmoke">{`Please Click here to Reply or send email to : ${selectedOrder.user.email}`}</a>}
+                            {selectedOrder.fromContactPage && <span className="bubble sender bg-whitesmoke">Please Delete this Conversation when you're done.</span> }
                             <div ref={contentRef} />
                         </div>
                     }{isSettingsOpen && 
@@ -275,7 +308,12 @@ export default function ManageMessages() {
                         {selectedOrder && selectedOrder.isClosed ? <>
                             <textarea disabled={true} className="input" placeholder="Order is Closed" ></textarea>
                             <img className="closed" src="/icons/paper-plane-solid.svg" alt="" />
-                        </> : <>
+                        </> : 
+                        selectedOrder && selectedOrder.fromContactPage ? <>
+                            <textarea disabled={true} className="input" placeholder="No Reply" ></textarea>
+                            <img className="closed" src="/icons/paper-plane-solid.svg" alt="" />
+                        </> : 
+                        <>
                             <textarea disabled={isSettingsOpen} className="input"></textarea>
                             <img onClick={e => {!isSettingsOpen && handleSendMessage(e)}} src="/icons/paper-plane-solid.svg" alt="" />
                         </>}

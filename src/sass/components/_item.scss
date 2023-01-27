@@ -47,13 +47,23 @@
     margin-bottom: 10px;
 }
 .item-description-container > .title{
-    font-size: 2rem;
     margin-bottom: 10px;
-}
-.item-description-container > .title p{
     font-size: 1.5rem;
+}
+.item-description-container > .title .name{
+    max-width: 70%;
     margin-bottom: 10px;
 }
+.item-description-container > .title .price{
+    margin-bottom: 10px;
+}
+.item-description-container > .title .sale{
+    font-size: 0.7em;
+    text-decoration: line-through;
+    color: red;
+}
+
+
 .item-description-container > .colors{
     margin-bottom: 10px;
 }
@@ -62,6 +72,13 @@
     aspect-ratio: 1 / 1;
     border-radius: 50%;
     margin-right: 5px;
+}
+.item-description-container > .colors img.tag{
+    position: absolute;
+    top: 0px;
+    right: -5px;
+    height: 15px;
+    aspect-ratio: 1 / 1;
 }
 .item-description-container > .input{
     height: 100px;

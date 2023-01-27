@@ -8,6 +8,7 @@ import { useGallery } from '../hooks/useGallery'
 
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getDiscountedPrice } from "../helper/helper"
 
 
 
@@ -80,8 +81,11 @@ export default function GalleryPage() {
                                 <img onClick={() => handleFavClick(cat.id)} className='fav cur-pointer' src={`/icons/${isFav(cat.id) ? "favorite" : "favorite_border"}.svg`} alt="" />
                             </div>
                             <div className="title  bg-whitesmoke  flex-row-center-between">
-                                <span>{cat.name}</span>
-                                <span> <span className="sale">$32</span> ${cat.price}</span>
+                                <span className="name">{cat.name}</span>
+                                {cat.discount? 
+                                    <span> <span className="sale">${cat.price}</span> ${getDiscountedPrice(cat.discount, cat.price)}</span> : 
+                                    <span>${cat.price}</span>
+                                }
                             </div>
                         </div>
                     ))

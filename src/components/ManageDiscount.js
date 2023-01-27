@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useCollection } from "../hooks/useCollection"
 import Select, { components } from 'react-select'
-import { rngFilename } from "../helper/helper";
+import { rngFilename, getDiscountedPrice } from "../helper/helper";
 import { useFirestore } from "../hooks/useFirestore";
 import { useToast } from "../hooks/useToast";
 import { usePrompt } from "../hooks/usePrompt";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 // import { useTest } from "../hooks/useTest";
 const defaultCategory = {label: "All Categories", value: "all"}
@@ -19,6 +20,7 @@ export default function ManageDiscount() {
     const { setDocument } = useFirestore('items')
     const { setDocument: setColorDocument } = useFirestore('colors')
 
+    const { isMobile } = useIsMobile()
     const { toast, showToast } = useToast(2000)
     const { prompt, promptChoice } = usePrompt()
 
@@ -41,18 +43,17 @@ export default function ManageDiscount() {
 
     const [grid, setGrid] = useState(2);
 
-
-    useEffect(() => {
-        if(documents){
-            console.log(documents);
-            // console.log( filterColor("2kzKARm9L8XkiwF2DqoP") );
-            // console.log(filterCategory("CK2uErQ3b4lKRRjc8bs5"));
-            // console.log(filterPrice(">=", "50"));
-            // console.log(filterName("square"));
-            // setFilteredItems(documents)
-            // handleSearchClick()
-        }
-    }, [documents]);
+    // useEffect(() => {
+    //     if(documents){
+    //         console.log(documents);
+    //         // console.log( filterColor("2kzKARm9L8XkiwF2DqoP") );
+    //         // console.log(filterCategory("CK2uErQ3b4lKRRjc8bs5"));
+    //         // console.log(filterPrice(">=", "50"));
+    //         // console.log(filterName("square"));
+    //         // setFilteredItems(documents)
+    //         // handleSearchClick()
+    //     }
+    // }, [documents]);
 
     // filter by color/s        OK
     // filter by name           OK
@@ -125,16 +126,6 @@ export default function ManageDiscount() {
         setSelectedColors(null)
         setCategory(defaultCategory)
     }
-    const getDiscountedPrice = (discObj, price) => {
-        let ret = price
-        if(discObj.type === "percent"){
-            const p = parseFloat(discObj.price) * 0.01
-            ret = (parseFloat(price) - (parseFloat(price) * p))
-        }else if(discObj.type === "amount"){
-            ret = parseFloat(price) - parseFloat(discObj.price)
-        }
-        return ret
-    }
     const getColorObjById = (colorid) => {
         let ret
         colors && colors.every(color => {
@@ -157,7 +148,7 @@ export default function ManageDiscount() {
         return x
     }
 
-    // console.log(categories);
+    // console.log(selectedColors);
 
 
     useEffect(() => {
@@ -375,7 +366,8 @@ export default function ManageDiscount() {
     }
 
     const handleColorGoClick = () =>{
-        if(selectedColors.length <= 0){
+        console.log(selectedColors);
+        if(selectedColors === null){
             showToast({
                 message: "Please select a color to put on sale..."
             })
@@ -414,22 +406,29 @@ export default function ManageDiscount() {
 
     }
     const handleRemoveColorClick = () => {
-        const colorobj = getColorObjById(selectedColors.value)
-        delete colorobj.discount
+        if(selectedColors){
+            const colorobj = getColorObjById(selectedColors.value)
+            delete colorobj.discount
 
-        setColorDocument(colorobj.id, {
-            ...colorobj
-        })
-        .then(() => {
-            showToast({
-                message: "Successfully Removed Color Sale"
+            setColorDocument(colorobj.id, {
+                ...colorobj
             })
-        })
-        .catch(() => {
-            showToast({
-                message: "An error occured while updating the database"
+            .then(() => {
+                showToast({
+                    message: "Successfully Removed Color Sale"
+                })
             })
-        })
+            .catch(() => {
+                showToast({
+                    message: "An error occured while updating the database"
+                })
+            })
+        }else{
+            showToast({
+                message: "Please select a color to remove"
+            })
+            return
+        }
 
     }
     const handleSaleColorClick = color => {
@@ -446,13 +445,13 @@ export default function ManageDiscount() {
     }
 
   return (
-    <div className="manage-discount-main flex-col-center-start container mt-2">
+    <div className={`manage-discount-main flex-col-center-start container mt-2 ${isMobile && "mobile"}`}>
         {toast}
         {prompt}
         <h4>Colors Discount</h4>
         <hr className=" bg-black" />
-        <div className="header mt-1 flex-row-end-between w-100">
-            <div className="flex-col-start-start w-30">
+        <div className={`header mt-1 flex-${isMobile ? "col-center-start" : "row-end-between"} w-100`}>
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-30"}`}>
                 <p className="mini">Select Colors to put on Sale</p>
                 <Select
                     className='select w-100'
@@ -469,7 +468,7 @@ export default function ManageDiscount() {
                     placeholder="Select Color"
                 />
             </div>
-            <div className="flex-col-start-start w-20">
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-20"}`}>
                 <p className="mini">Select Type of Discount</p>
                 <Select
                     className='select w-100'
@@ -486,15 +485,15 @@ export default function ManageDiscount() {
                     ]}
                 />
             </div>
-            <div className="flex-col-start-start w-10">
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-10"}`}>
                 <p className="mini">{selectedColorDiscountType.label}</p>
                 <input value={selectedColorDiscountPrice} onChange={e => setSelectedColorDiscountPrice(e.target.value)} type="number" className="input" />
             </div>
-            <div className="flex-col-start-start w-15">
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-15"}`}>
                 <p className="mini"></p>
                 <button onClick={handleRemoveColorClick} className="btn-red">Remove</button>
             </div>
-            <div className="flex-col-start-start w-15">
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-15"}`}>
                 <p className="mini"></p>
                 <button onClick={handleColorGoClick} className="btn-green">Go</button>
             </div>
@@ -516,8 +515,12 @@ export default function ManageDiscount() {
         <h4 className="mt-2">Items Discount</h4>
         <hr className=" bg-black" />
 
-        <div className="header flex-row-end-start w-100 mt-2">
-            <div className="flex-col-start-start w-30">
+        <div className={`header flex-${isMobile ? "col" : "row"}-end-start w-100 mt-1`}>
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-40"}`}>
+                <label className="" title="Select Items on Sale"> <input type="checkbox" checked={isOnSale} onChange={e => setIsOnSale(e.target.checked)}   /> {`Select Items on Sale`}</label>
+                <input type="text" className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Search Name" />
+            </div>
+            <div className={`flex-col-start-start ${isMobile ? "w-100 mt-1" : "w-30"}`}>
                 <div className="mini flex-row-center-even w-100">
                     {/* <legend className="minitext">Filter Price</legend> */}
                     <label title="greater or equal to"> <input type="radio" checked={priceFormat === ">=" ? true : false} name="format" onChange={() => setPriceFormat(">=")}  /> {`>=`}</label>
@@ -526,12 +529,8 @@ export default function ManageDiscount() {
                 </div>
                 <input type="number" className="input" value={price} onChange={e => setPrice(e.target.value)} placeholder="Enter Price" />
             </div>
-            <div className="flex-col-start-start w-40">
-                <label className="" title="Select Items on Sale"> <input type="checkbox" checked={isOnSale} onChange={e => setIsOnSale(e.target.checked)}   /> {`Select Items on Sale`}</label>
-                <input type="text" className="input" value={name} onChange={e => setName(e.target.value)} placeholder="Search Name" />
-            </div>
             <Select
-                className='select w-40'
+                className={`select ${isMobile ? "w-100 mt-1" : "w-40"}`}
                 value={category}
                 defaultValue={"all"}
                 onChange={so => setCategory(so)} 
@@ -542,22 +541,24 @@ export default function ManageDiscount() {
         </div>
         
         
-        <div className="flex-row-center-center w-50  mt-1">
+        <div className={`flex-row-center-center ${isMobile ? "w-100 mt-1" : "w-50"}  mt-1`}>
             <button onClick={() => reset()} className="btn-red">Reset</button>
             <button onClick={handleSearchClick} className="btn-green ml-1">Search</button>
         </div>
 
-        {filteredItems && 
-            <div className="w-100 mt-2 flex-row-center-center pos-relative ">
+        {filteredItems && !isMobile &&
+            <div className="w-100 mt-2 flex-col-center-center pos-relative ">
+                <div className="flex-row-center-center">
+                    <img onClick={() => setGrid(1)} className={`grid-icon ${grid === 1 && "active"}`} src="/icons/grid-1.svg" alt="" />
+                    <img onClick={() => setGrid(2)} className={`grid-icon ml-2 ${grid === 2 && "active"}`} src="/icons/grid-2.svg" alt="" />
+                    <img onClick={() => setGrid(3)} className={`grid-icon ml-2 mr-2 ${grid === 3 && "active"}`}src="/icons/grid-3.svg" alt="" />
+                    <img onClick={() => setGrid(4)} className={`grid-icon ${grid === 4 && "active"}`} src="/icons/grid-4.svg" alt="" />
+                </div>
                 <label className="select-all-check"> <input onChange={e => e.target.checked ? setAllItemSelected() : setAllItemDeselected()} type="checkbox"/> Select All</label>
-                <img onClick={() => setGrid(1)} className={`grid-icon ${grid === 1 && "active"}`} src="/icons/grid-1.svg" alt="" />
-                <img onClick={() => setGrid(2)} className={`grid-icon ml-2 ${grid === 2 && "active"}`} src="/icons/grid-2.svg" alt="" />
-                <img onClick={() => setGrid(3)} className={`grid-icon ml-2 mr-2 ${grid === 3 && "active"}`}src="/icons/grid-3.svg" alt="" />
-                <img onClick={() => setGrid(4)} className={`grid-icon ${grid === 4 && "active"}`} src="/icons/grid-4.svg" alt="" />
             </div>
         }
 
-        <div className="widget-container w-100 mt-1 flex-col-center-start">
+        <div className="widget-container w-100 mt-2 flex-col-center-start">
             <div className="row gap-1 w-100">
                 {filteredItems && filteredItems.map(item => (
                     <div key={item.id} title={item.name} onClick={() => handleItemSelectChange(item)} className={`widget p-0-1-1-0 col-12-sm col-${grid === 1 ? "12" : grid === 2 ? "6" : grid === 3 ? "4" : "3"}-lg flex-row-start-between`}>
@@ -577,11 +578,11 @@ export default function ManageDiscount() {
         </div>
 
         {filteredItems && 
-            <div className="w-50 m-4-0">
+            <div className={`${isMobile ? "w-100" : "w-50"} m-4-0`}>
                 <fieldset className="flex-col-center-center p-1-2">
                     <legend className="flex-row-center-between w-100">
                         <label >Percent <input checked={saleMode === "percent" ? true : false} onChange={() => setSaleMode("percent")} type="radio" name="happy" /> </label>
-                        <span className="mini text-red">enter amount below</span>
+                        <span className="mini text-red">enter {saleMode}</span>
                         <label className="ml-1" > <input checked={saleMode === "amount" ? true : false} onChange={() => setSaleMode("amount")} type="radio" name="happy" /> Amount</label>
                     </legend>
                     <input value={salePrice} onChange={e => setSalePrice(e.target.value)} type="number" className="input" />

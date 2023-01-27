@@ -6,10 +6,11 @@ import { useDocument } from '../hooks/useDocument'
 import { useCollection } from '../hooks/useCollection'
 import { useEffect, useState } from 'react'
 import { useFavorite } from '../hooks/useFavorite'
-import { scrollToTop } from '../helper/helper'
+import { getDiscountedPrice, scrollToTop } from '../helper/helper'
 import { useFirestore } from '../hooks/useFirestore'
 import { useAuthContext } from '../hooks/useAuthContext'
 import ItemOrderRequest from '../components/ItemOrderRequest'
+// import { useColorsCollection } from '../hooks/useColorsCollection'
 
 export default function Item() {
     const { user } = useAuthContext()
@@ -18,15 +19,20 @@ export default function Item() {
     const { document } = useDocument('items', itemid)
     const [selectedImage, setSelectedImage] = useState(null)
     const { setDocument } = useFirestore("users")
+    
+    // const [selectedColors, setSelectedColors] = useState(null);
 
 
+    // const { documents: colors } = useColorsCollection(true, selectedColors)
     const { documents: colors } = useCollection('colors')
     const { documents: favs } = useFavorite()
     const [favIds, setFavIds] = useState(null)
 
 
     scrollToTop()
-    // console.log(favs);
+    // console.log(colors);
+
+
     const isFav = itemid => {
         let ret = false
         favIds && favIds.forEach(fi => {
@@ -60,10 +66,12 @@ export default function Item() {
           })
           setFavIds([...favIds, itemid])
         }
-      }
+    }
+
 
     useEffect(() => {
         if(document){
+            // console.log(document);
             setSelectedImage(document.images[0])
         }
     }, [document]);
@@ -92,13 +100,23 @@ export default function Item() {
                     <img className='item-image' src={selectedImage.url} alt="" />
                 </div>
                 <div className="item-description-container flex-col-start-start">
-                    <span className='title flex-row-center-between w-100'>{document.name} <p>${document.price}</p></span>
+                    <div className='title flex-row-start-between w-100'>
+                        <p className='name'>{document.name}</p> 
+                        {/* <p className='price'>${document.price}</p> */}
+                        {document.discount? 
+                            <span className='price'> <span className="sale">${document.price}</span> ${getDiscountedPrice(document.discount, document.price)}</span> : 
+                            <span className='price'>${document.price}</span>
+                        }
+                    </div>
                     <h4>Description</h4>
                     <p>{document.description}</p>
                     <h4>Colors Used</h4>
                     <div className="colors flex-row-center-start p-1">
                         {colors && selectedImage.colors.map(color => (
-                            <img key={color} src={getColorObjById(color).url} alt={getColorObjById(color).name} title={`${getColorObjById(color).name}${getColorObjById(color).isLowOnStock ? " - Low on Stock" : ""}${getColorObjById(color).isAvailable ? " - Available" : " - Unavailable"}`} />
+                            <div key={color} className="img-container pos-relative">
+                                <img key={color} src={getColorObjById(color).url} alt={getColorObjById(color).name} title={`${getColorObjById(color).name}${getColorObjById(color).isLowOnStock ? " - Low on Stock" : ""}${getColorObjById(color).isAvailable ? " - Available" : " - Unavailable"} `} />
+                                {getColorObjById(color).discount && <img src="/icons/tag-solid.svg" alt="" className='tag' title={`${getColorObjById(color).discount.type === "amount" ? `$${getColorObjById(color).discount.price}` : `${getColorObjById(color).discount.price}%`} discount`} /> }
+                            </div>
                         ))}
                     </div>
                     {document.width !== "" && <>

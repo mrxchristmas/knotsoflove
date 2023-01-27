@@ -11,6 +11,11 @@ import { usePrompt } from '../hooks/usePrompt'
 
 export default function ManageItem() {
 
+
+
+    
+    // console.log(happy);
+
     const { isMobile } = useIsMobile()
     const { documents: colors } = useCollection("colors")
     const { documents: categories } = useCollection("category")
@@ -37,6 +42,7 @@ export default function ManageItem() {
     const [availableColor, setAvailableColor] = useState(null)
     const [isAvailable, setIsAvailable] = useState(false)
     
+    const [isNavOpen, setIsNavOpen] = useState(true);
     
     // console.log(images);
     // console.log(selectedColors);
@@ -440,28 +446,49 @@ export default function ManageItem() {
         );
     };
 
+
+    const showNavQuery = () => {
+        if(isMobile){
+            if(isNavOpen){
+                return true
+            }else{
+                return false
+            }
+        }else{
+            return true
+        }
+    }
     return (<>
         {toast}
         {prompt}
-        <div className="manage-item-main p-2 mt-2  w-100 flex-row-start-between">
-            <div className="itemlist-container bg-red flex-col-center-start">
-                <button onClick={() => reset()} className="btn-purple">Add New Item</button>
-                {categories && items && categories.map(cat => (
-                    <div key={cat.id} className="category-wrapper bg-white w-100 flex-col-center-start">
-                        <div className="header flex-row-center-end">
-                            <h3 className="flex-row-center-start" onClick={e => handleItemlistCatClick(e)}><p className="pr-1">&nbsp;</p>{cat.title}</h3>
-                            <img src="/icons/caret-left-solid.svg" alt="" />
+        <div className={`manage-item-main p-1-2  w-100 flex-${isMobile ? "col" : "row"}-start-between`}>
+            {isMobile && <button onClick={() => setIsNavOpen(true)} className="btn-yellow mb-1">Select Item</button>}
+            {showNavQuery() && 
+                <div className={`itemlist-container flex-col-center-start ${isMobile && "mobile"}`}>
+                    <button onClick={() => reset()} className="btn-purple">Add New Item</button>
+                    {isMobile && 
+                        <img onClick={() => setIsNavOpen(false)} className="close p-1" src="/icons/xmark-solid.svg" alt="" />
+                    }
+                    {categories && items && categories.map(cat => (
+                        <div key={cat.id} className="category-wrapper bg-white w-100 flex-col-center-start">
+                            <div className="header flex-row-center-end">
+                                <h3 className="flex-row-center-start" onClick={e => handleItemlistCatClick(e)}><p className="pr-1">&nbsp;</p>{cat.title}</h3>
+                                <img src="/icons/caret-left-solid.svg" alt="" />
+                            </div>
+                            <div className="item-widget-container hidden w-100 flex-col-center-center">
+                                {getItemsFromCategoryId(cat.id).length > 0 ? getItemsFromCategoryId(cat.id).map(item => (
+                                    <span key={item.id} className='w-100 ' onClick={() => {
+                                        handleItemClick(item.id)
+                                        setIsNavOpen(false)
+                                    }} >{item.name}</span>
+                                )) : <span>No Items</span>
+                            }
+                            </div>
                         </div>
-                        <div className="item-widget-container hidden flex-col-center-center">
-                            {getItemsFromCategoryId(cat.id).length > 0 ? getItemsFromCategoryId(cat.id).map(item => (
-                                <span key={item.id} onClick={() => handleItemClick(item.id)} >{item.name}</span>
-                            )) : <span>No Items</span>
-                        }
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className="itemdesc-container ml-2 flex-col-center-start">
+                    ))}
+                </div>
+            }
+            <div className={`itemdesc-container ml-2 flex-col-center-start ${isMobile && "mobile"}`}>
                 <div className={`manage-item-details-container flex-${isMobile ? "col-center-start" : "row-start-between"} `}>
                     <div className="manage-item-description-container flex-col-start-start">
                         <h4>Category <span className="text-red">*</span></h4>
@@ -493,13 +520,13 @@ export default function ManageItem() {
                         <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
                         <button onClick={e => e.target.parentElement.children[0].click()} className='btn-blue mb-1'>Add New Image</button>
                         <span className="add-image-report minitext text-red">{addImageReport}</span>
-                        <div className="flex-row-start-between w-100">
+                        <div className={`flex-${isMobile ? "col" : "row"}-start-between w-100`}>
                             <div className={`manage-item-thumbnails-container flex-${isMobile ? "row" : "col"}-center-start`}>
                                 {images.length > 0 ? images.map(image => (
                                     <img key={image.id} onClick={() => handleChangeImageClick(image.id)} src={image.src} alt="" />
                                 )) : <div className="skeleton-box flex-col-center-end">no img yet</div> }
                             </div>
-                            <div className="manage-item-thumbnail-details flex-col-start-start">
+                            <div className={`manage-item-thumbnail-details flex-col-start-start ${isMobile && "mobile mb-2"}`}>
                                 {selectedImage && <>
                                     <h4>Image</h4>
                                     <img className='manage-item-thumbnailImage mb-1' src={selectedImageObj ? selectedImageObj.src : ""} alt="" />
@@ -528,14 +555,14 @@ export default function ManageItem() {
                                         ))}
                                     </div>
                                     <label className='flex-row-center-start mb-1'> <input className='mr-1' type="checkbox" checked={isAvailable} onChange={e => updateImageAvailability(selectedImage, e.target.checked)} /> available on hand?</label>
-                                    <p className="minitext text-red">*Sale/Discounts criteria can be set on Sale Page</p>
+                                    <p className="minitext text-red ">*Sale/Discounts criteria can be set on Sale Page</p>
                                 </>}
                             </div>
                         </div>
                     </div>
                     
                 </div>
-                <button onClick={() => handleSaveItemClick()} className='btn-green mt-2'>Save</button>
+                <button onClick={() => handleSaveItemClick()} className='btn-green mt-1'>Save</button>
                 {itemID && <button onClick={() => handleDeleteItemClick()} className='btn-red mt-2'>Delete</button>}
             </div>
 

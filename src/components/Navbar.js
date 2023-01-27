@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Navbar({ openNav, setUserMsgOpen }) {
   const { logout } = useAuth()
-  const { user, ADMIN_UID } = useAuthContext()
+  const { user, ADMIN_UID, theme } = useAuthContext()
   const { isMobile } = useIsMobile()
   const location = useLocation()
   const { documents: _orders } = useCollection('orders')
@@ -55,18 +55,19 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   
   return (
-    <div className={`nav-main text-black flex-row-center-between p-1-2 ${location.pathname.split('/')[1] === 'testimonials' | location.pathname.split('/')[1] === 'gallery' && "dark"}`}>
+    <div className={`nav-main text-black flex-row-center-between p-1-2 ${theme === "dark" ? "dark" : "light"}`}>
 
       {isMobile && location.pathname.split('/')[1] === 'gallery' && openNav}
 
       <Link to="/" className='font-aureta brand-name flex-row-end-start text-straight'><h1>Knots of Love</h1></Link>
       
-        <div className={`${isMobile ? "navs-mobile" : "navs"} flex-row-center-center`}>
-          <NavLink to="/gallery" className="m-0-1" >Gallery</NavLink>
-          <NavLink to="/testimonials" className="m-0-1">Testimonials</NavLink>
-          <NavLink to="/contact" className="m-0-1">Contact</NavLink>
-          <NavLink to="/about" className="m-0-1">About</NavLink>
-        </div>
+      <div className={`${isMobile ? "navs-mobile" : "navs"} flex-row-center-center`}>
+        <NavLink to="/gallery" className="m-0-1" >Gallery</NavLink>
+        <NavLink to="/testimonials" className="m-0-1">Testimonials</NavLink>
+        <NavLink to="/contact" className="m-0-1">Contact</NavLink>
+        <NavLink to="/about" className="m-0-1">About</NavLink>
+        
+      </div>
 
       <div className='nav-profile flex-row-start-start'>
 

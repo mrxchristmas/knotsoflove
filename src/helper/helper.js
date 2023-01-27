@@ -513,6 +513,19 @@ export const testUsername =(username)=>{
     // var regexp = /^[A-Za-z]+$/;
     return username.match(/^[A-Za-z0-9]+$/)
 }
+export const testPhoneNumber =(phone)=>{
+    return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone)
+    // return /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(phone)
+}
+
+export const testEmail =(email)=>{
+    // var regexp = /^[A-Za-z]+$/;
+    // ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
+    // return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+}
+
+
 
 export const textId = (id) => {
     return /[^A-Za-z0-9]+/g.test(id)
@@ -617,13 +630,7 @@ export const spline =(points = [], tension = 1, close = false, cb)=> {
 
 export const sendEmailToLezzt =({ sender, message, callback, email })=> {
     // <script src="https://smtpjs.com/v3/smtp.js"></script>
-    console.log("Sending Email");
-	// let toemail = '';
-    // let tx = 0;
-    // $.each(options.toemail, function(key, value){
-    //     toemail += `${value}${tx == 0 ? "" : ","}`;
-    //     tx++;
-    // });
+    // var Email = { send: function (a) { return new Promise(function (n, e) { a.nocache = Math.floor(1e6 * Math.random() + 1), a.Action = "Send"; var t = JSON.stringify(a); Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, function (e) { n(e) }) }) }, ajaxPost: function (e, n, t) { var a = Email.createCORSRequest("POST", e); a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), a.onload = function () { var e = a.responseText; null != t && t(e) }, a.send(n) }, ajax: function (e, n) { var t = Email.createCORSRequest("GET", e); t.onload = function () { var e = t.responseText; null != n && n(e) }, t.send() }, createCORSRequest: function (e, n) { var t = new XMLHttpRequest; return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t } };
     const ggdomain = `https://finance.lezzt.com/`;
     const htmlBody = `
     <div style="width: 800px;
@@ -1340,3 +1347,172 @@ export const fetchImage = async (url) => {
 export const qrcode = text => {
     return encodeURI(`https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=${text}`)
 }
+
+
+export const getDiscountedPrice = (discObj, price) => {
+    let ret = price
+    if(discObj.type === "percent"){
+        const p = parseFloat(discObj.price) * 0.01
+        ret = (parseFloat(price) - (parseFloat(price) * p))
+    }else if(discObj.type === "amount"){
+        ret = parseFloat(price) - parseFloat(discObj.price)
+    }
+    return ret
+}
+
+
+export const toDataURL = async url => {
+    let ret
+
+    try {
+        fetch(url
+        //     , {
+        //     method: "GET", 
+        //     // body: JSON.stringify(data),
+        //     mode: 'cors',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin' : "http://localhost:3000",
+        //         'Access-Control-Allow-Credentials' : 'true'
+        //     }
+        //   }
+          )
+        .then(response => response.blob())
+        .then(blob => new Promise((resolve, reject) => {
+            const reader = new FileReader()
+            reader.onloadend = () => resolve(reader.result)
+            reader.onerror = reject
+            reader.readAsDataURL(blob)
+        }))
+        .then(data => {
+            ret = data
+            console.log(data);
+        })
+    } catch (error) {
+        console.log(error.message);
+    }
+
+    return ret
+}
+
+export const toDataURLCanvas = async (src) => {
+    let ret
+    var img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.referrerPolicy = "no-referrer"
+    img.onload = async () => new Promise((res, rej)=>{
+        var canvas = document.createElement('CANVAS');
+        var ctx = canvas.getContext('2d');
+        var dataURL;
+        canvas.height = this.naturalHeight;
+        canvas.width = this.naturalWidth;
+        ctx.drawImage(this, 0, 0);
+        dataURL = canvas.toDataURL("image/png");
+        //   callback(dataURL);
+            // console.log(dataURL);   
+        // ret = dataURL
+        res(dataURL)
+    }).then(data => {
+        console.log(data);
+        ret = data
+    })
+    img.src = src;
+    if (img.complete || img.complete === undefined) {
+        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        img.src = src;
+    }
+
+    return ret
+}
+
+export const FirebaseVideo = () => <video className="homepage-hero__video homepage-hero__video-loop" autoPlay loop={true} muted={true} playsInline={true}  preload="" src="https://firebase.google.com/static/images/homepage/Firebase_Hero_Loop_1440x735.webm" style={{height: "304.203px"}} ></video>
+
+
+export const sendEmailToKaye =({ name, message, callback, phone, email })=> {
+    // <script src="https://smtpjs.com/v3/smtp.js"></script>
+    const htmlBody = `
+    <div style="width: 800px;
+    height: auto;
+    padding: 20px;
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <span class="subject" style="
+        display: inline-block;
+        font-size: 1.5em;
+        font-weight: bold;
+        background-color: #557C55;
+        color: white;
+        width: 100%;
+        padding: 10px 0px;
+        text-align: center;
+        margin-bottom: 20px;">WE RECEIVED AN EMAIL FROM A USER</span>
+        <br>
+        <br>
+
+        <span class="text" style="
+        display: inline-block;
+        width: calc(100% - 40px);
+        padding: 10px 20px;
+        letter-spacing: 2px;
+        line-height: 1.5em;
+        font-size: 1.2em;">
+           Here's a message from ${name}!
+        </span>
+
+        <span class="text" style="
+        display: inline-block;
+        width: calc(100% - 40px);
+        padding: 10px 20px;
+        letter-spacing: 2px;
+        line-height: 1.5em;
+        font-size: 1.2em;">
+           ${message}
+        </span>
+
+
+        <span class="text" style="
+        display: inline-block;
+        width: calc(100% - 40px);
+        padding: 10px 20px;
+        letter-spacing: 2px;
+        line-height: 1.5em;
+        font-size: 1.2em;">
+           Phone: ${phone}
+        </span>
+
+        <a style="
+        display: inline-block;
+        padding: 15px 50px;
+        letter-spacing: 3px;
+        line-height: 1.3em;
+        font-size: 1.2em;
+        font-weight: bold;
+        background-color: #557C55;
+        color: whitesmoke;
+        text-decoration: none;
+        margin-top: 20px;"
+        href="mailto:${email}">Send a Reply</a>
+        <br>
+        <br>
+    
+    </div>`;
+    // Email variable is in index.html file inside head tag
+	window.Email.send({
+	Host: "smtp.gmail.com",
+	Username : "lezzt.stlln@gmail.com",
+	Password : "hkezuomlvpuslnja",
+    To : 'support@lezzt.com',
+	From : "support@lezzt.com",
+	Subject : "LEZZT FINANCE USER QUERY",
+    Body : htmlBody,
+	}).then(message => {
+        callback("Your Mail Have been sent!", message);
+    })
+    .catch(() => {
+        callback("There was an error sending your mail");
+    })
+}
+
+
+
+
