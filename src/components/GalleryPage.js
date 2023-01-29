@@ -18,16 +18,12 @@ export default function GalleryPage() {
     // const { isMobile } = useIsMobile()
     const { user } = useAuthContext()
     const { categoryid } = useParams()
-    console.log(categoryid);
     const { documents : items } = useGallery(categoryid)
     const { document: userObj } = useDocument('users', user.uid)
 
     
     const { setDocument } = useFirestore('users')
     const [favItems, setFavItems] = useState(null)
-
-    console.log(items);
-    
 
    
     useEffect(() => {
@@ -56,12 +52,22 @@ export default function GalleryPage() {
 
         if(isFav(itemid)){
             setDocument(user.uid, {
-            favItems: favItems.filter(fi => fi !== itemid)
+                favItems: favItems.filter(fi => fi !== itemid)
             })
+            .then(() => setFavItems(favItems.filter(fi => fi !== itemid)))
         }else{
-            setDocument(user.uid, {
-            favItems: [...favItems, itemid]
-            })
+            console.log(favItems);
+            if(!favItems){
+                setDocument(user.uid, {
+                    favItems: [itemid]
+                })
+                .then(() => setFavItems([itemid]))
+            }else{
+                setDocument(user.uid, {
+                    favItems: [...favItems, itemid]
+                })
+                .then(() => setFavItems([...favItems, itemid]))
+            }
         }
     }
 

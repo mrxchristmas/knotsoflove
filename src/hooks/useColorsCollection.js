@@ -1,41 +1,30 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { db } from '../firebase/config'
 
-import { collection, getDocs, documentId, query, where } from 'firebase/firestore'
+import { collection, getDocs, documentId, query, where, limit, orderBy } from 'firebase/firestore'
 
 
-export const useColorsCollection = (persistSelectColors, colors) => {
+export const useColorsCollection = (persistSelectColors, colors, l=null) => {
     const [documents, setDocuments] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState(null)
 
     useEffect( () => {
         let store = collection(db, 'colors')
-        setIsPending(true)
 
-        const _getDocs = async () => new Promise((res, rej)=>{
-            getDocs(store)
-            .then(snapshot => {
-                console.log(snapshot);
-                let resp = []
-                snapshot.docs.forEach(doc => {
-                    resp.push({id: doc.id, ...doc.data()})
-                })
-                res(resp)
-            })
-            .catch(err => {
-                console.log(err)
-                rej('could not fetch data: ', err)
-            })
-        });
-        
+        if(l){
+            store = query(store, limit(l))
+            store = query(store, orderBy("isAvailable"))
+        }
+
+        setIsPending(true)
 
         if(persistSelectColors){
             if(colors){
                 store = query(store, where(documentId(), "in", colors))
                 getDocs(store)
                 .then(snapshot => {
-                    console.log(snapshot);
+                    // console.log(snapshot);
                     let resp = []
                     snapshot.docs.forEach(doc => {
                         resp.push({id: doc.id, ...doc.data()})
@@ -50,7 +39,7 @@ export const useColorsCollection = (persistSelectColors, colors) => {
         }else{
             getDocs(store)
             .then(snapshot => {
-                console.log(snapshot);
+                // console.log(snapshot);
                 let resp = []
                 snapshot.docs.forEach(doc => {
                     resp.push({id: doc.id, ...doc.data()})
@@ -69,7 +58,7 @@ export const useColorsCollection = (persistSelectColors, colors) => {
         setError(null)
 
         // return () => unsub()
-    }, [colors, persistSelectColors]);
+    }, [colors, persistSelectColors, l]);
 
     return { documents, isPending, error }
 }

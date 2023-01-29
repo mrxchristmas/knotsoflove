@@ -11,8 +11,7 @@ export const useGallery = (categoryid) => {
 
     useEffect( () => {
         let unsub = () => {}
-        console.log(categoryid);
-
+        
         try {
             let store = collection(db, "items")
             setIsPending(true)
@@ -22,7 +21,7 @@ export const useGallery = (categoryid) => {
 
             unsub = onSnapshot(store, snapshot => {
                 let res = []
-                console.log(snapshot.docs);
+                // console.log(snapshot.docs);
                 snapshot.docs.forEach(doc => {
                     res.push({id: doc.id, ...doc.data()})
                 })

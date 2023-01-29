@@ -28,19 +28,19 @@ import { useState } from 'react'
 
 
 function App() {
-  const { user, authIsReady, ADMIN_UID } = useAuthContext()
+  const { user, authIsReady, ADMIN_UID, theme } = useAuthContext()
 
-  const [nav, setNav] = useState(false)
-  const NavButtonOpen = <img onClick={() => setNav(true)} src="/icons/menu_black_48dp.svg" alt="" />
-  const NavButtonClose = <img onClick={() => setNav(false)} src="/icons/xmark-solid.svg"  alt=""/>
+  // const [nav, setNav] = useState(false)
+  // const NavButtonOpen = <img onClick={() => setNav(true)} src="/icons/menu_black_48dp.svg" alt="" />
+  // const NavButtonClose = <img onClick={() => setNav(false)} src="/icons/xmark-solid.svg"  alt=""/>
 
   const [userMessageOpen, setUserMessageOpen] = useState(false);
   
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       {authIsReady && (
         <BrowserRouter>
-          <Navbar openNav={NavButtonOpen} setUserMsgOpen={setUserMessageOpen} />
+          <Navbar setUserMsgOpen={setUserMessageOpen} />
           <UserMessage isOpen={userMessageOpen} setIsOpen={setUserMessageOpen} />
           <Routes>
             <Route path="/" element={ <Home /> } />
@@ -58,8 +58,8 @@ function App() {
             <Route path="/testimonials/" element={ <Testimonials /> } />
             <Route path="/writetestimonials/:testimonyid" element={ <WriteTestimony /> } />
             <Route path="/item/:itemid/" element={ <Item /> } />
-            <Route path="/gallery/" element={ <Gallery nav={nav} setNav={setNav} closeNav={NavButtonClose} /> } />
-            <Route path="/gallery/:categoryid" element={ <Gallery nav={nav} setNav={setNav} closeNav={NavButtonClose} /> } />
+            <Route path="/gallery/" element={ <Gallery /> } />
+            <Route path="/gallery/:categoryid" element={ <Gallery /> } />
             <Route path="*" element={ <Navigate to="/" />  } />
           </Routes>
         </BrowserRouter>

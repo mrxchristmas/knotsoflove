@@ -60,30 +60,30 @@ export default function ManageDiscount() {
     // filter by price          OK
     // filter by category       OK
 
-    const filterColor = (doc, colors) => {
+    // const filterColor = (doc, colors) => {
         
-        let ret = []
-        doc && doc.forEach(d => {
-            d.images.forEach(img => {
-                img.colors.forEach(c => {
-                    colors.forEach(cc => {
-                        if(c === cc.value){
-                            // ret.push(d)
-                            let x = true
-                            ret.forEach(r => {
-                                if(d.id === r.id){
-                                    x = false
-                                }
-                            })
-                            x && ret.push(d)
-                        }
-                    })
-                })
-            })
-        })
-        // console.log(ret);s
-        return ret
-    }
+    //     let ret = []
+    //     doc && doc.forEach(d => {
+    //         d.images.forEach(img => {
+    //             img.colors.forEach(c => {
+    //                 colors.forEach(cc => {
+    //                     if(c === cc.value){
+    //                         // ret.push(d)
+    //                         let x = true
+    //                         ret.forEach(r => {
+    //                             if(d.id === r.id){
+    //                                 x = false
+    //                             }
+    //                         })
+    //                         x && ret.push(d)
+    //                     }
+    //                 })
+    //             })
+    //         })
+    //     })
+    //     // console.log(ret);s
+    //     return ret
+    // }
     const filterCategory = (doc, cat) => {
         let ret = []
         doc && doc.forEach(d => {

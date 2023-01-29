@@ -4,7 +4,6 @@ import { useStorage } from "../hooks/useStorage";
 import { useState } from "react";
 import '../css/Manage.css'
 import { usePrompt } from "../hooks/usePrompt";
-
 import { MAX_FILE_SIZE, rngFilename } from "../helper/helper";
 import { useIsMobile } from "../hooks/useIsMobile";
 

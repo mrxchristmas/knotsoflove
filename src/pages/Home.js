@@ -14,8 +14,6 @@ import HomeShowcase from "../components/HomeShowcase";
 import HomePromotions from "../components/HomePromotions";
 import '../css/Home.css'
 
-import { scrollToTop } from '../helper/helper'
-
 import pair1trans from '../assets/itemimages/pair1trans.png'
 import pair2trans from '../assets/itemimages/pair2trans.png'
 import pair3trans from '../assets/itemimages/pair3trans.png'
@@ -28,6 +26,7 @@ import item1trans from '../assets/itemimages/item1trans.png'
 import item2trans from '../assets/itemimages/item2trans.png'
 import item3trans from '../assets/itemimages/item3trans.png'
 import HomeColors from "../components/HomeColors";
+import Footer from "../components/Footer";
 
 
 export default function Home() {
@@ -90,14 +89,7 @@ export default function Home() {
       <HomePromotions />
       <HomeColors />
       <HomeShowcase data={homeShowcaseObj2}/>
-      
-      
-
-      <footer className="footer bg-pink text-white flex-row-center-between p-0-4">
-        {!isMobile && <span>Terms and Conditions</span>}
-        <span className="flex-row-center-center"><span className="big">®</span><span className="font-aureta">Knots of Love</span>&nbsp; by &nbsp;<b>Kaye™</b> &nbsp;&nbsp; ©2023</span>
-        {!isMobile && <span onClick={() => scrollToTop()}>Back to Top</span>}
-      </footer>
+      <Footer />
 
     </>
 

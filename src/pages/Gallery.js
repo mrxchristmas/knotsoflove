@@ -1,14 +1,16 @@
 
 import '../css/Gallery.css'
 import banner1 from '../assets/itemimages/banner1.png'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { scrollToTop } from '../helper/helper'
 import { useIsMobile } from '../hooks/useIsMobile'
 import { useCollection } from '../hooks/useCollection'
 import { NavLink, useParams } from 'react-router-dom'
 import GalleryPage from '../components/GalleryPage'
+import { useAuthContext } from '../hooks/useAuthContext'
+import Footer from '../components/Footer'
 
-export const Gallery = ({nav, setNav, closeNav}) => {
+export const Gallery = () => {
 
   const { isMobile } = useIsMobile()
   const { categoryid } = useParams()
@@ -17,25 +19,11 @@ export const Gallery = ({nav, setNav, closeNav}) => {
   // const { documents: items } = useCollection('items')
 
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const { theme } = useAuthContext()
   // const [selCatItems, setSelCatItems] = useState(null)
 
-
-  // console.log(categoryid);
-  // useEffect(() => {
-  //   let categoryid = searchParams.get("categoryid")
-
-  //   if(categoryObj){
-  //     let ret = categoryObj[0]
-  //     categoryObj.forEach(cat => {
-  //       if(cat.id === categoryid){
-  //         ret = cat
-  //       }
-  //     });
-  //     setSelectedCategory(ret)
-  //   }
-  // }, [categoryObj, searchParams]);
-
-
+  const [nav, setNav] = useState(false);
+  const catRef = useRef(null)
 
   useEffect(() => {
     if(categoryObj){
@@ -53,9 +41,15 @@ export const Gallery = ({nav, setNav, closeNav}) => {
 
   useEffect(() => {
     if(isMobile){
-      setNav(true)
+      if(!categoryid){
+        setNav(true)
+      }
     }
   }, [isMobile, setNav]);
+
+  useEffect(() => {
+    catRef.current?.scrollIntoView({behavior: 'smooth'});
+  }, [nav]);
 
   
   const getIsNavOpen = () => {
@@ -72,11 +66,12 @@ export const Gallery = ({nav, setNav, closeNav}) => {
 
 
   return (
-    <div className="gallery-main dark flex-row-start-center">
+    <div className={`gallery-main flex-col-start-center ${theme} ${isMobile && "mobile"}`}>
 
-      { getIsNavOpen() && 
-        <div className="gallerynav-container  flex-col-center-start">
-          <span className={`title ${isMobile && "flex-row-center-between w-100"}`}>Categories {isMobile && closeNav}</span>
+      <div className={`flex-${isMobile ? "col" : "row"}-start-center w-100 mb-2`}>
+
+        <div className={`gallerynav-container flex-col-center-start ${!getIsNavOpen() && "hidden" }`}>
+        {isMobile && <span ref={catRef} className={`title pt-1 ${isMobile && "flex-row-center-between w-100"}`}>Categories <img onClick={() => setNav(false)} src="/icons/xmark-solid.svg"  alt=""/></span>}
           {categoryObj && categoryObj.map((cat) => (
             <NavLink 
               to={`/gallery/${cat.id}/`}
@@ -96,19 +91,19 @@ export const Gallery = ({nav, setNav, closeNav}) => {
             </NavLink>
           ))}
         </div>
-      }
-      <div className="gallery-container  flex-col-center-start">
-        <div className="gallery-header flex-col-center-start">
-          <img src={banner1} alt="" />
-          {/* <ImageLoader url={banner1} /> */}
-          <span className="title mt-1">Premium Quality Handmade Macrame Merchandise <p>right at your fingertips</p></span>
-          <div className="peel"></div>
-        </div>
-        {selectedCategory && <h1 className='mt-2' onClick={() => setNav(true)} style={{backgroundColor: selectedCategory.color}}>{selectedCategory.title}</h1>}
 
-        <GalleryPage  />
+        <div className="gallery-container  flex-col-center-start">
+          <div className="gallery-header flex-col-center-start">
+            <img src={banner1} alt="" />
+            <span className="title mt-1 p-1">Premium Quality Handmade Macrame Merchandise <p>right at your fingertips</p></span>
+            <div className="peel"></div>
+          </div>
+          {selectedCategory && <h1 className='mt-2' onClick={() => setNav(true)} style={{backgroundColor: selectedCategory.color}}>{selectedCategory.title}</h1>}
+          <GalleryPage  />
+        </div>
 
       </div>
+      <Footer />
     </div>
   )
 }

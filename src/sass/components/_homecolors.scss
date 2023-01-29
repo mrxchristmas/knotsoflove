@@ -35,3 +35,10 @@
     overflow: hidden;
     text-transform: capitalize;
 }
+
+.colors-main.dark .title{
+    color: white;
+}
+.colors-main.dark .title.text-gray{
+    color: gray;
+}

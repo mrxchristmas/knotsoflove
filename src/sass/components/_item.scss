@@ -1,3 +1,15 @@
+.item-main.dark{
+    color: white;
+}
+.item-main.light{
+    color: black;
+}
+
+.item-main input,
+.item-main textarea{
+    color: black;
+}
+
 .item-details-container{
     padding: 2rem;
     max-width: calc(100vw - 4rem);

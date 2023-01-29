@@ -8,10 +8,11 @@ import { useIsMobile } from '../hooks/useIsMobile'
 import { useLocation } from 'react-router-dom' 
 import { useCollection } from '../hooks/useCollection'
 import { useNavigate } from 'react-router-dom'
+import { Moon, Sun } from '../helper/iconhelper'
 
 export default function Navbar({ openNav, setUserMsgOpen }) {
   const { logout } = useAuth()
-  const { user, ADMIN_UID, theme } = useAuthContext()
+  const { user, ADMIN_UID, theme, dispatch } = useAuthContext()
   const { isMobile } = useIsMobile()
   const location = useLocation()
   const { documents: _orders } = useCollection('orders')
@@ -45,17 +46,27 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
   }
 
 
-  
-
   // const x = !user.isAnonymous ? user.photoURL : anon;
   // console.log(!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest");
-  // console.log(location.pathname.split('/')[1]);
+  // console.log(location.pathname);
   
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   
+  const [themeHandle, setThemeHandle] = useState(true);
+
+  useEffect(() => {
+    if(themeHandle){
+      dispatch({type: "DARK_MODE"})
+    }else{
+      dispatch({type: "LIGHT_MODE"})
+    }
+  }, [themeHandle, dispatch]);
+  
+  
   return (
-    <div className={`nav-main text-black flex-row-center-between p-1-2 ${theme === "dark" ? "dark" : "light"}`}>
+    // <div className={`nav-main text-black flex-row-center-between p-1-2 ${location.pathname !== "/" && theme}`}>
+    <div className={`nav-main text-black flex-row-center-between p-1-2 ${theme}`}>
 
       {isMobile && location.pathname.split('/')[1] === 'gallery' && openNav}
 
@@ -66,6 +77,7 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
         <NavLink to="/testimonials" className="m-0-1">Testimonials</NavLink>
         <NavLink to="/contact" className="m-0-1">Contact</NavLink>
         <NavLink to="/about" className="m-0-1">About</NavLink>
+
         
       </div>
 
@@ -78,6 +90,8 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
         {user && 
           <div className="profile-container flex-col-end-center position-relative">
             <div className="profile-img-name-container flex-row-center-end">
+
+              {/* // BELL ICON */}
               {orders && getNotif() > 0 && 
                 <div onClick={() => user.uid === ADMIN_UID ? navigate('/manage/messages/') : setUserMsgOpen(true)} className="profile-notif flex-col-center-center mr-1">
                   <p className="counter flex-row-center-center">{getNotif()}</p>
@@ -86,8 +100,14 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
               }
 
               
-              {!isMobile && <span onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}
+              <label className={`ml-1 theme-selector flex-row-center-between _${theme}`}>
+                <input type="checkbox" checked={themeHandle} onChange={e => setThemeHandle(e.target.checked)} className='theme-handle' style={{opacity: "0", position: "absolute"}} />
+                <Moon color='#15293e' className="theme-icon" />
+                <Sun color='#e6a01e' className="theme-icon" />
+                <div className="ball"></div>
+              </label>  
               <img onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} referrerPolicy="no-referrer" alt="" />
+            
             </div>
             {isProfileOpen && user && 
               <div className="profile-popup-container mt-1 p-1 flex-col-center-center">
@@ -124,3 +144,4 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
 
       
       
+// {!isMobile && <span onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-name">{!user.isAnonymous ? user.displayName.replace(/ .*/,'') : "Guest"}</span>}

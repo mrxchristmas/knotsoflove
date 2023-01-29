@@ -12,13 +12,13 @@
 @import "colors";
 
 // utilities (margin, padding, opacity, etc)
+@import 'components/button';
+@import 'components/input';
 @import 'utilities';
 
 // components (button, card, navbar etc)
 @import 'components/prompt';
-@import 'components/button';
 @import 'components/navbar';
-@import 'components/input';
 @import 'components/modal';
 @import 'components/homecat';
 @import 'components/home';

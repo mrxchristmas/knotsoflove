@@ -514,6 +514,7 @@ export const testUsername =(username)=>{
     return username.match(/^[A-Za-z0-9]+$/)
 }
 export const testPhoneNumber =(phone)=>{
+    // eslint-disable-next-line
     return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(phone)
     // return /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(phone)
 }
@@ -522,6 +523,7 @@ export const testEmail =(email)=>{
     // var regexp = /^[A-Za-z]+$/;
     // ^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$
     // return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email)
+    // eslint-disable-next-line
     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 }
 

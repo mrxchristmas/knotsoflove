@@ -1,7 +1,9 @@
 .manager-main{
     position: relative;
-
-    
+    min-height: calc( (100vh - 84px) - 1.75rem );
+}
+.manager-main.dark .dark-wt{
+    color: white;
 }
 
 
