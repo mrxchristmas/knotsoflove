@@ -2,6 +2,11 @@
     padding: 0px;
 }
 
+.manage-messages-main.dark p,
+.manage-messages-main.dark span{
+    color: white;
+}
+
 .manage-messages-main .left{
     width: 30%;
     height: calc(150px + 55vh);
@@ -11,6 +16,10 @@
     border-right: 1px solid rgba(0, 0, 0, 0.5);
     overflow-y: auto;
 }
+.manage-messages-main.dark .left{
+    background-color: map-get($colors, "darkaccent" );
+}
+
 .manage-messages-main .left.mobile{
     width: 100vw;
     height: 100vh;
@@ -22,10 +31,13 @@
     overflow-y: auto;
 }
 .manage-messages-main .left .widget{
-    background-color: white;
     box-shadow: inset 0px -5px 5px 0px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     position: relative;
+}
+.manage-messages-main.dark .left .widget{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
 }
 .manage-messages-main .left .widget img{
     height: 50px;
@@ -66,14 +78,16 @@
 
 .manage-messages-main .right .header{
     height: 70px;
-    /* box-shadow: inset 0px -5px 5px 0px rgba(0, 0, 0, 0.1); */
-    /* box-shadow: inset 0px -5px 20px -4px rgba(0,0,0,0.1); */
     width: calc(100% - 2rem);
     padding: 0rem 1rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     border-top-right-radius: 15px;
 }
-.manage-messages-main .right .header img{
+.manage-messages-main.dark .right .header{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
+}
+.manage-messages-main .right .header .img{
     height: 30px;
     width: 30px;
 }
@@ -93,6 +107,9 @@
     border-bottom-right-radius: 10px;
     overflow-y: auto;
 }
+.manage-messages-main.dark .right .content{
+    background-color: map-get($colors, "darkaccent" );
+}
 .manage-messages-main.mobile .right .content{
     height: 50vh;
 }
@@ -103,11 +120,18 @@
     margin-top: 1rem;
     max-width: 55%;
 }
+.manage-messages-main.dark .right .content .bubble{
+    background-color: lighten(map-get($colors, "darkaccent" ), 10%);
+    color: white;
+}
 .manage-messages-main .right .content .sender{
     align-self: flex-start;
 }
 .manage-messages-main .right .content .receiver{
     align-self: flex-end;
+}
+.manage-messages-main .right .content .bubble.receiver{
+    background-color: map-get($colors, "blue" );
 }
 
 
@@ -163,17 +187,28 @@
     border-radius: 0px 10px 10px 0px;
     font-size: 1rem;
 }
+.manage-messages-main.dark .right .replybox textarea{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
+    border-color: map-get($colors, "darkaccent" );
+}
 .manage-messages-main .right .replybox .send{
     width: calc(20% - 2rem);
 }
-.manage-messages-main .right .replybox img{
+.manage-messages-main .right .replybox .img{
     height: 20px;
     background-color: white;
     padding: 12px;
     border-radius: 5px;
 }
-.manage-messages-main .right .replybox img.closed{
+.manage-messages-main.dark .right .replybox .img{
+    background-color: map-get($colors, "darkaccent" );
+}
+.manage-messages-main .right .replybox .img.closed{
     background-color: rgb(230, 230, 230);
+}
+.manage-messages-main.dark .right .replybox .img.closed{
+    background-color: map-get($colors, "darkaccent" );
 }
 
 .manage-messages-main .minitext{

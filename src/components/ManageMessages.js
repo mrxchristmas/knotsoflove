@@ -9,13 +9,14 @@ import { usePrompt } from "../hooks/usePrompt"
 import { useToast } from "../hooks/useToast"
 import { Link } from "react-router-dom"
 import { useIsMobile } from "../hooks/useIsMobile"
+import { Envelope, PaperPlane, Settings } from "../helper/iconhelper"
 
 export default function ManageMessages() {
 
     const { isMobile } = useIsMobile()
 
     const { documents } = useCollection('orders')
-    const { user } = useAuthContext()
+    const { user, theme } = useAuthContext()
     const { setDocument, deleteDocument } = useFirestore('orders')
     const { addDocument : addSalesDocument } = useFirestore('sales')
 
@@ -36,7 +37,7 @@ export default function ManageMessages() {
 
     useEffect(() => {
         if(documents){
-            console.log(documents);
+            // console.log(documents);
             setOrders(documents)
             contentRef.current?.scrollIntoView({behavior: 'smooth'});
         }
@@ -76,7 +77,13 @@ export default function ManageMessages() {
     }
 
     const handleSendMessage = e => {
-        const m = e.target.previousElementSibling.value
+        let m = ""
+
+        if(e.target.tagName === "svg"){
+            m = e.target.previousElementSibling.value
+        }else{
+            m = e.target.parentElement.previousElementSibling.value
+        }
 
         const messages = {
             id: rngPassword(),
@@ -229,13 +236,13 @@ export default function ManageMessages() {
     }
 
     return (
-        <div className={`manage-messages-main container w-100 mt-1 flex-${isMobile ? "col-start-between mobile" : "row-start-between"}`}>
+        <div className={`manage-messages-main container w-100 mt-1 flex-${isMobile ? "col-start-between mobile" : "row-start-between"} ${theme}`}>
             {prompt}
             {toast}
             {showNavQuery() && 
                 <div className={`left bg-white ${isMobile && "mobile"}`}>
                     {isMobile &&
-                        <div onClick={() => setIsNavOpen(false)} className="widget close p-1 bg-red flex-rowr-center-start">
+                        <div onClick={() => setIsNavOpen(false)} className="widget close p-1 bg-white flex-rowr-center-start">
                             <img src="/icons/xmark-solid.svg" referrerPolicy="no-referrer" alt="" />
                             <span className="mr-1">{`Close`}</span>
                         </div>
@@ -244,13 +251,13 @@ export default function ManageMessages() {
                         <div onClick={() => {
                             setSelectedOrder(order)
                             setIsNavOpen(false)
-                        }} key={order.id} className="widget p-1 bg-red flex-row-center-start">
+                        }} key={order.id} className="widget p-1 flex-row-center-start">
                             {getNotif(order) > 0 && <p className="counter flex-col-center-center">{getNotif(order)}</p>}
                             {/* <ImageLoader url={order.user.photoURL} /> */}
                             <img src={order.user.photoURL} referrerPolicy="no-referrer" alt="" />
                             <span>{order.user.name}</span>
                         </div>
-                        )) : <div className="widget p-1 bg-red flex-row-center-center">
+                        )) : <div className="widget p-1 flex-row-center-center">
                             <span>No Orders</span>
                         </div>
                     }
@@ -259,11 +266,15 @@ export default function ManageMessages() {
             {isMobile && <button onClick={() => setIsNavOpen(true)} className="btn-green">Select Message</button>}
             <div className={`right ${isMobile ? "w-100 mt-1" : "w-70"} flex-col-center-start`}>
                 {selectedOrder && conversation && <>
-                    <div className="header  bg-white flex-row-center-between">
+                    <div className="header bg-white flex-row-center-between">
                         <span className="name">{selectedOrder.user.name}</span>
                         <div className="flex-row-center-center">
                             {getNotif(selectedOrder) > 0 && <span onClick={() => handleMarkAsRead()} className="markasread mr-1">mark as read</span>}
-                            <img onClick={() => setIsSettingsOpen(!isSettingsOpen)} src={`/icons/${isSettingsOpen ? "envelope-solid" : "settings_black_48dp"}.svg`} alt="" />
+                            {/* <img onClick={() => setIsSettingsOpen(!isSettingsOpen)} src={`/icons/${isSettingsOpen ? "envelope-solid" : "settings_black_48dp"}.svg`} alt="" /> */}
+                            {isSettingsOpen ? 
+                                <Envelope className="img" color={theme === "dark" ? "white" : "black"} onClick={() => setIsSettingsOpen(!isSettingsOpen)} /> : 
+                                <Settings className="img" color={theme === "dark" ? "white" : "black"} onClick={() => setIsSettingsOpen(!isSettingsOpen)} />
+                            }
                         </div>
                     </div>
                     {!isSettingsOpen && 
@@ -307,15 +318,18 @@ export default function ManageMessages() {
                     <div className="replybox mt-1 flex-row-center-between">
                         {selectedOrder && selectedOrder.isClosed ? <>
                             <textarea disabled={true} className="input" placeholder="Order is Closed" ></textarea>
-                            <img className="closed" src="/icons/paper-plane-solid.svg" alt="" />
+                            {/* <img className="closed" src="/icons/paper-plane-solid.svg" alt="" /> */}
+                            <PaperPlane color={theme === "dark" ? "white" : "black"} className="closed img" />
                         </> : 
                         selectedOrder && selectedOrder.fromContactPage ? <>
                             <textarea disabled={true} className="input" placeholder="No Reply" ></textarea>
-                            <img className="closed" src="/icons/paper-plane-solid.svg" alt="" />
+                            {/* <img className="closed" src="/icons/paper-plane-solid.svg" alt="" /> */}
+                            <PaperPlane color={theme === "dark" ? "white" : "black"} className="closed img" />
                         </> : 
                         <>
                             <textarea disabled={isSettingsOpen} className="input"></textarea>
-                            <img onClick={e => {!isSettingsOpen && handleSendMessage(e)}} src="/icons/paper-plane-solid.svg" alt="" />
+                            {/* <img onClick={e => {!isSettingsOpen && handleSendMessage(e)}} src="/icons/paper-plane-solid.svg" alt="" /> */}
+                            <PaperPlane color={theme === "dark" ? "white" : "black"} className="img" onClick={e => {!isSettingsOpen && handleSendMessage(e)}}  />
                         </>}
                     </div>
                 </>}

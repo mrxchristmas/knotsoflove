@@ -4,14 +4,14 @@ import { useStorage } from "../hooks/useStorage";
 
 import { MAX_FILE_SIZE, rngFilename } from "../helper/helper";
 
-import '../css/Manage.css'
 import { useState } from "react";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function ManageCategory() {
 
     const { isMobile } = useIsMobile()
-
+    const { theme } = useAuthContext()
     const { documents } = useCollection('category')
     const { updateDocument } = useFirestore('category')
     const { addFile, deleteFile } = useStorage()
@@ -105,9 +105,9 @@ export default function ManageCategory() {
     // console.log(fsresponse)
 
     return (
-        <div className="manage-category-main  w-100 flex-col-center-start p-2  ">
+        <div className={`manage-category-main  w-100 flex-col-center-start p-2  ${theme}`}>
             {documents && documents.map(doc => (
-                <div key={doc.id} className={`widget w-100  mb-1 flex-${isMobile ? "col" : "row"}-center-between ${isMobile && "bg-white p-1"}`}>
+                <div key={doc.id} className={`widget w-100  mb-1 flex-${isMobile ? "col" : "row"}-center-between ${isMobile && "bg-gray p-1"}`}>
                     <div className={`flex-row-center-between ${isMobile ? "w-100 m-1" : "w-70"}`}>
                         <img  onClick={(e)=> e.target.parentElement.children[1].click() } className="w-30 bg-white" src={doc.url} alt="" title="Category Image" />
                         <input onChange={handleProfileChange} type="file" style={{display: 'none'}} />
@@ -127,7 +127,7 @@ export default function ManageCategory() {
                     <input className="color ml-1" type="color" title="Category Theme Color" />
                     <button className="btn-green twice ml-1" title="Save Title and Color">Add New Category</button>
                 </div>
-            <span className="minitext">Cannot add new Categories at the moment</span>
+            <span className="minitext text-red text-align-center">Cannot add new Categories at the moment</span>
         </div>
     )
 }

@@ -7,11 +7,14 @@ import { useReactToPrint } from 'react-to-print'
 import { useFirestore } from "../hooks/useFirestore";
 import { useToast } from "../hooks/useToast";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { CaretLeft, CaretRight } from "../helper/iconhelper";
 
 export default function ManageSales() {
 
     const qrcodeBaseURL = 'http://localhost:3000/writetestimonials/'
     const { isMobile } = useIsMobile()
+    const { theme } = useAuthContext()
 
     const z = getDateNow()
     const months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" ]
@@ -413,7 +416,7 @@ export default function ManageSales() {
         {toast}
         {/* <button onClick={handleCreateTest} className="btn">Create</button> */}
         {isPrintOpen && 
-            <div className={`manage-sales-print bg-white shadow-3 container flex-col-center-start  p-1-2 ${isMobile ? "mobile" : "mt-2"}`}>
+            <div className={`manage-sales-print bg-white shadow-3 container flex-col-center-start  p-1-2 ${isMobile ? "mobile" : "mt-2"} ${theme} `}>
                 <div className={`header w-100 flex-${isMobile ? "colr" : "row"}-center-between pb-2`}>
                     <div className={`actions flex-row-center-start ${isMobile ? "w-100" : "w-70"}`}>
                         <label className="mr-1"> <input checked={isInvoiceOpen} onChange={e => setIsInvoiceOpen(e.target.checked)} type="checkbox"/> Invoice</label>
@@ -553,33 +556,52 @@ export default function ManageSales() {
 
             </div>
         }
-        <div className="manage-sales-main container flex-col-center-start mt-1">
+        <div className={`manage-sales-main container flex-col-center-start mt-1 ${theme}`}>
             <div className={`header flex-row-center-between ${isMobile ? "w-100" : "w-50"}`}>
-                <img onClick={() => {
+                {/* <img onClick={() => {
                     setSelectedWeek(null)
                     setMonthObj(getMonthObject( getPrevMonth() ))
-                }} src="/icons/caret-left-solid.svg" alt="" />
+                }} src="/icons/caret-left-solid.svg" alt="" /> */}
+                <CaretLeft color={theme === "dark" ? "white" : "black"} className="img" onClick={() => {
+                    setSelectedWeek(null)
+                    setMonthObj(getMonthObject( getPrevMonth() ))
+                }} />
                 <h3 className="bg-white shadow-1">{selectedMonthText} {z.year}</h3>
-                <img onClick={() => {
+                {/* <img onClick={() => {
                     setSelectedWeek(null)
                     setMonthObj(getMonthObject( getNextMonth() ))
-                }} src="/icons/caret-right-solid.svg" alt="" />
+                }} src="/icons/caret-right-solid.svg" alt="" /> */}
+                <CaretRight className="img" color={theme === "dark" ? "white" : "black"} onClick={() => {
+                    setSelectedWeek(null)
+                    setMonthObj(getMonthObject( getNextMonth() ))
+                }} />
             </div>
             <div className={`weekheader flex-row-center-center ${isMobile ? "w-90" : "w-30"}`}>
                 {firstDate && lastDate && <h3 className="bg-white shadow-1">{dateTextToWord(firstDate)} - {dateTextToWord(lastDate)}</h3>}
             </div>
             <div className={`weekheader flex-row-center-between ${isMobile ? "w-90" : "w-30"}`}>
-                <img onClick={() => {
+                {/* <img onClick={() => {
                     selectedWeek === null ? setSelectedWeek(monthObj.length - 1) :
                     selectedWeek - 1 < 0 ? setSelectedWeek(null) : 
                     setSelectedWeek(selectedWeek - 1) 
-                }} src="/icons/caret-left-solid.svg" alt="" />
+                }} src="/icons/caret-left-solid.svg" alt="" /> */}
+                <CaretLeft className="img" color={theme === "dark" ? "white" : "black"} onClick={() => {
+                    selectedWeek === null ? setSelectedWeek(monthObj.length - 1) :
+                    selectedWeek - 1 < 0 ? setSelectedWeek(null) : 
+                    setSelectedWeek(selectedWeek - 1) 
+                }} />
+                
                 <h3 className="bg-white shadow-1">{selectedWeekText}</h3>
-                <img onClick={() => {
+                {/* <img onClick={() => {
                     selectedWeek === null ? setSelectedWeek(0) :
                     selectedWeek + 1 > monthObj.length - 1 ? setSelectedWeek(null) : 
                     setSelectedWeek(selectedWeek + 1) 
-                }} src="/icons/caret-right-solid.svg" alt="" />
+                }} src="/icons/caret-right-solid.svg" alt="" /> */}
+                <CaretRight className="img" color={theme === "dark" ? "white" : "black"} onClick={() => {
+                    selectedWeek === null ? setSelectedWeek(0) :
+                    selectedWeek + 1 > monthObj.length - 1 ? setSelectedWeek(null) : 
+                    setSelectedWeek(selectedWeek + 1) 
+                }} />
             </div>
 
             <div className={`list flex-col-center-start ${isMobile ? "w-100" : "w-70"} mt-2`}>

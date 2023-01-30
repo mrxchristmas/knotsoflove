@@ -7,6 +7,8 @@ import { useFirestore } from "../hooks/useFirestore";
 import { useToast } from "../hooks/useToast";
 import { usePrompt } from "../hooks/usePrompt";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { Grid1, Grid2, Grid3, Grid4 } from "../helper/iconhelper";
 
 // import { useTest } from "../hooks/useTest";
 const defaultCategory = {label: "All Categories", value: "all"}
@@ -19,6 +21,7 @@ export default function ManageDiscount() {
     const { documents: categories } = useCollection("category")
     const { setDocument } = useFirestore('items')
     const { setDocument: setColorDocument } = useFirestore('colors')
+    const { theme } = useAuthContext()
 
     const { isMobile } = useIsMobile()
     const { toast, showToast } = useToast(2000)
@@ -445,7 +448,7 @@ export default function ManageDiscount() {
     }
 
   return (
-    <div className={`manage-discount-main flex-col-center-start container mt-2 ${isMobile && "mobile"}`}>
+    <div className={`manage-discount-main flex-col-center-start container mt-2 ${isMobile && "mobile"} ${theme}`}>
         {toast}
         {prompt}
         <h4>Colors Discount</h4>
@@ -549,10 +552,10 @@ export default function ManageDiscount() {
         {filteredItems && !isMobile &&
             <div className="w-100 mt-2 flex-col-center-center pos-relative ">
                 <div className="flex-row-center-center">
-                    <img onClick={() => setGrid(1)} className={`grid-icon ${grid === 1 && "active"}`} src="/icons/grid-1.svg" alt="" />
-                    <img onClick={() => setGrid(2)} className={`grid-icon ml-2 ${grid === 2 && "active"}`} src="/icons/grid-2.svg" alt="" />
-                    <img onClick={() => setGrid(3)} className={`grid-icon ml-2 mr-2 ${grid === 3 && "active"}`}src="/icons/grid-3.svg" alt="" />
-                    <img onClick={() => setGrid(4)} className={`grid-icon ${grid === 4 && "active"}`} src="/icons/grid-4.svg" alt="" />
+                    <Grid1 color={theme === "dark" ? "white" : "black"} onClick={() => setGrid(1)} className={`grid-icon ${grid === 1 && "active"}`} />
+                    <Grid2 color={theme === "dark" ? "white" : "black"} onClick={() => setGrid(2)} className={`grid-icon ml-2 ${grid === 2 && "active"}`} />
+                    <Grid3 color={theme === "dark" ? "white" : "black"} onClick={() => setGrid(3)} className={`grid-icon ml-2 mr-2 ${grid === 3 && "active"}`} />
+                    <Grid4 color={theme === "dark" ? "white" : "black"} onClick={() => setGrid(4)} className={`grid-icon ${grid === 4 && "active"}`} />
                 </div>
                 <label className="select-all-check"> <input onChange={e => e.target.checked ? setAllItemSelected() : setAllItemDeselected()} type="checkbox"/> Select All</label>
             </div>
@@ -569,8 +572,6 @@ export default function ManageDiscount() {
                             {!item.discount && <p>{`$${item.price}`}</p>}
                             {item.discount && <p><span className="discount text-red mr-1">{`$${item.price} `}</span> ${getDiscountedPrice(item.discount, item.price)}</p> }
                         </div>
-
-
                         {/* <span className="discount mini text-red mr-1">{`$${getDiscountedPrice(item.discount, item.price)} `}</span> */}
                     </div>
                 ))}

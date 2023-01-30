@@ -16,7 +16,8 @@ import { getDiscountedPrice } from "../helper/helper"
 export default function GalleryPage() {
 
     // const { isMobile } = useIsMobile()
-    const { user } = useAuthContext()
+
+    const { user, theme } = useAuthContext()
     const { categoryid } = useParams()
     const { documents : items } = useGallery(categoryid)
     const { document: userObj } = useDocument('users', user.uid)
@@ -86,7 +87,7 @@ export default function GalleryPage() {
                                 {/* <img className='fav' src="icons/favorite_border.svg" alt="" /> */}
                                 <img onClick={() => handleFavClick(cat.id)} className='fav cur-pointer' src={`/icons/${isFav(cat.id) ? "favorite" : "favorite_border"}.svg`} alt="" />
                             </div>
-                            <div className="title  bg-whitesmoke  flex-row-center-between">
+                            <div className={`title flex-row-center-between ${theme === "dark" ? "bg-darkaccent text-white" : "bg-whitesmoke"}`}>
                                 <span className="name">{cat.name}</span>
                                 {cat.discount? 
                                     <span> <span className="sale">${cat.price}</span> ${getDiscountedPrice(cat.discount, cat.price)}</span> : 

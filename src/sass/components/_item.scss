@@ -99,6 +99,11 @@
     resize: none;
     margin-bottom: 10px;
 }
+.item-main.dark .item-description-container > .input{
+    background-color: map-get($colors, "darkaccent" );
+    border-color: map-get($colors, "darkaccent" );
+    color: white;
+}
 .item-description-container > .minitext{
     font-size: 0.7rem;
     margin-bottom: 0px;

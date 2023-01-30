@@ -8,6 +8,8 @@ import { useStorage } from '../hooks/useStorage'
 import { useFirestore } from '../hooks/useFirestore'
 import { useToast } from '../hooks/useToast'
 import { usePrompt } from '../hooks/usePrompt'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { Caret, CaretLeft, Xmark } from '../helper/iconhelper'
 
 export default function ManageItem() {
 
@@ -15,7 +17,7 @@ export default function ManageItem() {
 
     
     // console.log(happy);
-
+    const { theme } = useAuthContext()
     const { isMobile } = useIsMobile()
     const { documents: colors } = useCollection("colors")
     const { documents: categories } = useCollection("category")
@@ -117,21 +119,21 @@ export default function ManageItem() {
         setIsAvailable(av)
     }
     const handleItemlistCatClick = e => {
-        const td = e.target.parentElement.parentElement.children[1]
-        const cc = "item-widget-container flex-col-center-center"
+        const td = e.target.parentElement.parentElement
         let cn = false
         td.className.split(' ').forEach(c => {
-            if(c === "hidden"){
+            console.log(c);
+            if(c === "closed"){
                 cn = true
             }
         })
 
         if(cn){
-            td.className = cc
-            e.target.parentElement.children[1].src = "/icons/caret-down-solid.svg"
+            td.classList.remove('closed')
+            td.classList.add('open')
         }else{
-            td.className = cc + " hidden"
-            e.target.parentElement.children[1].src = "/icons/caret-left-solid.svg"
+            td.classList.remove('open')
+            td.classList.add('closed')
         }
     }
     const handleProfileChange = e => {
@@ -461,21 +463,26 @@ export default function ManageItem() {
     return (<>
         {toast}
         {prompt}
-        <div className={`manage-item-main p-1-2  w-100 flex-${isMobile ? "col" : "row"}-start-between`}>
+        <div className={`manage-item-main p-1-2  w-100 flex-${isMobile ? "col" : "row"}-start-between ${theme}`}>
             {isMobile && <button onClick={() => setIsNavOpen(true)} className="btn-yellow mb-1">Select Item</button>}
             {showNavQuery() && 
-                <div className={`itemlist-container flex-col-center-start ${isMobile && "mobile"}`}>
+                <div className={`itemlist-container flex-col-center-start ${isMobile && "mobile"} ${theme}`}>
                     <button onClick={() => reset()} className="btn-purple">Add New Item</button>
                     {isMobile && 
-                        <img onClick={() => setIsNavOpen(false)} className="close p-1" src="/icons/xmark-solid.svg" alt="" />
+                        // <img onClick={() => setIsNavOpen(false)} className="close p-1" src="/icons/xmark-solid.svg" alt="" />
+                        <div className='flex-row-center-end w-100'>
+                            <Xmark onClick={() => setIsNavOpen(false)} className="close p-1" color={`${theme === "dark" ? "white" : "black"}`} />
+                        </div>
                     }
                     {categories && items && categories.map(cat => (
-                        <div key={cat.id} className="category-wrapper bg-white w-100 flex-col-center-start">
+                        <div key={cat.id} className={`category-wrapper closed w-100 flex-col-center-start ${theme === "dark" && "text-white"}`}>
                             <div className="header flex-row-center-end">
                                 <h3 className="flex-row-center-start" onClick={e => handleItemlistCatClick(e)}><p className="pr-1">&nbsp;</p>{cat.title}</h3>
-                                <img src="/icons/caret-left-solid.svg" alt="" />
+                                {/* <img src="/icons/caret-left-solid.svg" alt="" /> */}
+                                <Caret direction="left" className="img left" color={`${theme === "dark" ? "white" : "black"}`} />
+                                <Caret direction="down" className="img down" color={`${theme === "dark" ? "white" : "black"}`} />
                             </div>
-                            <div className="item-widget-container hidden w-100 flex-col-center-center">
+                            <div className="item-widget-container w-100 flex-col-center-center">
                                 {getItemsFromCategoryId(cat.id).length > 0 ? getItemsFromCategoryId(cat.id).map(item => (
                                     <span key={item.id} className='w-100 ' onClick={() => {
                                         handleItemClick(item.id)

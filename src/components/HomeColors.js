@@ -33,7 +33,7 @@ export default function HomeColors() {
             }
           </div>
         </div>
-        <button onClick={() => setLimit(null)} className="btn-transparent m-2-0 w-70">View All</button>
+        <button onClick={() => setLimit(null)} className={`m-2-0 w-70 ${theme === "dark" ? "btn-darkaccent" : "btn-whitesmoke"}`}>View All</button>
     </section> 
   )
 }

@@ -5,6 +5,10 @@
     /* border: 1px solid black; */
     position: relative;
 }
+.manage-color-main.dark label,
+.manage-color-main.dark span{
+    color: white;
+}
 
 .manage-color-main .addColor img{
     height: 100%;

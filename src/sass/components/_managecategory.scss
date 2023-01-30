@@ -4,6 +4,10 @@
     width: 100%;
     /* min-height: 100px; */
 }
+.manage-category-main > .widget.bg-gray{
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 1rem;
+}
 .manage-category-main > .widget .title{
     width: 50%;
 }
@@ -28,4 +32,13 @@
 }
 .manage-category-main > .widget .btn-green:disabled{
     background-color: grey;
+}
+
+.manage-category-main.dark input{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
+    border-color: map-get($colors, "darkaccent" );
+}
+.manage-category-main.dark > .widget img{
+    background-color: map-get($colors, "darkaccent" );
 }

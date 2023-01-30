@@ -1,7 +1,7 @@
 .manage-sales-main{
     padding: 0px;
 }
-.manage-sales-main .header img{
+.manage-sales-main .header .img{
     height: 40px;
     cursor: pointer;
     padding: 10px;
@@ -13,9 +13,17 @@
     border-radius: 10px;
     cursor: pointer;
 }
+.manage-sales-main.dark .header h3{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
+}
 
 .manage-sales-main .list .widget{
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.manage-sales-main.dark .list .widget{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
 }
 .manage-sales-main .list .widget:last-child{
     border-bottom: none;
@@ -30,7 +38,7 @@
     color: rgba(128, 128, 128, 0.5);
 }
 
-.manage-sales-main .weekheader img{
+.manage-sales-main .weekheader .img{
     height: 30px;
     cursor: pointer;
     padding: 5px;
@@ -42,6 +50,19 @@
     border-radius: 10px;
     cursor: pointer;
     font-size: 0.8rem;
+}
+.manage-sales-main .weekheader h3{
+    padding: 3px 10px;
+    width: 50%;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    background-color: white;
+}
+.manage-sales-main.dark .weekheader h3{
+    background-color: map-get($colors, "darkaccent" );
+    color: white;
 }
 
 
