@@ -8,7 +8,7 @@
 // import { useToast } from '../hooks/useToast';
 // import { usePrompt } from '../hooks/usePrompt'
 // import { useSwipe } from '../hooks/useSwipe';
-import { useIsMobile } from "../hooks/useIsMobile";
+// import { useIsMobile } from "../hooks/useIsMobile";
 import HomeWallpaper from "../components/HomeWallpaper";
 import HomeShowcase from "../components/HomeShowcase";
 import HomePromotions from "../components/HomePromotions";
@@ -31,7 +31,7 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   
-  const { isMobile } = useIsMobile()
+  // const { isMobile } = useIsMobile()
 
   const homeShowcaseObj = {
     title: ["Discover your new favorite", "macramé collections", "in pairs!"],

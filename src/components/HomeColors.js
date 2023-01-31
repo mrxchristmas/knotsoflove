@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useColorsCollection } from '../hooks/useColorsCollection'
+import { Tag } from '../helper/iconhelper';
 
 
 export default function HomeColors() {
@@ -28,6 +29,7 @@ export default function HomeColors() {
                   <div className={`title flex-row-center-center ${!color.isAvailable && "text-gray"}`}>
                     <span>{color.name.replaceAll('_', ' ')}</span>
                   </div>
+                  {color.discount && <Tag color='#c60d0d' className="tag" />}
                 </div>
               ))
             }

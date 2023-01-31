@@ -104,7 +104,9 @@ export default function Item() {
                                 <img onClick={() => setSelectedImage(docim)} key={index} src={docim.url} alt="" />
                             ))}
                         </div>
-                        <img onClick={() => handleFavClick(itemid)} src={`/icons/${isFav(itemid) ? "favorite" : "favorite_border"}.svg`} alt="" className="fav" />
+                        {user && 
+                            <img onClick={() => handleFavClick(itemid)} src={`/icons/${isFav(itemid) ? "favorite" : "favorite_border"}.svg`} alt="" className="fav" />
+                        }
                         <img className='item-image' src={selectedImage.url} alt="" />
                     </div>
                     <div className="item-description-container flex-col-start-start">

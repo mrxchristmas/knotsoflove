@@ -10,6 +10,7 @@ import { useToast } from "../hooks/useToast"
 import { Link } from "react-router-dom"
 import { useIsMobile } from "../hooks/useIsMobile"
 import { Envelope, PaperPlane, Settings } from "../helper/iconhelper"
+import anon from '../assets/anonymous.jpg'
 
 export default function ManageMessages() {
 
@@ -33,7 +34,7 @@ export default function ManageMessages() {
     const contentRef = useRef()
 
     // const { ImageLoader } = useImage()
-    // console.log(orders);
+    console.log(orders);
 
     useEffect(() => {
         if(documents){
@@ -77,13 +78,13 @@ export default function ManageMessages() {
     }
 
     const handleSendMessage = e => {
-        let m = ""
-
+        let xxx 
         if(e.target.tagName === "svg"){
-            m = e.target.previousElementSibling.value
+            xxx = e.target.previousElementSibling
         }else{
-            m = e.target.parentElement.previousElementSibling.value
+            xxx = e.target.parentElement.previousElementSibling
         }
+        const m = xxx.value
 
         const messages = {
             id: rngPassword(),
@@ -97,7 +98,7 @@ export default function ManageMessages() {
         })
         .then(() => {
             console.log('ok');
-            e.target.previousElementSibling.value = ""
+            xxx.value = ""
         })
         .catch(() => {
             console.log('err');
@@ -254,7 +255,7 @@ export default function ManageMessages() {
                         }} key={order.id} className="widget p-1 flex-row-center-start">
                             {getNotif(order) > 0 && <p className="counter flex-col-center-center">{getNotif(order)}</p>}
                             {/* <ImageLoader url={order.user.photoURL} /> */}
-                            <img src={order.user.photoURL} referrerPolicy="no-referrer" alt="" />
+                            <img src={order.user.photoURL ? order.user.photoURL : anon} referrerPolicy="no-referrer" alt="" />
                             <span>{order.user.name}</span>
                         </div>
                         )) : <div className="widget p-1 flex-row-center-center">

@@ -104,11 +104,14 @@
   /* min-height: 200px; */
   /* min-width: 200px; */
   width: 100%;
-  background-color: rgba(208, 208, 208, 0.431);
+  // background-color: rgba(208, 208, 208, 0.431);
   border-radius: 10px;
   box-shadow: 0px 0px 3px grey;
   text-align: center;
   z-index: 100;
+}
+.nav-main.dark .profile-popup-container{
+  background-color: map-get($colors, "darkaccent" );
 }
 .profile-popup-container hr{
   width: calc(100% - 30px);
@@ -125,7 +128,6 @@
   color: red;
 }
 .profile-popup-container span{
-  background-color: whitesmoke;
   padding: 0px 10px;
   border-radius: 5px;
 }

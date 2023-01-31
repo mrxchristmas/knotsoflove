@@ -6,12 +6,13 @@ import { useFirestore } from '../hooks/useFirestore';
 import { Timestamp } from 'firebase/firestore';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { rngPassword } from '../helper/helper';
+import { PaperPlane, Xmark } from '../helper/iconhelper';
 
 
 export default function UserMessage({ isOpen, setIsOpen }) {
     
     
-    const { user } = useAuthContext()
+    const { user, theme } = useAuthContext()
     const { document: ordersObj } = useDocument('orders', user && user.uid)
     const { setDocument } = useFirestore('orders')
 
@@ -44,7 +45,14 @@ export default function UserMessage({ isOpen, setIsOpen }) {
 
 
     const handleSendMessage = e => {
-        const m = e.target.previousElementSibling.value
+
+        let xxx 
+        if(e.target.tagName === "svg"){
+            xxx = e.target.previousElementSibling
+        }else{
+            xxx = e.target.parentElement.previousElementSibling
+        }
+        const m = xxx.value
 
         // console.log(m);
         const messages = {
@@ -64,7 +72,7 @@ export default function UserMessage({ isOpen, setIsOpen }) {
             // })
             console.log('Message Sent');
             contentRef.current?.scrollIntoView({behavior: 'smooth'});
-            e.target.previousElementSibling.value = ""
+            xxx.value = ""
         })
         .catch(() => {
             // showToast({
@@ -83,17 +91,17 @@ export default function UserMessage({ isOpen, setIsOpen }) {
 
     return (<>
         { isOpen && 
-            <div onFocus={handleFocus} className="user-message-main bg-whitesmoke p-2 flex-col-center-between">
-                <img onClick={() => setIsOpen(false)} className='close' src="/icons/xmark-solid.svg" alt="" />
+            <div onFocus={handleFocus} className={`user-message-main bg-whitesmoke p-2 flex-col-center-between _${theme}`}>
+                <Xmark color={theme === "dark" ? "white" : "black"} onClick={() => setIsOpen(false)} className='close'/>
                 <div className="content bg-white w-100 flex-col-center-start">
                     {ordersObj && ordersObj.messages.map(msg => (
-                        <span key={msg.id} className={msg.sender === user.uid ? "widget receiver bg-blue m-1-1-0-1 text-white" : "widget sender bg-whitesmoke m-1-1-0-1 "}>{msg.message}</span>
+                        <span key={msg.id} className={msg.sender === user.uid ? "widget receiver bg-blue m-1-1-0-1 text-white" : "widget sender bg-darkaccent m-1-1-0-1 "}>{msg.message}</span>
                     ))}
                     <div ref={contentRef} />
                 </div>
                 <div className="replybox w-100  flex-row-center-between">
                     <textarea className="input" ></textarea>
-                    <img onClick={e => handleSendMessage(e)} className='bg-white p-1' src="/icons/paper-plane-solid.svg" alt="" />
+                    <PaperPlane color={theme === "dark" ? "white" : "black"} onClick={e => handleSendMessage(e)} className='bg-white p-1 img'  />
                 </div>
             </div>
         }

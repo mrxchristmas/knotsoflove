@@ -20,12 +20,13 @@ export default function GalleryPage() {
     const { user, theme } = useAuthContext()
     const { categoryid } = useParams()
     const { documents : items } = useGallery(categoryid)
-    const { document: userObj } = useDocument('users', user.uid)
+    const { document: userObj } = useDocument('users', user ? user.uid : null)
 
     
     const { setDocument } = useFirestore('users')
     const [favItems, setFavItems] = useState(null)
 
+    // console.log(userObj);
    
     useEffect(() => {
         if(userObj){
@@ -85,7 +86,9 @@ export default function GalleryPage() {
                                 <img  className='img' src={cat.images[0].url} alt="" />
                                 </Link>
                                 {/* <img className='fav' src="icons/favorite_border.svg" alt="" /> */}
-                                <img onClick={() => handleFavClick(cat.id)} className='fav cur-pointer' src={`/icons/${isFav(cat.id) ? "favorite" : "favorite_border"}.svg`} alt="" />
+                                {user && 
+                                    <img onClick={() => handleFavClick(cat.id)} className='fav cur-pointer' src={`/icons/${isFav(cat.id) ? "favorite" : "favorite_border"}.svg`} alt="" />
+                                }
                             </div>
                             <div className={`title flex-row-center-between ${theme === "dark" ? "bg-darkaccent text-white" : "bg-whitesmoke"}`}>
                                 <span className="name">{cat.name}</span>

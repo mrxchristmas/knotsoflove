@@ -8,7 +8,7 @@ import { useFirestore } from "../hooks/useFirestore";
 import { useToast } from "../hooks/useToast";
 import { useIsMobile } from "../hooks/useIsMobile";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { CaretLeft, CaretRight } from "../helper/iconhelper";
+import { CaretLeft, CaretRight, Print, Xmark } from "../helper/iconhelper";
 
 export default function ManageSales() {
 
@@ -408,7 +408,7 @@ export default function ManageSales() {
     // }
 
 
-
+    // console.log(selectedPrintSale);
       
 
   return ( 
@@ -416,20 +416,20 @@ export default function ManageSales() {
         {toast}
         {/* <button onClick={handleCreateTest} className="btn">Create</button> */}
         {isPrintOpen && 
-            <div className={`manage-sales-print bg-white shadow-3 container flex-col-center-start  p-1-2 ${isMobile ? "mobile" : "mt-2"} ${theme} `}>
+            <div className={`manage-sales-print shadow-3 container flex-col-center-start  p-1-2 ${isMobile ? "mobile" : "mt-2"} ${theme === "dark" ? "bg-darkaccent _dark" : " bg-white _light"} `}>
                 <div className={`header w-100 flex-${isMobile ? "colr" : "row"}-center-between pb-2`}>
                     <div className={`actions flex-row-center-start ${isMobile ? "w-100" : "w-70"}`}>
                         <label className="mr-1"> <input checked={isInvoiceOpen} onChange={e => setIsInvoiceOpen(e.target.checked)} type="checkbox"/> Invoice</label>
                         <label className="mr-1"> <input checked={isThanksCardOpen} onChange={e => setIsThanksCardOpen(e.target.checked)} type="checkbox"/> Thank you card</label>
-                        <label className="mr-1"> <input checked={isTestimonyTicketOpen} onChange={e => setIsTestimonyTicketOpen(e.target.checked)} type="checkbox"/> Testimony Ticket</label>
-                        <img onClick={handlePrint} className="mr-1" src="/icons/print-solid.svg" alt="" />
+                        {selectedPrintSale.buyerEmail && <label className="mr-1"> <input checked={isTestimonyTicketOpen} onChange={e => setIsTestimonyTicketOpen(e.target.checked)} type="checkbox"/> Testimony Ticket</label>}
+                        <Print color={theme === "dark" ? "white" : "black"} onClick={handlePrint} className="img mr-1" />
                     </div>
                     <div className={`flex-row-${isMobile ? "center-between w-100 mb-1" : "center-end w-40"}`}>
                         <div className="flex-col-start-start minitext">
                             <p>Shipping Fee (keep 0 for FREE shipping)</p>
                             <input className="w-80 mr-4 shadow-1 bg-whitesmoke shipping-input" type="number" value={shippingPrice} onChange={e => setShippingPrice(e.target.value)}  placeholder="Enter Shipping Price, 0 for FREE" />
                         </div>
-                        <img onClick={() => setIsPrintOpen(false)} className="close" src="/icons/xmark-solid.svg" alt="" />
+                        <Xmark color={theme === "dark" ? "white" : "black"} onClick={() => setIsPrintOpen(false)} className="img close" />
                     </div>
                 </div>
                 <div className={`content w-100 bg-gray p-2 flex-col-${isMobile ? "center" : "center"}-start`}>

@@ -14,7 +14,7 @@ export const useColorsCollection = (persistSelectColors, colors, l=null) => {
 
         if(l){
             store = query(store, limit(l))
-            store = query(store, orderBy("isAvailable"))
+            store = query(store, orderBy("isAvailable", "desc"))
         }
 
         setIsPending(true)

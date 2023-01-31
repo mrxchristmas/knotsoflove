@@ -9,7 +9,7 @@ import { useFirestore } from '../hooks/useFirestore'
 import { useToast } from '../hooks/useToast'
 import { usePrompt } from '../hooks/usePrompt'
 import { useAuthContext } from '../hooks/useAuthContext'
-import { Caret, CaretLeft, Xmark } from '../helper/iconhelper'
+import { Caret, Xmark } from '../helper/iconhelper'
 
 export default function ManageItem() {
 

@@ -4,12 +4,12 @@ import { Link, useParams } from "react-router-dom"
 import { useDocument } from "../hooks/useDocument"
 import { useEffect, useState } from "react"
 import { useFirestore } from "../hooks/useFirestore"
-
-import '../css/WriteTestimony.css'
+import { useAuthContext } from "../hooks/useAuthContext"
 
 
 export default function WriteTestimony() {
 
+    const { theme } = useAuthContext()
     const { testimonyid } = useParams()
     const { document } = useDocument('testimony', testimonyid)
     const { setDocument } = useFirestore('testimony')
@@ -67,7 +67,7 @@ export default function WriteTestimony() {
 
     return (<>
         {document && document.isAvailable &&
-            <div className="write-testimony-main container flex-col-center-start mt-4">
+            <div className={`write-testimony-main container flex-col-center-start mt-4 ${theme}`}>
                     <h2>We're glad to have you here,</h2>
                     <div className="flex-col-center-center w-70 mt-2 mb-3">
                         <img className="writerPhotoURL" src={document.writerPhotoURL} alt="" referrerPolicy="no-referrer" />
@@ -82,25 +82,23 @@ export default function WriteTestimony() {
                     <h3>These are the items you bought</h3>
                     <p  className="mb-1 minitext">Click to View Item in New Tab</p>
                     {document.items.map(item => (
-                        <Link to={`/item/${item.id}`} target="_blank" referrerPolicy="norefferrer" key={item.id} className="itemwidget w-90 p-1-2 bg-white flex-row-center-between">
+                        <Link to={`/item/${item.id}`} target="_blank" referrerPolicy="norefferrer" key={item.id} className={`itemwidget w-90 p-1-2 flex-row-center-between ${theme === "dark" ? "bg-darkaccent text-white" : "bg-white text-black"}`}>
                             <p>{item.name}</p>
                             <p>${item.salePrice}</p>
                         </Link>
                     ))}
                     
-                    <textarea className="input mt-1" placeholder="Here are some questions to help you with your Testimony. 1) How do you like the items you bought? 2) where did you learn of us? eg. social media, friends etc. 3) are you willing to refer us to your friends and collegues?"></textarea>
+                    <textarea className={`input mt-1 `} placeholder="Here are some questions to help you with your Testimony. 1) How do you like the items you bought? 2) where did you learn of us? eg. social media, friends etc. 3) are you willing to refer us to your friends and collegues?"></textarea>
                     <button onClick={handleSubmit} className="btn-green mt-1">Submit</button>
                 </div>
 
             </div>
         }
         {document && !document.isAvailable && 
-            <div className="write-testimony-main container flex-col-center-start mt-4">
+            <div className={`write-testimony-main container flex-col-center-start mt-4 ${theme}`}>
                 <h1>We appreciate you writing a Testimony for us!</h1>
-                <h2 className="mt-1">We'll give you $5 OFF discount on your next purchase</h2>
+                <h2 className="mt-1">You're qualified for a $5 OFF discount on your next purchase</h2>
                 <h3 className="mt-1">See you! Till then</h3>
-
-
                 <span className="mt-5">looks like you've finished writing your Testimony, </span>
                 <span className="">If you think this is an Error please send us a quick message!</span>
                 <span className="mt-5">best regards,</span>
@@ -108,7 +106,7 @@ export default function WriteTestimony() {
             </div>
         }
         {document === null && 
-            <div className="write-testimony-main container flex-col-center-start mt-4">
+            <div className={`write-testimony-main container flex-col-center-start mt-4 ${theme}`}>
                 <h1>Nothing here but Knots and Love</h1>
             </div>
         }

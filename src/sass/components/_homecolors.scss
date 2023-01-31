@@ -35,6 +35,13 @@
     overflow: hidden;
     text-transform: capitalize;
 }
+.colors-page-widget .tag{
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    top: 20px;
+    right: 15px;
+}
 
 .colors-main.dark .title{
     color: white;

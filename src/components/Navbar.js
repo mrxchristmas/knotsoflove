@@ -31,17 +31,34 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
 
   const getNotif = () => {
     let x = 0
-    orders.forEach(order => {
-      order.messages.forEach(om => {
-        // console.log(om);
-        let y = true
-        om.read.forEach(id => {
-          // console.log(id === user.ADMIN_UID);
-          if(id === user.uid) y = false
+    if(user.uid === ADMIN_UID){
+      orders.forEach(order => {
+        order.messages.forEach(om => {
+          // console.log(om);
+          let y = true
+          om.read.forEach(id => {
+            // console.log(id === user.ADMIN_UID);
+            if(id === user.uid) y = false
+          })
+          y && x++
         })
-        y && x++
       })
-    })
+    }else{
+      orders.forEach(order => {
+        if(order.id === user.uid){
+          order.messages.forEach(om => {
+            // console.log(om);
+            let y = true
+            om.read.forEach(id => {
+              // console.log(id === user.ADMIN_UID);
+              if(id === user.uid) y = false
+            })
+            y && x++
+          })
+        }
+      })
+    }
+    
     return x
   }
 
@@ -52,7 +69,7 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
   
 
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  
+
   const [themeHandle, setThemeHandle] = useState(true);
 
   useEffect(() => {
@@ -81,7 +98,21 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
         
       </div>
 
-      <div className='nav-profile flex-row-start-start'>
+      <div className='nav-profile flex-row-center-start'>
+        {/* // BELL ICON */}
+        {user && orders && getNotif() > 0 && 
+          <div onClick={() => user.uid === ADMIN_UID ? navigate('/manage/messages/') : setUserMsgOpen(true)} className="profile-notif flex-col-center-center mr-1">
+            <p className="counter flex-row-center-center">{getNotif()}</p>
+            <img className='' src='/icons/bell-solid.svg' alt="" />
+          </div>
+        }
+        {/* THEME SELECTOR */}
+        <label className={`mr-1 theme-selector flex-row-center-between _${theme}`}>
+          <input type="checkbox" checked={themeHandle} onChange={e => setThemeHandle(e.target.checked)} className='theme-handle' style={{opacity: "0", position: "absolute"}} />
+          <Moon color='#15293e' className="theme-icon" />
+          <Sun color='#e6a01e' className="theme-icon" />
+          <div className="ball"></div>
+        </label>  
 
         {!user && <div className='flex-row-center-center login-button'>
           <NavLink to="/login">Login | Register</NavLink>
@@ -90,25 +121,9 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
         {user && 
           <div className="profile-container flex-col-end-center position-relative">
             <div className="profile-img-name-container flex-row-center-end">
-
-              {/* // BELL ICON */}
-              {orders && getNotif() > 0 && 
-                <div onClick={() => user.uid === ADMIN_UID ? navigate('/manage/messages/') : setUserMsgOpen(true)} className="profile-notif flex-col-center-center mr-1">
-                  <p className="counter flex-row-center-center">{getNotif()}</p>
-                  <img className='' src='/icons/bell-solid.svg' alt="" />
-                </div>
-              }
-
-              
-              <label className={`ml-1 theme-selector flex-row-center-between _${theme}`}>
-                <input type="checkbox" checked={themeHandle} onChange={e => setThemeHandle(e.target.checked)} className='theme-handle' style={{opacity: "0", position: "absolute"}} />
-                <Moon color='#15293e' className="theme-icon" />
-                <Sun color='#e6a01e' className="theme-icon" />
-                <div className="ball"></div>
-              </label>  
-              <img onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-photo ml-1" src={!user.isAnonymous ? user.photoURL : anon} referrerPolicy="no-referrer" alt="" />
-            
+              <img onClick={() => setIsProfileOpen(!isProfileOpen)}  className="profile-photo" src={!user.isAnonymous ? user.photoURL : anon} referrerPolicy="no-referrer" alt="" />
             </div>
+            
             {isProfileOpen && user && 
               <div className="profile-popup-container mt-1 p-1 flex-col-center-center">
               {/* <div className="face1 display-none" style={{display: 'none'}}> */}
@@ -117,7 +132,7 @@ export default function Navbar({ openNav, setUserMsgOpen }) {
                   <hr />
                   {ADMIN_UID === user.uid && <Link to="/manage" className="btn-black text-white ">Manage Website</Link> }
                   {!user.isAnonymous && <button className="btn-pink mt-1">View Favorites</button> }
-                  {!user.isAnonymous && user.uid !== ADMIN_UID && <button onClick={() => setIsProfileOpen(false)} className="btn-blue mt-1">Messages</button> }
+                  {!user.isAnonymous && user.uid !== ADMIN_UID && <button onClick={() => setUserMsgOpen(true)} className="btn-blue mt-1">Messages</button> }
                   {user.isAnonymous && <p>You will lose all data when you logout</p> }
                   {user.isAnonymous && <button className="btn-green">Link Guest Account</button> }
                   <button className="btn-red mt-1" onClick={() => logout()}>Logout</button>

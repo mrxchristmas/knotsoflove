@@ -71,6 +71,9 @@
     max-height: 70vh;
     border-radius: 1rem;
 }
+.manage-sales-print._dark label{
+    color: white;
+}
 .manage-sales-print.mobile{
     position: fixed;
     top: 0px;
@@ -83,10 +86,10 @@
 .manage-sales-print .header{
     border-bottom: thick solid black;
 }
-.manage-sales-print .header img{
+.manage-sales-print .header .img{
     height: 20px;
 }
-.manage-sales-print .header img.close{
+.manage-sales-print .header .img.close{
     height: 30px;
 }
 .manage-sales-print .content{

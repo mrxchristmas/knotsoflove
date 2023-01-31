@@ -14,13 +14,13 @@ export default function ItemOrderRequest({ item }) {
     const { user } = useAuthContext()
     // const { itemid } = useParams()
     const { toast, showToast } = useToast(2000)
-    const { document: ordersObj } = useDocument('orders', user.uid)
+    const { document: ordersObj } = useDocument('orders', user ? user.uid : null)
 
 
     const [orders, setOrders] = useState(null)
 
 
-    // console.log(item);
+    // console.log(user);
 
     useEffect(() => {
         if(ordersObj){
@@ -102,6 +102,9 @@ export default function ItemOrderRequest({ item }) {
         {toast}
         <p className="minitext text-red">Please include where you want to be contacted back (eg. phone, email, or in app)</p>
         <textarea className="input" placeholder='ask a question or a special request eg(colors, size, etc.)'></textarea>
-        <button onClick={(e) => handleSubmitOrderRequest(e)} className="btn-gray">Submit Order Request</button>
+        {user ? 
+            <button onClick={(e) => handleSubmitOrderRequest(e)} className="btn-gray">Submit Order Request</button> : 
+            <button onClick={() => showToast({message: "Please Login to Submit an Order Request"})} className="btn-gray">Please Login to Order</button>
+        }
     </>)
 }

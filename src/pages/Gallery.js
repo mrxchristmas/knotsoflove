@@ -45,7 +45,7 @@ export const Gallery = () => {
         setNav(true)
       }
     }
-  }, [isMobile, setNav]);
+  }, [isMobile, categoryid, setNav]);
 
   useEffect(() => {
     catRef.current?.scrollIntoView({behavior: 'smooth'});
